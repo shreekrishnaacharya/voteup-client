@@ -1,11 +1,4 @@
 
-const contactPage = {
-    CONTACT_LIST: "/contact",
-    CONTACT_ADD: "/contact/add",
-    CONTACT_VIEW: "/contact/view",
-    CONTACT_UPDATE: "/contact/view/update",
-}
-
 const sitePage = {
     LOGIN: "/guest",
     NEW_PASSWORD: "/guest/new-password",
@@ -26,7 +19,6 @@ const pages = {
     HOME: "/home",
     DASHBOARD: "/dashboard",
     ...sitePage,
-    ...contactPage,
 };
 
 const guestPage = [
@@ -42,4 +34,4 @@ const getFullUrl = (page) => {
     return pages.LOCAL_URL + "#" + page;
 }
 
-export { pages, sitePage,guestPage, contactPage,  getFullUrl };
+export { pages, sitePage, guestPage, getFullUrl };

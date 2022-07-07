@@ -4,6 +4,8 @@ import StoreController from "view";
 import Auth from "_base/Auth";
 import { loadProgressBar } from 'axios-progress-bar';
 import 'axios-progress-bar/dist/nprogress.css';
+import ThemeCustomization from 'themes';
+import { CssBaseline } from '@mui/material';
 loadProgressBar();
 
 export default function App() {
@@ -14,8 +16,10 @@ export default function App() {
   }, [pathname]);
 
   return (
-    <Auth>
-      <StoreController key="StoreController" />
-    </Auth>
+    <ThemeCustomization>
+      <Auth>
+        <StoreController key="StoreController" />
+      </Auth>
+    </ThemeCustomization>
   );
 }
