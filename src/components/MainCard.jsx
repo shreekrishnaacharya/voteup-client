@@ -36,7 +36,6 @@ const MainCard = forwardRef(
     ) => {
         const theme = useTheme();
         boxShadow = theme.palette.mode === 'dark' ? boxShadow || true : boxShadow;
-
         return (
             <Card
                 elevation={elevation || 0}

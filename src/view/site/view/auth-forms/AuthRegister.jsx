@@ -36,6 +36,7 @@ const schema = yup.object({
     fname: yup.string().required("First name cannot be blank"),
     lname: yup.string().required("Last name cannot be blank"),
     email: yup.string().required("Email cannot be blank").email(),
+    contact: yup.string().required("Phone cannot be blank"),
     temp_password: yup.string().required("Password cannot be blank"),
 });
 
@@ -147,7 +148,7 @@ const AuthRegister = () => {
                     <Grid item xs={12}>
                         <Stack spacing={1}>
                             <Controller
-                                name="phone1"
+                                name="contact"
                                 defaultValue=""
                                 control={control}
                                 render={({ field, fieldState }) => {

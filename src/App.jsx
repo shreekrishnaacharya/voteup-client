@@ -5,6 +5,7 @@ import Auth from "_base/Auth";
 import { loadProgressBar } from 'axios-progress-bar';
 import 'axios-progress-bar/dist/nprogress.css';
 import ThemeCustomization from 'themes';
+import ThemeProvider from './theme/ThemeProvider';
 import { CssBaseline } from '@mui/material';
 loadProgressBar();
 
@@ -16,10 +17,10 @@ export default function App() {
   }, [pathname]);
 
   return (
-    <ThemeCustomization>
+    <ThemeProvider>
       <Auth>
         <StoreController key="StoreController" />
       </Auth>
-    </ThemeCustomization>
+    </ThemeProvider>
   );
 }
