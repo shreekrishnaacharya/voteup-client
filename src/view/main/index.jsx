@@ -1,12 +1,11 @@
 import { Suspense } from 'react';
 import { Route } from 'react-router-dom';
 import { pages } from 'links';
+import FeedController from './feed';
 function MainController() {
-    console.log("i am main controller");
-
     return (
         <div key="MainController">
-            
+            <FeedController />
         </div >
     );
 }

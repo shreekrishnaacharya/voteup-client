@@ -1,20 +1,18 @@
-import { Route } from 'react-router-dom';
-import { contactPage } from "links";
-import ContactList from './view/list';
-import ContactAdd from './view/create';
-import ContactUpdate from './view/update';
-import ContactView from './view/view';
+import Feed from "./view/Feed";
+import Rightbar from "./view/Rightbar";
+import { Box, Stack } from "@mui/material";
+import Add from "./view/Add";
 
-function ContactController() {
+function FeedController() {
     return (
-        <>
-            <Route exact path={contactPage.CONTACT_LIST} component={ContactList} />
-            <Route exact path={contactPage.CONTACT_ADD} component={ContactAdd} />
-            <Route exact path={contactPage.CONTACT_UPDATE} component={ContactUpdate} />
-            <Route exact path={contactPage.CONTACT_VIEW} component={ContactView} />
-            
-        </>
+        <Box bgcolor={"background.default"} color={"text.primary"}>
+            <Stack direction="row" spacing={2} justifyContent="space-between">
+                <Feed />
+                <Rightbar />
+            </Stack>
+            <Add />
+        </Box>
     );
 }
 
-export default ContactController;
+export default FeedController;
