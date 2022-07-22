@@ -13,13 +13,13 @@ const Feed = () => {
 
   useEffect(() => {
     getFeeds().then(res => {
+      console.log(res)
       if (res.flag) {
         setFeeds(res.data);
         setLoading(false);
       }
     })
   }, []);
-
   return (
     <Box flex={4} p={{ xs: 0, md: 1 }}>
       {loading ? (
@@ -32,7 +32,7 @@ const Feed = () => {
       ) : (
         <>
           {postFeeds.map(post => {
-            <Post post={post} />
+            return <Post key={post._id} post={post} />
           })}
         </>
       )}

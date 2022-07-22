@@ -10,7 +10,8 @@ import {
     Button,
     CardActions,
     Link,
-    styled
+    styled,
+    Stack
 } from '@mui/material';
 
 import MoreHorizTwoToneIcon from '@mui/icons-material/MoreHorizTwoTone';
@@ -42,10 +43,10 @@ function Post({ post }) {
                     title={post.username}
                     subheader={
                         <>
-                            {post.tags.map(hash => {
-                                return <Link href="#" underline="hover">
+                            {post.tags.split(",").map(hash => {
+                                return <><Link href="#" underline="hover">
                                     {hash}
-                                </Link>
+                                </Link>{" "}</>
                             })}
                         </>
                     }
@@ -55,11 +56,11 @@ function Post({ post }) {
                         {post.desc}
                     </Typography>
                 </Box>
-                <CardMedia
+                {/* <CardMedia
                     sx={{ minHeight: 280 }}
                     image="/static/images/placeholders/covers/6.jpg"
                     title="Card Cover"
-                />
+                /> */}
                 <Box p={3}>
                     <Typography variant="subtitle2">
                         • 4 mins ago
@@ -73,7 +74,7 @@ function Post({ post }) {
                         justifyContent: 'space-between'
                     }}
                 >
-                    <Box>
+                    <Stack direction="row" spacing={2} justifyContent="space-between">
                         <Button color='primary' startIcon={<ThumbUpAltTwoToneIcon />} variant={post.vtype == 1 ? "contained" : "outlined"}>
                             Like
                         </Button>
@@ -83,15 +84,15 @@ function Post({ post }) {
                         <Button startIcon={<ShareTwoToneIcon />} variant="outlined">
                             Share
                         </Button>
-                    </Box>
+                    </Stack>
                     <Box sx={{ mt: { xs: 2, md: 0 } }}>
                         <Typography variant="subtitle2" component="span">
                             <Text color="green">
-                                <b>{post.up_count}</b>
+                                <b>{post.up_vote}</b>
                             </Text>{' '}
-                            Likes{' '}
+                            Likes{' | '}
                             <Text color="red">
-                                <b>{post.down_count}</b>
+                                <b>{post.down_vote}</b>
                             </Text>{' '}
                             Dislike
                         </Typography>

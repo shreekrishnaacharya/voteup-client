@@ -18,7 +18,7 @@ const getApiRequest = async (requestData) => {
 
 async function getFeeds() {
     return await getApiRequest({
-        url: "/feed",
+        url: "/feeds",
     }).then((result) => {
         return result;
     });

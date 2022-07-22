@@ -5,7 +5,7 @@ import Add from "./view/Add";
 
 function FeedController() {
     return (
-        <Box bgcolor={"background.default"} color={"text.primary"}>
+        <Box pb={15} bgcolor={"background.default"} color={"text.primary"}>
             <Stack direction="row" spacing={2} justifyContent="space-between">
                 <Feed />
                 <Rightbar />
