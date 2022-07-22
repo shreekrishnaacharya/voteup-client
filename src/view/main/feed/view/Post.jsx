@@ -15,9 +15,9 @@ import {
 
 import MoreHorizTwoToneIcon from '@mui/icons-material/MoreHorizTwoTone';
 import ThumbUpAltTwoToneIcon from '@mui/icons-material/ThumbUpAltTwoTone';
-import CommentTwoToneIcon from '@mui/icons-material/CommentTwoTone';
 import ShareTwoToneIcon from '@mui/icons-material/ShareTwoTone';
 import Text from 'components/Text';
+import { ThumbDownAltTwoTone } from '@mui/icons-material';
 
 const CardActionsWrapper = styled(CardActions)(
     ({ theme }) => `
@@ -26,7 +26,7 @@ const CardActionsWrapper = styled(CardActions)(
   `
 );
 
-function Post() {
+function Post({ post }) {
     return (
         <Box p={{ xs: 0, md: 2 }}>
             <Card>
@@ -39,24 +39,20 @@ function Post() {
                     }
                     titleTypographyProps={{ variant: 'h4' }}
                     subheaderTypographyProps={{ variant: 'subtitle2' }}
-                    title="Allison Lipshutz"
+                    title={post.username}
                     subheader={
                         <>
-                            Managing Partner,{' '}
-                            <Link href="#" underline="hover">
-                                #software
-                            </Link>
-                            ,{' '}
-                            <Link href="#" underline="hover">
-                                #managers
-                            </Link>
-                            , Google Inc.
+                            {post.tags.map(hash => {
+                                return <Link href="#" underline="hover">
+                                    {hash}
+                                </Link>
+                            })}
                         </>
                     }
                 />
                 <Box px={3} pb={2}>
                     <Typography variant="h4" fontWeight="normal">
-                        Welcome to organizing your remote office for maximum productivity.
+                        {post.desc}
                     </Typography>
                 </Box>
                 <CardMedia
@@ -65,14 +61,8 @@ function Post() {
                     title="Card Cover"
                 />
                 <Box p={3}>
-                    <Typography variant="h2" sx={{ pb: 1 }}>
-                        Organizing Your Remote Office for Maximum Productivity
-                    </Typography>
                     <Typography variant="subtitle2">
-                        <Link href="#" underline="hover">
-                            example.com
-                        </Link>{' '}
-                        • 4 mins read
+                        • 4 mins ago
                     </Typography>
                 </Box>
                 <Divider />
@@ -84,15 +74,11 @@ function Post() {
                     }}
                 >
                     <Box>
-                        <Button startIcon={<ThumbUpAltTwoToneIcon />} variant="contained">
+                        <Button color='primary' startIcon={<ThumbUpAltTwoToneIcon />} variant={post.vtype == 1 ? "contained" : "outlined"}>
                             Like
                         </Button>
-                        <Button
-                            startIcon={<CommentTwoToneIcon />}
-                            variant="outlined"
-                            sx={{ mx: 2 }}
-                        >
-                            Comment
+                        <Button color='error' startIcon={<ThumbDownAltTwoTone />} variant={post.vtype == 0 ? "contained" : "outlined"}>
+                            Dislike
                         </Button>
                         <Button startIcon={<ShareTwoToneIcon />} variant="outlined">
                             Share
@@ -100,14 +86,14 @@ function Post() {
                     </Box>
                     <Box sx={{ mt: { xs: 2, md: 0 } }}>
                         <Typography variant="subtitle2" component="span">
-                            <Text color="black">
-                                <b>485</b>
+                            <Text color="green">
+                                <b>{post.up_count}</b>
                             </Text>{' '}
-                            reactions •{' '}
-                            <Text color="black">
-                                <b>63</b>
+                            Likes{' '}
+                            <Text color="red">
+                                <b>{post.down_count}</b>
                             </Text>{' '}
-                            comments
+                            Dislike
                         </Typography>
                     </Box>
                 </CardActionsWrapper>

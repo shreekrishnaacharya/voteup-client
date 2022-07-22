@@ -1,12 +1,9 @@
 import {
   Avatar,
-  AvatarGroup,
   Box,
   Card,
   CardMedia,
   Divider,
-  ImageList,
-  ImageListItem,
   List,
   ListItem,
   ListItemAvatar,

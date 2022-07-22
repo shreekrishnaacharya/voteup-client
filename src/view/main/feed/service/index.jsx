@@ -16,12 +16,9 @@ const getApiRequest = async (requestData) => {
     return result;
 }
 
-async function getContactList(param) {
+async function getFeeds() {
     return await getApiRequest({
-        url: "/contact",
-        data: {
-            ...param
-        }
+        url: "/feed",
     }).then((result) => {
         return result;
     });
@@ -80,7 +77,7 @@ async function getLocationList() {
 }
 
 export {
-    getContactList,
+    getFeeds,
     getContactDetail,
     addContact,
     updateContact,

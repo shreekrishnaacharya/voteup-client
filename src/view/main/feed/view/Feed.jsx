@@ -1,13 +1,24 @@
 import { Box, Stack, Skeleton } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { getFeeds } from "../service";
 import Post from "./Post";
 
 const Feed = () => {
-  const [loading, setLoading] = useState(false);
-
+  const [loading, setLoading] = useState(true);
+  const [postFeeds, setFeeds] = useState([]);
   // setTimeout(() => {
   //   setLoading(false);
   // }, [3000]);
+
+
+  useEffect(() => {
+    getFeeds().then(res => {
+      if (res.flag) {
+        setFeeds(res.data);
+        setLoading(false);
+      }
+    })
+  }, []);
 
   return (
     <Box flex={4} p={{ xs: 0, md: 1 }}>
@@ -20,12 +31,9 @@ const Feed = () => {
         </Stack>
       ) : (
         <>
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
+          {postFeeds.map(post => {
+            <Post post={post} />
+          })}
         </>
       )}
     </Box>
