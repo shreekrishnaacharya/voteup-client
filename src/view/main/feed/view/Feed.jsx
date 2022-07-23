@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { getFeeds } from "../service";
+import { actionUpdate, getFeeds } from "../service";
 import Post from "./Post";
 import PostLoad from "./PostLoad";
 
@@ -21,6 +21,7 @@ const Feed = () => {
       }
     })
   }, []);
+
   return (
     <Box flex={4} p={{ xs: 0, md: 1 }}>
       {loading ? (

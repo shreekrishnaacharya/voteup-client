@@ -44,16 +44,14 @@ async function addPost(idata) {
     });
 }
 
-async function updateContact(id, idata) {
-    idata["ads"] = idata["address"];
-    delete idata["address"];
-    console.log(idata);
-    const fdata = getJsonForm(idata);
+async function actionUpdate(id, type) {
     return await getApiRequest({
-        url: "/contact/" + id,
-        method: "put",
-        data: fdata,
-        headers: { 'Content-Type': 'multipart/form-data' }
+        url: "/feeds/action",
+        method: "post",
+        data: {
+            id,
+            type
+        },
     }).then((result) => {
         return result;
     });
@@ -71,6 +69,6 @@ export {
     getFeeds,
     getRecent,
     addPost,
-    updateContact,
+    actionUpdate,
     getLocationList
 };

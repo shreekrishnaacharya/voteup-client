@@ -20,7 +20,15 @@ import ShareTwoToneIcon from '@mui/icons-material/ShareTwoTone';
 import Text from 'components/Text';
 import { ThumbDownAltTwoTone } from '@mui/icons-material';
 import ReactTimeAgo from 'react-time-ago'
+import { useState } from 'react';
+import { actionUpdate } from "../service";
 
+const ActionType = {
+    DISLIKE: 0,
+    LIKE: 1,
+    RDISLIKE: 2,
+    RLIKE: 3
+}
 const CardActionsWrapper = styled(CardActions)(
     ({ theme }) => `
        background: ${theme.colors.alpha.black[5]};
@@ -30,6 +38,19 @@ const CardActionsWrapper = styled(CardActions)(
 
 
 function Post({ post }) {
+    const [paction, setPaction] = useState({
+        up_vote: post.up_vote,
+        down_vote: post.down_vote,
+        vtype: post.vtype
+    });
+
+    const updateAction = (type) => {
+        actionUpdate(post._id, type).then(e => {
+            if (e.flag) {
+                setPaction(e.data);
+            }
+        })
+    }
 
     let tagsList = [];
     if (post.tags !== null) {
@@ -83,10 +104,20 @@ function Post({ post }) {
                     }}
                 >
                     <Stack direction="row" spacing={2} justifyContent="space-between">
-                        <Button color='primary' startIcon={<ThumbUpAltTwoToneIcon />} variant={post.vtype == 1 ? "contained" : "outlined"}>
+                        <Button
+                            onClick={() => { updateAction(ActionType.LIKE) }}
+                            color='primary'
+                            startIcon={<ThumbUpAltTwoToneIcon />}
+                            variant={paction.vtype == 1 ? "contained" : "outlined"}
+                        >
                             Like
                         </Button>
-                        <Button color='error' startIcon={<ThumbDownAltTwoTone />} variant={post.vtype == 0 ? "contained" : "outlined"}>
+                        <Button
+                            onClick={() => { updateAction(ActionType.DISLIKE) }}
+                            color='error'
+                            startIcon={<ThumbDownAltTwoTone />}
+                            variant={paction.vtype == 0 ? "contained" : "outlined"}
+                        >
                             Dislike
                         </Button>
                         <Button startIcon={<ShareTwoToneIcon />} variant="outlined">
@@ -96,11 +127,11 @@ function Post({ post }) {
                     <Box sx={{ mt: { xs: 2, md: 0 } }}>
                         <Typography variant="subtitle2" component="span">
                             <Text color="success">
-                                <b>{post.up_vote}</b>
+                                <b>{paction.up_vote}</b>
                             </Text>{' '}
                             Likes{' | '}
                             <Text color="error">
-                                <b>{post.down_vote}</b>
+                                <b>{paction.down_vote}</b>
                             </Text>{' '}
                             Dislike
                         </Typography>

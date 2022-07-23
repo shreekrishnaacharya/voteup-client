@@ -12,7 +12,6 @@ import {
   CardContent,
   CardActions,
   IconButton,
-  Stack,
   Skeleton
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -97,9 +96,9 @@ const Rightbar = () => {
                     <ListItemText
                       primary={post.username}
                       secondary={
-                        <React.Fragment>
-                          {post.desc}
-                        </React.Fragment>
+                        <Typography noWrap style={{ color: "#6E759F" }}>
+                          {post.post_detail}
+                        </Typography>
                       }
                     />
                   </ListItem>
