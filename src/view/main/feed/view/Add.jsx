@@ -13,13 +13,18 @@ import {
 import React, { useState } from "react";
 import {
   Add as AddIcon,
-  DateRange,
   EmojiEmotions,
   Image,
   PersonAdd,
   VideoCameraBack,
 } from "@mui/icons-material";
 import { Box } from "@mui/system";
+import { Controller, useForm } from "react-hook-form";
+import { useSnackbar } from 'notistack';
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { addPost } from "../service";
+import { isEmpty } from "_services";
 
 const SytledModal = styled(Modal)({
   display: "flex",
@@ -34,8 +39,36 @@ const UserBox = styled(Box)({
   marginBottom: "20px",
 });
 
+
+const schema = yup.object({
+  image: yup.mixed(),
+  post_detail: yup.string().max(500)
+});
 const Add = () => {
   const [open, setOpen] = useState(false);
+  const { handleSubmit, control, getValues, setValue, reset, formState: { errors } } = useForm({
+    resolver: yupResolver(schema)
+  });
+  const { enqueueSnackbar } = useSnackbar();
+
+  const submitForm = (fdata) => {
+    if (isEmpty(fdata.post_detail)) {
+      enqueueSnackbar("Post cannot be blank", {
+        variant: 'error',
+      });
+      return false;
+    }
+    addPost(fdata).then(e => {
+      if (e.flag) {
+        enqueueSnackbar("Post uploaded", {
+          variant: 'success',
+        });
+        // reset();
+        // setOpen(false);
+      }
+    })
+  }
+
   return (
     <>
       <Tooltip
@@ -77,27 +110,37 @@ const Add = () => {
               John Doe
             </Typography>
           </UserBox>
-          <TextField
-            sx={{ width: "100%" }}
-            id="standard-multiline-static"
-            multiline
-            rows={3}
-            placeholder="What's on your mind?"
-            variant="standard"
-          />
-          <Stack direction="row" gap={1} mt={2} mb={3}>
-            <EmojiEmotions color="primary" />
-            <Image color="secondary" />
-            <VideoCameraBack color="success" />
-            <PersonAdd color="error" />
-          </Stack>
-          <ButtonGroup
-            fullWidth
-            variant="contained"
-            aria-label="outlined primary button group"
-          >
-            <Button>Post</Button>
-          </ButtonGroup>
+          <form onSubmit={handleSubmit(submitForm)}>
+            <Controller
+              name="post_detail"
+              control={control}
+              render={({ field, fieldState }) => (
+                <>
+                  <TextField
+                    sx={{ width: "100%" }}
+                    multiline
+                    rows={3}
+                    placeholder="What's on your mind?"
+                    variant="standard"
+                    {...field}
+                  />
+                </>
+              )}
+            />
+            <Stack direction="row" gap={1} mt={2} mb={3}>
+              <EmojiEmotions color="primary" />
+              <Image color="secondary" />
+              <VideoCameraBack color="success" />
+              <PersonAdd color="error" />
+            </Stack>
+            <ButtonGroup
+              fullWidth
+              variant="contained"
+              aria-label="outlined primary button group"
+            >
+              <Button type="submit">Post</Button>
+            </ButtonGroup>
+          </form>
         </Box>
       </SytledModal>
     </>

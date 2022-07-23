@@ -1,7 +1,8 @@
-import { Box, Stack, Skeleton } from "@mui/material";
+import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { getFeeds } from "../service";
 import Post from "./Post";
+import PostLoad from "./PostLoad";
 
 const Feed = () => {
   const [loading, setLoading] = useState(true);
@@ -23,20 +24,20 @@ const Feed = () => {
   return (
     <Box flex={4} p={{ xs: 0, md: 1 }}>
       {loading ? (
-        <Stack spacing={1}>
-          <Skeleton variant="text" height={100} />
-          <Skeleton variant="text" height={20} />
-          <Skeleton variant="text" height={20} />
-          <Skeleton variant="rectangular" height={300} />
-        </Stack>
+        <>
+          <PostLoad />
+          <PostLoad />
+          <PostLoad />
+        </>
       ) : (
         <>
           {postFeeds.map(post => {
             return <Post key={post._id} post={post} />
           })}
         </>
-      )}
-    </Box>
+      )
+      }
+    </Box >
   );
 };
 

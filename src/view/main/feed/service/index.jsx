@@ -24,27 +24,18 @@ async function getFeeds() {
     });
 }
 
-async function getContactDetail(id) {
+async function getRecent() {
     return await getApiRequest({
-        url: "/contact/" + id
+        url: "/feeds",
+        data: { sort: "-id", size: "5" }
     }).then((result) => {
         return result;
     });
 }
 
-async function getContactDelete(id) {
+async function addPost(idata) {
     return await getApiRequest({
-        url: "/contact/" + id,
-        method: "delete"
-    }).then((result) => {
-        return result;
-    });
-}
-
-async function addContact(idata) {
-    console.log(getJsonForm(idata), idata);
-    return await getApiRequest({
-        url: "/contact/",
+        url: "/feeds/",
         method: "post",
         data: getJsonForm(idata),
         headers: { 'Content-Type': 'multipart/form-data' }
@@ -78,9 +69,8 @@ async function getLocationList() {
 
 export {
     getFeeds,
-    getContactDetail,
-    addContact,
+    getRecent,
+    addPost,
     updateContact,
-    getContactDelete,
     getLocationList
 };

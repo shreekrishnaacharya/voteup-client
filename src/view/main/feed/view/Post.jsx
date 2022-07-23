@@ -19,6 +19,7 @@ import ThumbUpAltTwoToneIcon from '@mui/icons-material/ThumbUpAltTwoTone';
 import ShareTwoToneIcon from '@mui/icons-material/ShareTwoTone';
 import Text from 'components/Text';
 import { ThumbDownAltTwoTone } from '@mui/icons-material';
+import ReactTimeAgo from 'react-time-ago'
 
 const CardActionsWrapper = styled(CardActions)(
     ({ theme }) => `
@@ -27,7 +28,18 @@ const CardActionsWrapper = styled(CardActions)(
   `
 );
 
+
 function Post({ post }) {
+
+    let tagsList = [];
+    if (post.tags !== null) {
+        tagsList = post.tags.split(",").map(hash => {
+            return <><Link href="#" underline="hover">
+                {hash}
+            </Link>{" "}</>
+        })
+    }
+
     return (
         <Box p={{ xs: 0, md: 2 }}>
             <Card>
@@ -43,17 +55,13 @@ function Post({ post }) {
                     title={post.username}
                     subheader={
                         <>
-                            {post.tags.split(",").map(hash => {
-                                return <><Link href="#" underline="hover">
-                                    {hash}
-                                </Link>{" "}</>
-                            })}
+                            {tagsList}
                         </>
                     }
                 />
                 <Box px={3} pb={2}>
                     <Typography variant="h4" fontWeight="normal">
-                        {post.desc}
+                        {post.post_detail}
                     </Typography>
                 </Box>
                 {/* <CardMedia
@@ -61,9 +69,9 @@ function Post({ post }) {
                     image="/static/images/placeholders/covers/6.jpg"
                     title="Card Cover"
                 /> */}
-                <Box p={3}>
+                <Box p={1}>
                     <Typography variant="subtitle2">
-                        • 4 mins ago
+                        <ReactTimeAgo date={new Date(post.create_at)} locale="en-US" />
                     </Typography>
                 </Box>
                 <Divider />
@@ -87,11 +95,11 @@ function Post({ post }) {
                     </Stack>
                     <Box sx={{ mt: { xs: 2, md: 0 } }}>
                         <Typography variant="subtitle2" component="span">
-                            <Text color="green">
+                            <Text color="success">
                                 <b>{post.up_vote}</b>
                             </Text>{' '}
                             Likes{' | '}
-                            <Text color="red">
+                            <Text color="error">
                                 <b>{post.down_vote}</b>
                             </Text>{' '}
                             Dislike

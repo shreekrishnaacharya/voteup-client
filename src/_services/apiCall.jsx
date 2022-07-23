@@ -31,7 +31,7 @@ instance.interceptors.response.use(
     async (err) => {
         // console.log(err);
         let originalConfig = err.config;
-        console.log(refreshTokenRequest);
+        // console.log(refreshTokenRequest);
         if (originalConfig.url != pages.LOGIN && err.response) {
             // Access Token was expired
             if (err.response.status === 401 && !refreshTokenRequest) {
