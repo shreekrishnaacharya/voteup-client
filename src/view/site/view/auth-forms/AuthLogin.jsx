@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { useForm, Controller } from "react-hook-form";
+
 // material-ui
 import {
     Button,
@@ -41,7 +42,6 @@ const schema = yup.object({
 
 const AuthLogin = () => {
     const [checked, setChecked] = useState(false);
-
     const [showPassword, setShowPassword] = useState(false);
     const history = useHistory();
     const { handleSubmit, control, formState: { errors, isSubmitting } } = useForm({
@@ -65,7 +65,7 @@ const AuthLogin = () => {
                     ...res.data
                 });
                 history.push({
-                    pathname: pages.DASHBOARD
+                    pathname: pages.HOME
                 });
             } else {
                 enqueueSnackbar("Invalid login detail", {

@@ -1,5 +1,4 @@
 import { setLogout } from "redux/action/userAction";
-import { alertService } from "./alert.service";
 class TokenService {
     static store;
     static setStore(store) {
@@ -23,6 +22,7 @@ class TokenService {
         return JSON.parse(localStorage.getItem("userModel"));
     }
     setUser(user) {
+        user["isLogin"] = true;
         localStorage.setItem("userModel", JSON.stringify(user));
     }
     removeUser() {

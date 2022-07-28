@@ -8,7 +8,7 @@ function StoreController() {
     return (
         <Switch>
             <Route path={pages.GUEST} component={SiteController} />
-            <Route path="*" component={MainController} />
+            <Route path={pages.HOME} component={MainController} />
         </Switch>
     );
 }

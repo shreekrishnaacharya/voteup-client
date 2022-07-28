@@ -16,9 +16,11 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Text from 'components/Text';
-import userImg from 'assets/images/team-1.jpg'
 import LogoutIcon from '@mui/icons-material/Logout';
 import { getRecent } from "../service";
+
+import { useHistory, Link } from 'react-router-dom';
+import { pages } from 'links';
 
 const Loading = () => {
 
@@ -35,15 +37,21 @@ const Loading = () => {
   </ListItem>
 }
 
-const Rightbar = () => {
-
+const Rightbar = ({ tokenService }) => {
+  const history = useHistory();
   const [loading, setLoading] = useState(true);
   const [postFeeds, setFeeds] = useState([]);
+  const userModel = tokenService.getUser();
 
+  const logoutAction = () => {
+    tokenService.removeUser()
+    history.push({
+      pathname: pages.GUEST
+    });
+  }
 
   useEffect(() => {
     getRecent().then(res => {
-      console.log(res)
       if (res.flag) {
         setFeeds(res.data);
         setLoading(false);
@@ -52,23 +60,23 @@ const Rightbar = () => {
   }, []);
 
   return (
-    <Box flex={1} p={3} sx={{ display: { xs: "none", sm: "block" } }}>
+    <Box sx={{ display: { xs: "none", sm: "block" } }}>
       <Box position="sticky" width={350}>
-        <Typography variant="h6" fontWeight={100} mt={2} mb={2}>
+        <Typography variant="h6" fontWeight={100} mb={2}>
           Profile
         </Typography>
         <Card sx={{ display: 'flex' }}>
           <CardMedia
             component="img"
             sx={{ width: 50 }}
-            image={userImg}
+            image={userModel.img}
             alt="Live from space album cover"
           />
           <CardContent>
-            <Text>Krishna Acharya</Text>
+            <Link to={pages.PROFILE}><Text>{userModel.name}</Text></Link>
           </CardContent>
           <CardActions>
-            <IconButton color="error">
+            <IconButton color="error" onClick={logoutAction}>
               <LogoutIcon sx={{ fontSize: 20 }} />
             </IconButton>
           </CardActions>
@@ -88,10 +96,10 @@ const Rightbar = () => {
           ) : (
             <List sx={{ width: '100%', maxWidth: 380, bgcolor: 'background.paper', padding: "12px 0px" }}>
               {postFeeds.map(post => {
-                return <>
-                  <ListItem key={post._id} alignItems="flex-start">
+                return <div key={'recent' + post._id}>
+                  <ListItem alignItems="flex-start">
                     <ListItemAvatar>
-                      <Avatar alt={post.username} src="https://material-ui.com/static/images/avatar/3.jpg" />
+                      <Avatar alt={post.username} src={post.user_dp} />
                     </ListItemAvatar>
                     <ListItemText
                       primary={post.username}
@@ -103,7 +111,7 @@ const Rightbar = () => {
                     />
                   </ListItem>
                   <Divider variant="inset" component="li" />
-                </>
+                </div>
               })}
             </List>
           )}

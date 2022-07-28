@@ -10,7 +10,7 @@ const CardActionsWrapper = styled(CardActions)(
   `
 );
 export default function PostLoad() {
-    return <Box p={{ xs: 0, md: 2 }}>
+    return <Box mb={2}>
         <Card>
             <CardHeader
                 avatar={<Skeleton animation="wave" variant="circular" width={40} height={40} />}

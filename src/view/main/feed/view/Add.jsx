@@ -26,6 +26,8 @@ import * as yup from "yup";
 import { addPost } from "../service";
 import { isEmpty } from "_services";
 
+
+
 const SytledModal = styled(Modal)({
   display: "flex",
   alignItems: "center",
@@ -39,14 +41,13 @@ const UserBox = styled(Box)({
   marginBottom: "20px",
 });
 
-
 const schema = yup.object({
   image: yup.mixed(),
-  post_detail: yup.string().max(500)
+  post_detail: yup.string()
 });
-const Add = () => {
+const Add = ({ userModel }) => {
   const [open, setOpen] = useState(false);
-  const { handleSubmit, control, getValues, setValue, reset, formState: { errors } } = useForm({
+  const { handleSubmit, control, reset, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   });
   const { enqueueSnackbar } = useSnackbar();
@@ -63,8 +64,8 @@ const Add = () => {
         enqueueSnackbar("Post uploaded", {
           variant: 'success',
         });
-        // reset();
-        // setOpen(false);
+        reset();
+        setOpen(false);
       }
     })
   }
@@ -73,7 +74,7 @@ const Add = () => {
     <>
       <Tooltip
         onClick={(e) => setOpen(true)}
-        title="Delete"
+        title="Create Post"
         sx={{
           position: "fixed",
           bottom: 20,
@@ -103,11 +104,11 @@ const Add = () => {
           </Typography>
           <UserBox>
             <Avatar
-              src="https://images.pexels.com/photos/846741/pexels-photo-846741.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+              src={userModel.img}
               sx={{ width: 30, height: 30 }}
             />
             <Typography fontWeight={500} variant="span">
-              John Doe
+              {userModel.name}
             </Typography>
           </UserBox>
           <form onSubmit={handleSubmit(submitForm)}>

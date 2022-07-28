@@ -1,3 +1,8 @@
+const votePages = {
+    FEEDS: "/vote/feeds",
+    USER: "/user",
+    PROFILE: "/profile"
+}
 
 const sitePage = {
     LOGIN: "/guest",
@@ -12,13 +17,10 @@ const pages = {
     // BASE_URL: "http://mystore.com/index.php",
     BASE_URL: "http://localhost:3000",
     LOCAL_URL: "http://localhost:3000",
-    PROFILE: "/user",
     GUEST: "/guest",
-    PROFILE_UPDATE: "/user/update",
-    PROFILE_UPDATE_PASSWORD: "/user/update-password",
-    HOME: "/home",
-    DASHBOARD: "/dashboard",
+    HOME: "/",
     ...sitePage,
+    ...votePages
 };
 
 const guestPage = [
@@ -34,4 +36,4 @@ const getFullUrl = (page) => {
     return pages.LOCAL_URL + "#" + page;
 }
 
-export { pages, sitePage, guestPage, getFullUrl };
+export { pages, sitePage, votePages, guestPage, getFullUrl };

@@ -24,10 +24,18 @@ async function getFeeds() {
     });
 }
 
+async function getPost() {
+    return await getApiRequest({
+        url: "/user/mypost",
+    }).then((result) => {
+        return result;
+    });
+}
+
 async function getRecent() {
     return await getApiRequest({
         url: "/feeds",
-        data: { sort: "-id", size: "5" }
+        data: { sort: "-id", size: "3" }
     }).then((result) => {
         return result;
     });
@@ -57,9 +65,21 @@ async function actionUpdate(id, type) {
     });
 }
 
-async function getLocationList() {
+async function addReport(id, fdata) {
     return await getApiRequest({
-        url: "/location",
+        url: "/feeds/report/" + id,
+        method: "post",
+        data: getJsonForm(fdata),
+    }).then((result) => {
+        return result;
+    });
+}
+
+async function deletePost(id) {
+    return await getApiRequest({
+        url: "/feeds/" + id,
+        method: "delete"
+
     }).then((result) => {
         return result;
     });
@@ -70,5 +90,7 @@ export {
     getRecent,
     addPost,
     actionUpdate,
-    getLocationList
+    addReport,
+    deletePost,
+    getPost
 };

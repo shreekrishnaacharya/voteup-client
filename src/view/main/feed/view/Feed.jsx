@@ -1,29 +1,52 @@
 import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { actionUpdate, getFeeds } from "../service";
+import { getFeeds, getPost } from "../service";
+import ConfirmDelete from "./ConfirmDelete";
 import Post from "./Post";
 import PostLoad from "./PostLoad";
+import Report from "./Report";
 
-const Feed = () => {
+
+const Feed = ({ userModel, feedType }) => {
   const [loading, setLoading] = useState(true);
   const [postFeeds, setFeeds] = useState([]);
-  // setTimeout(() => {
-  //   setLoading(false);
-  // }, [3000]);
+  const [report, setReport] = useState({
+    open: false,
+    postid: null
+  })
+  const [confirm, setConfirm] = useState({
+    open: false,
+    postid: null
+  })
 
+  const filterPost = (pid) => {
+    setFeeds(postFeeds.filter(e => e._id !== pid));
+  }
 
   useEffect(() => {
-    getFeeds().then(res => {
-      console.log(res)
-      if (res.flag) {
-        setFeeds(res.data);
-        setLoading(false);
-      }
-    })
+    if (feedType == 'profile') {
+      getPost().then(res => {
+        if (res.flag) {
+          setFeeds(res.data);
+          setLoading(false);
+        }
+      })
+    } else {
+      getFeeds().then(res => {
+        if (res.flag) {
+          setFeeds(res.data);
+          setLoading(false);
+        }
+      })
+    }
+
+    return () => {
+      setFeeds([])
+    }
   }, []);
 
   return (
-    <Box flex={4} p={{ xs: 0, md: 1 }}>
+    <Box sx={{ width: '100%' }}>
       {loading ? (
         <>
           <PostLoad />
@@ -33,11 +56,13 @@ const Feed = () => {
       ) : (
         <>
           {postFeeds.map(post => {
-            return <Post key={post._id} post={post} />
+            return <Post key={post._id} post={post} setReport={setReport} setConfirm={setConfirm} userModel={userModel} />
           })}
         </>
       )
       }
+      <Report report={report} setOpen={setReport} />
+      <ConfirmDelete confirm={confirm} setConfirm={setConfirm} filterPost={filterPost} />
     </Box >
   );
 };

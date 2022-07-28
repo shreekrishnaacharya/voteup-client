@@ -1,4 +1,5 @@
 const ActionTypes = {
+    PROFILE: "PROFILE",
     LOGIN: "LOGIN",
     LOGOUT: "LOGOUT",
     MENU: "MENU",

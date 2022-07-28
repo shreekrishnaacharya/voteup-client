@@ -22,7 +22,7 @@ const getUpdateKey = (jsData, keys) => {
 
 const getJsonForm = (jsData) => {
     const fData = new FormData();
-    for (const jd in jsData) {
+    for (const jd of Object.keys(jsData)) {
         if (jsData[jd] instanceof FileList) {
             fData.append(jd, jsData[jd][0]);
         } else if (jsData[jd] instanceof Array) {
@@ -44,9 +44,9 @@ const getJsonForm = (jsData) => {
 
 const getJsonForms = (jsData) => {
     const fData = new FormData();
-    for (const jd in jsData) {
+    for (const jd of Object.keys(jsData)) {
         if (jsData[jd] instanceof FileList) {
-            for (const jdd in jsData[jd]) {
+            for (const jdd of Object.keys(jsData[jd])) {
                 if (!isNaN(jdd)) {
                     fData.append(jd + "[]", jsData[jd][jdd]);
                 }

@@ -67,7 +67,7 @@ const getApiRequest = async (options) => {
     if (method == 'get' || method == 'delete') {
         options['params'] = options.data;
         delete options['data'];
-        return instance.get(url, options);
+        return instance[method](url, options);
     } else {
         const data = options.data;
         delete options['data'];

@@ -11,7 +11,9 @@ import {
     CardActions,
     Link,
     styled,
-    Stack
+    Stack,
+    Menu,
+    MenuItem
 } from '@mui/material';
 
 import MoreHorizTwoToneIcon from '@mui/icons-material/MoreHorizTwoTone';
@@ -20,14 +22,13 @@ import ShareTwoToneIcon from '@mui/icons-material/ShareTwoTone';
 import Text from 'components/Text';
 import { ThumbDownAltTwoTone } from '@mui/icons-material';
 import ReactTimeAgo from 'react-time-ago'
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { actionUpdate } from "../service";
+import userImg from "assets/images/team-5.jpg";
 
 const ActionType = {
     DISLIKE: 0,
-    LIKE: 1,
-    RDISLIKE: 2,
-    RLIKE: 3
+    LIKE: 1
 }
 const CardActionsWrapper = styled(CardActions)(
     ({ theme }) => `
@@ -37,13 +38,28 @@ const CardActionsWrapper = styled(CardActions)(
 );
 
 
-function Post({ post }) {
+function Post({ post, setReport, setConfirm, userModel }) {
     const [paction, setPaction] = useState({
         up_vote: post.up_vote,
         down_vote: post.down_vote,
         vtype: post.vtype
     });
-
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    const handleOptionClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleOptionClose = () => {
+        setAnchorEl(null);
+    };
+    const handleOptionAction = (type) => {
+        if (type == 0) {
+            setReport({ postid: post._id, open: true })
+        } else if (type == 2) {
+            setConfirm({ postid: post._id, open: true })
+        }
+        setAnchorEl(null);
+    }
     const updateAction = (type) => {
         actionUpdate(post._id, type).then(e => {
             if (e.flag) {
@@ -62,14 +78,33 @@ function Post({ post }) {
     }
 
     return (
-        <Box p={{ xs: 0, md: 2 }}>
+        <Box mb={2}>
             <Card>
                 <CardHeader
-                    avatar={<Avatar src="/static/images/avatars/5.jpg" />}
+                    avatar={<Avatar src={post.user_dp} />}
                     action={
-                        <IconButton color="primary">
-                            <MoreHorizTwoToneIcon fontSize="medium" />
-                        </IconButton>
+                        <>
+                            <IconButton
+                                color="primary"
+                                onClick={handleOptionClick}
+                            >
+                                <MoreHorizTwoToneIcon fontSize="medium" />
+                            </IconButton>
+                            <Menu
+                                anchorEl={anchorEl}
+                                open={open}
+                                onClose={handleOptionClose}
+                            >
+                                {post.userid === userModel._id ? (
+                                    [
+                                        <MenuItem key={'edit'} onClick={() => { handleOptionAction(1) }}>Edit</MenuItem>,
+                                        <MenuItem key={'delete'} onClick={() => { handleOptionAction(2) }}>Delete</MenuItem>
+                                    ]
+                                ) : (
+                                    <MenuItem onClick={() => { handleOptionAction(0) }}>Report</MenuItem>
+                                )}
+                            </Menu>
+                        </>
                     }
                     titleTypographyProps={{ variant: 'h4' }}
                     subheaderTypographyProps={{ variant: 'subtitle2' }}
@@ -138,7 +173,7 @@ function Post({ post }) {
                     </Box>
                 </CardActionsWrapper>
             </Card>
-        </Box>
+        </Box >
     );
 }
 

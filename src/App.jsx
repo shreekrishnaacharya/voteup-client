@@ -16,9 +16,9 @@ export default function App() {
 
   return (
     <ThemeProvider>
-      {/* <Auth> */}
-      <StoreController key="StoreController" />
-      {/* </Auth> */}
+      <Auth>
+        <StoreController key="StoreController" />
+      </Auth>
     </ThemeProvider>
   );
 }
