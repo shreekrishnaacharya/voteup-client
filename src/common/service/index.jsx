@@ -16,13 +16,6 @@ const getApiRequest = async (requestData) => {
     return result;
 }
 
-async function getFeeds() {
-    return await getApiRequest({
-        url: "/feeds",
-    }).then((result) => {
-        return result;
-    });
-}
 
 async function getPost() {
     return await getApiRequest({
@@ -32,25 +25,6 @@ async function getPost() {
     });
 }
 
-async function getRecent() {
-    return await getApiRequest({
-        url: "/feeds",
-        data: { sort: "-id", size: "3" }
-    }).then((result) => {
-        return result;
-    });
-}
-
-async function addPost(idata) {
-    return await getApiRequest({
-        url: "/feeds/",
-        method: "post",
-        data: getJsonForm(idata),
-        headers: { 'Content-Type': 'multipart/form-data' }
-    }).then((result) => {
-        return result;
-    });
-}
 
 async function actionUpdate(id, type) {
     return await getApiRequest({
@@ -65,19 +39,30 @@ async function actionUpdate(id, type) {
     });
 }
 
-async function getViewPost(id) {
+async function addReport(id, fdata) {
     return await getApiRequest({
-        url: "/user/" + id,
+        url: "/feeds/report/" + id,
+        method: "post",
+        data: getJsonForm(fdata),
     }).then((result) => {
         return result;
     });
 }
 
+async function deletePost(id) {
+    return await getApiRequest({
+        url: "/feeds/" + id,
+        method: "delete"
+
+    }).then((result) => {
+        return result;
+    });
+}
+
+
 export {
-    getFeeds,
-    getRecent,
-    addPost,
     actionUpdate,
-    getViewPost,
-    getPost
+    addReport,
+    deletePost,
+    getPost,
 };

@@ -112,24 +112,32 @@ const ProfileCover = ({ user, saveImage }) => {
           {user?.address1} | {user?.address2} | {user?.state}
         </Typography>
       </Box>
-      <ImageLoader InputProps={{
-        id: 'icon-button-file',
-        accept: "image/*",
-        name: "icon-button-file"
-      }}
+      <ImageLoader
+        title={'Change Profile Picture'}
+        multiple={false}
+        InputProps={{
+          id: 'icon-button-file',
+          accept: "image/*",
+          name: "icon-button-file"
+        }}
+        isModal={true}
         cancelName={'Cancel'}
         saveName={'Save'}
         onSave={(files, close) => {
           saveImage({ 'pimage': files }, close);
         }}
       />
-      <ImageLoader InputProps={{
-        id: 'icon-coverbutton-file',
-        accept: "image/*",
-        name: "icon-coverbutton-file"
-      }}
+      <ImageLoader
+        title={'Change Cover'}
+        multiple={false}
+        InputProps={{
+          id: 'icon-coverbutton-file',
+          accept: "image/*",
+          name: "icon-coverbutton-file"
+        }}
         cancelName={'Cancel'}
         saveName={'Save'}
+        isModal={true}
         onSave={(files, close) => {
           saveImage({ 'cimage': files }, close);
         }}

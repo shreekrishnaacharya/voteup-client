@@ -1,5 +1,6 @@
 const votePages = {
     FEEDS: "/vote/feeds",
+    POST: "/post",
     USER: "/user",
     PROFILE: "/profile"
 }

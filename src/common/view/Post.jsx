@@ -22,9 +22,9 @@ import ShareTwoToneIcon from '@mui/icons-material/ShareTwoTone';
 import Text from 'components/Text';
 import { ThumbDownAltTwoTone } from '@mui/icons-material';
 import ReactTimeAgo from 'react-time-ago'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { actionUpdate } from "../service";
-import userImg from "assets/images/team-5.jpg";
+import CommentTwoToneIcon from '@mui/icons-material/CommentTwoTone';
 
 const ActionType = {
     DISLIKE: 0,
@@ -38,11 +38,13 @@ const CardActionsWrapper = styled(CardActions)(
 );
 
 
-function Post({ post, setReport, setConfirm, userModel }) {
+function Post({ post, onMenu, userModel, viewPost }) {
+    // console.log(post)
     const [paction, setPaction] = useState({
         up_vote: post.up_vote,
         down_vote: post.down_vote,
-        vtype: post.vtype
+        vtype: post.vtype,
+        review: post.review
     });
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -53,11 +55,7 @@ function Post({ post, setReport, setConfirm, userModel }) {
         setAnchorEl(null);
     };
     const handleOptionAction = (type) => {
-        if (type == 0) {
-            setReport({ postid: post._id, open: true })
-        } else if (type == 2) {
-            setConfirm({ postid: post._id, open: true })
-        }
+        onMenu(post._id, type)
         setAnchorEl(null);
     }
     const updateAction = (type) => {
@@ -67,6 +65,11 @@ function Post({ post, setReport, setConfirm, userModel }) {
             }
         })
     }
+
+    useEffect(() => {
+        setPaction(post);
+    }, [post]);
+
 
     let tagsList = [];
     if (post.tags !== null) {
@@ -155,12 +158,26 @@ function Post({ post, setReport, setConfirm, userModel }) {
                         >
                             Dislike
                         </Button>
+                        <Button
+                            startIcon={<CommentTwoToneIcon />}
+                            variant="outlined"
+                            sx={{ mx: 2 }}
+                            onClick={() => {
+                                viewPost(post._id)
+                            }}
+                        >
+                            Review
+                        </Button>
                         <Button startIcon={<ShareTwoToneIcon />} variant="outlined">
                             Share
                         </Button>
                     </Stack>
                     <Box sx={{ mt: { xs: 2, md: 0 } }}>
                         <Typography variant="subtitle2" component="span">
+                            <Text color="info">
+                                <b>{paction.review}</b>
+                            </Text>{' '}
+                            Review{' | '}
                             <Text color="success">
                                 <b>{paction.up_vote}</b>
                             </Text>{' '}

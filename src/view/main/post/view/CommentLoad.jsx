@@ -1,7 +1,5 @@
 import { Card, CardHeader, Skeleton, CardContent, styled, Box, Divider, CardActions, Stack, Button } from "@mui/material";
-import ThumbUpAltTwoToneIcon from '@mui/icons-material/ThumbUpAltTwoTone';
-import ShareTwoToneIcon from '@mui/icons-material/ShareTwoTone';
-import { ThumbDownAltTwoTone } from '@mui/icons-material';
+import { ThumbDownAltTwoTone, ThumbUpAltTwoTone } from '@mui/icons-material';
 
 const CardActionsWrapper = styled(CardActions)(
     ({ theme }) => `
@@ -9,8 +7,8 @@ const CardActionsWrapper = styled(CardActions)(
        padding: ${theme.spacing(3)};
   `
 );
-export default function PostLoad() {
-    return <Box mb={2}>
+export default function CommentLoad() {
+    return <Box mb={1}>
         <Card>
             <CardHeader
                 avatar={<Skeleton animation="wave" variant="circular" width={40} height={40} />}
@@ -18,22 +16,17 @@ export default function PostLoad() {
                     <Skeleton
                         animation="wave"
                         height={20}
-                        width="80%"
+                        width="20%"
                         style={{ marginBottom: 6 }}
                     />
-                }
-                subheader={
-                    <Skeleton animation="wave" height={20} width="40%" />
                 }
             />
             <CardContent>
                 <>
                     <Skeleton animation="wave" height={20} width="90%" style={{ marginTop: 6 }} />
-                    <Skeleton animation="wave" height={20} width="50%" />
-                    <Skeleton animation="wave" height={20} width="70%" style={{ marginBottom: 6 }} />
+                    <Skeleton animation="wave" height={20} width="70%" style={{ marginTop: 6 }} />
                 </>
             </CardContent>
-            <Divider />
             <CardActionsWrapper
                 sx={{
                     display: { xs: 'block', md: 'flex' },
@@ -41,15 +34,12 @@ export default function PostLoad() {
                     justifyContent: 'space-between'
                 }}
             >
-                <Stack direction="row" spacing={2} justifyContent="space-between">
-                    <Button disabled startIcon={<ThumbUpAltTwoToneIcon />} variant={"outlined"}>
+                <Stack direction="row" spacing={0} justifyContent="space-between">
+                    <Button disabled size='small' startIcon={<ThumbUpAltTwoTone />} variant={"outlined"}>
                         Like
                     </Button>
-                    <Button disabled startIcon={<ThumbDownAltTwoTone />} variant={"outlined"}>
+                    <Button disabled size='small' startIcon={<ThumbDownAltTwoTone />} variant={"outlined"}>
                         Dislike
-                    </Button>
-                    <Button disabled startIcon={<ShareTwoToneIcon />} variant="outlined">
-                        Share
                     </Button>
                 </Stack>
             </CardActionsWrapper>

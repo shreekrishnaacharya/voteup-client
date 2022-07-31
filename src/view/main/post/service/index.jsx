@@ -16,37 +16,11 @@ const getApiRequest = async (requestData) => {
     return result;
 }
 
-async function getFeeds() {
+async function addComment(id, idata) {
     return await getApiRequest({
-        url: "/feeds",
-    }).then((result) => {
-        return result;
-    });
-}
-
-async function getPost() {
-    return await getApiRequest({
-        url: "/user/mypost",
-    }).then((result) => {
-        return result;
-    });
-}
-
-async function getRecent() {
-    return await getApiRequest({
-        url: "/feeds",
-        data: { sort: "-id", size: "3" }
-    }).then((result) => {
-        return result;
-    });
-}
-
-async function addPost(idata) {
-    return await getApiRequest({
-        url: "/feeds/",
+        url: "/comment/" + id,
         method: "post",
-        data: getJsonForm(idata),
-        headers: { 'Content-Type': 'multipart/form-data' }
+        data: idata,
     }).then((result) => {
         return result;
     });
@@ -54,8 +28,8 @@ async function addPost(idata) {
 
 async function actionUpdate(id, type) {
     return await getApiRequest({
-        url: "/feeds/action",
-        method: "post",
+        url: "/comment",
+        method: "put",
         data: {
             id,
             type
@@ -67,17 +41,31 @@ async function actionUpdate(id, type) {
 
 async function getViewPost(id) {
     return await getApiRequest({
-        url: "/user/" + id,
+        url: "/feeds/" + id,
     }).then((result) => {
         return result;
     });
 }
 
+async function getComments(id) {
+    return await getApiRequest({
+        url: "/comment/" + id,
+    }).then((result) => {
+        return result;
+    });
+}
+async function deleteComment(id) {
+    return await getApiRequest({
+        url: "/comment/" + id,
+        method: "delete",
+    }).then((result) => {
+        return result;
+    });
+}
 export {
-    getFeeds,
-    getRecent,
-    addPost,
+    addComment,
     actionUpdate,
     getViewPost,
-    getPost
+    getComments,
+    deleteComment
 };
