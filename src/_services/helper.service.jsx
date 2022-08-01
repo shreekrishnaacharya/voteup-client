@@ -29,10 +29,10 @@ const getJsonForm = (jsData) => {
             jsData[jd].forEach((val, index) => {
                 if (val instanceof Object) {
                     for (const jddd in jsData[jd][index]) {
-                        fData.append(`${jd}[${index}][${jddd}]`, jsData[jd][index][jddd]);
+                        fData.append(`${jd}`, jsData[jd]);
                     }
                 } else {
-                    fData.append(`${jd}[${index}]`, jsData[jd][index]);
+                    fData.append(`${jd}`, jsData[jd]);
                 }
             });
         } else {
@@ -48,7 +48,7 @@ const getJsonForms = (jsData) => {
         if (jsData[jd] instanceof FileList) {
             for (const jdd of Object.keys(jsData[jd])) {
                 if (!isNaN(jdd)) {
-                    fData.append(jd + "[]", jsData[jd][jdd]);
+                    fData.append(jd, jsData[jd]);
                 }
             }
         } else {

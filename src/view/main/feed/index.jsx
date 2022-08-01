@@ -7,7 +7,7 @@ import tokenService from "_services/token.service";
 function FeedController() {
     const userModel = tokenService.getUser();
     return (
-        <Box p={3} pb={15} bgcolor={"background.default"} color={"text.primary"}>
+        <Box p={3} pb={15} color={"text.primary"}>
             <Stack direction="row" spacing={2} gap={2} justifyContent="space-between">
                 <Feed userModel={userModel} feedType={'feeds'} />
                 <Rightbar tokenService={tokenService} />

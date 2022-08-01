@@ -57,7 +57,7 @@ function ManagementUserProfile() {
 
   return (
     <>
-      <Container sx={{ mt: 2, mb: 5 }} maxWidth="lg">
+      
         <Grid
           container
           direction="row"
@@ -88,7 +88,6 @@ function ManagementUserProfile() {
             {currentTab === 'populat_tags' && <PopularTags />}
           </Grid>
         </Grid>
-      </Container>
     </>
   );
 }

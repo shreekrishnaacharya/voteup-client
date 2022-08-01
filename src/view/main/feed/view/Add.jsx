@@ -25,6 +25,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { addPost } from "../service";
 import { isEmpty } from "_services";
+import ImageLoader from "components/ImageLoader";
 
 
 
@@ -93,7 +94,7 @@ const Add = ({ userModel }) => {
       >
         <Box
           width={600}
-          height={300}
+          height={'auto'}
           bgcolor={"background.default"}
           color={"text.primary"}
           p={3}
@@ -128,12 +129,31 @@ const Add = ({ userModel }) => {
                 </>
               )}
             />
-            <Stack direction="row" gap={1} mt={2} mb={3}>
-              <EmojiEmotions color="primary" />
-              <Image color="secondary" />
-              <VideoCameraBack color="success" />
-              <PersonAdd color="error" />
+            <Stack direction="row" gap={1} mt={2} mb={2}>
+              <label htmlFor="uploadimages">
+                <Image color="secondary" />
+              </label>
             </Stack>
+            <Controller
+              name="image"
+              control={control}
+              render={({ field, fieldState }) => (
+                <>
+                  <ImageLoader
+                    multiple={true}
+                    InputProps={{
+                      accept: "image/*",
+                      id: 'uploadimages'
+                    }}
+                    size='md'
+                    isModal={false}
+                    onChange={(e) => {
+                      field.onChange(e.target.files);
+                    }}
+                  />
+                </>
+              )}
+            />
             <ButtonGroup
               fullWidth
               variant="contained"

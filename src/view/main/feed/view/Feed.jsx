@@ -24,7 +24,6 @@ const Feed = ({ userModel, feedType }) => {
     open: false,
     postid: null
   })
-  console.log(confirm, 'feed delete')
   const { enqueueSnackbar } = useSnackbar();
   const viewPost = (postid) => {
     history.push({
@@ -71,7 +70,6 @@ const Feed = ({ userModel, feedType }) => {
     if (type == 0) {
       setReport({ postid: postid, open: true })
     } else if (type == 2) {
-      console.log('delete confirm open')
       setConfirm({ postid: postid, open: true })
     }
   }

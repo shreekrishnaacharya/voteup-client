@@ -1,3 +1,4 @@
+import { getJsonForms } from '_services';
 import { getApiRequest as getApi, getJsonForm } from '_services';
 
 
@@ -45,7 +46,7 @@ async function addPost(idata) {
     return await getApiRequest({
         url: "/feeds/",
         method: "post",
-        data: getJsonForm(idata),
+        data: getJsonForms(idata),
         headers: { 'Content-Type': 'multipart/form-data' }
     }).then((result) => {
         return result;
