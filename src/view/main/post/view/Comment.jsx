@@ -20,6 +20,7 @@ import { Delete, Info, ThumbDownAltTwoTone } from '@mui/icons-material';
 import ReactTimeAgo from 'react-time-ago'
 import React, { useState } from 'react';
 import { actionUpdate } from "../service";
+import VoteButton from 'components/buttons/VoteButtons';
 
 const ActionType = {
     DISLIKE: 0,
@@ -105,24 +106,8 @@ function Comment({ comment, setReport, setConfirm, userModel }) {
                     }}
                 >
                     <Stack direction="row" spacing={1} justifyContent="space-between">
-                        <Button
-                            size='small'
-                            onClick={() => { updateAction(ActionType.LIKE) }}
-                            color='primary'
-                            startIcon={<ThumbUpAltTwoToneIcon />}
-                            variant={paction.vtype == 1 ? "contained" : "outlined"}
-                        >
-                            Like
-                        </Button>
-                        <Button
-                            size='small'
-                            onClick={() => { updateAction(ActionType.DISLIKE) }}
-                            color='error'
-                            startIcon={<ThumbDownAltTwoTone />}
-                            variant={paction.vtype == 0 ? "contained" : "outlined"}
-                        >
-                            Dislike
-                        </Button>
+                        <VoteButton size='small' onClick={updateAction} type={ActionType.LIKE} vote={paction.vtype} />
+                        <VoteButton size='small' onClick={updateAction} type={ActionType.DISLIKE} vote={paction.vtype} />
                     </Stack>
                     <Box sx={{ mt: { xs: 1, md: 0 } }}>
                         <Typography variant="subtitle2" component="span">

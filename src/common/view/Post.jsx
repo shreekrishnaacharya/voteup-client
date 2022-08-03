@@ -25,6 +25,7 @@ import ReactTimeAgo from 'react-time-ago'
 import React, { useEffect, useState } from 'react';
 import { actionUpdate } from "../service";
 import CommentTwoToneIcon from '@mui/icons-material/CommentTwoTone';
+import VoteButton from 'components/buttons/VoteButtons';
 
 const ActionType = {
     DISLIKE: 0,
@@ -79,7 +80,6 @@ function Post({ post, onMenu, userModel, viewPost }) {
             </Link>{" "}</>
         })
     }
-
     return (
         <Box mb={2}>
             <Card>
@@ -142,22 +142,8 @@ function Post({ post, onMenu, userModel, viewPost }) {
                     }}
                 >
                     <Stack direction="row" spacing={2} justifyContent="space-between">
-                        <Button
-                            onClick={() => { updateAction(ActionType.LIKE) }}
-                            color='primary'
-                            startIcon={<ThumbUpAltTwoToneIcon />}
-                            variant={paction.vtype == 1 ? "contained" : "outlined"}
-                        >
-                            Like
-                        </Button>
-                        <Button
-                            onClick={() => { updateAction(ActionType.DISLIKE) }}
-                            color='error'
-                            startIcon={<ThumbDownAltTwoTone />}
-                            variant={paction.vtype == 0 ? "contained" : "outlined"}
-                        >
-                            Dislike
-                        </Button>
+                        <VoteButton onClick={updateAction} type={ActionType.LIKE} vote={paction.vtype} />
+                        <VoteButton onClick={updateAction} type={ActionType.DISLIKE} vote={paction.vtype} />
                         <Button
                             startIcon={<CommentTwoToneIcon />}
                             variant="outlined"

@@ -1,23 +1,17 @@
-import { useContext } from 'react';
-
 import {
   Box,
   alpha,
   Stack,
   lighten,
   Divider,
-  IconButton,
-  Tooltip,
   styled,
   useTheme
 } from '@mui/material';
-import MenuTwoToneIcon from '@mui/icons-material/MenuTwoTone';
-// import { SidebarContext } from 'src/contexts/SidebarContext';
-import CloseTwoToneIcon from '@mui/icons-material/CloseTwoTone';
 
 import HeaderButtons from './Buttons';
 import HeaderUserbox from './Userbox';
 import HeaderLogo from '../Logo';
+import { pages } from 'links';
 
 const HeaderWrapper = styled(Box)(
   ({ theme }) => `
@@ -64,7 +58,7 @@ function Header() {
         alignItems="center"
         spacing={2}
       >
-        <HeaderLogo />
+        <HeaderLogo to={pages.HOME} />
       </Stack>
       <Box display="flex" alignItems="center">
         <HeaderButtons />

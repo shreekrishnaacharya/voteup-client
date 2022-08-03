@@ -62,26 +62,7 @@ const Rightbar = ({ tokenService }) => {
   return (
     <Box sx={{ display: { xs: "none", sm: "block" } }}>
       <Box position="sticky" width={350}>
-        <Typography variant="h6" fontWeight={100} mb={2}>
-          Profile
-        </Typography>
-        <Card sx={{ display: 'flex' }}>
-          <CardMedia
-            component="img"
-            sx={{ width: 50 }}
-            image={userModel.img}
-            alt="Live from space album cover"
-          />
-          <CardContent>
-            <Link to={pages.PROFILE}><Text>{userModel.name}</Text></Link>
-          </CardContent>
-          <CardActions>
-            <IconButton color="error" onClick={logoutAction}>
-              <LogoutIcon sx={{ fontSize: 20 }} />
-            </IconButton>
-          </CardActions>
-        </Card>
-        <Typography variant="h6" fontWeight={100} mt={2}>
+        <Typography variant="h6" fontWeight={100}>
           Recent Posts
         </Typography>
         <Card>

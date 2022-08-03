@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 
 import {
   Avatar,
@@ -8,7 +8,6 @@ import {
   Button,
   Divider,
   Hidden,
-  lighten,
   List,
   ListItem,
   ListItemText,
@@ -17,11 +16,12 @@ import {
   styled
 } from '@mui/material';
 
-import InboxTwoToneIcon from '@mui/icons-material/InboxTwoTone';
 import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
 import AccountBoxTwoToneIcon from '@mui/icons-material/AccountBoxTwoTone';
 import LockOpenTwoToneIcon from '@mui/icons-material/LockOpenTwoTone';
 import AccountTreeTwoToneIcon from '@mui/icons-material/AccountTreeTwoTone';
+import { pages } from 'links';
+import tokenService from "_services/token.service";
 
 const UserBoxButton = styled(Button)(
   ({ theme }) => `
@@ -52,19 +52,16 @@ const UserBoxLabel = styled(Typography)(
 `
 );
 
-const UserBoxDescription = styled(Typography)(
-  ({ theme }) => `
-        color: ${lighten(theme.palette.secondary.main, 0.5)}
-`
-);
+// const UserBoxDescription = styled(Typography)(
+//   ({ theme }) => `
+//         color: ${lighten(theme.palette.secondary.main, 0.5)}
+// `
+// );
 
 function HeaderUserbox() {
-  const user = {
-    name: 'Catherine Pike',
-    avatar: '/static/images/avatars/1.jpg',
-    jobtitle: 'Project Manager'
-  };
 
+  const history = useHistory();
+  const user = tokenService.getUser();
   const ref = useRef(null);
   const [isOpen, setOpen] = useState(false);
 
@@ -76,16 +73,24 @@ function HeaderUserbox() {
     setOpen(false);
   };
 
+
+  const logoutAction = () => {
+    tokenService.removeUser()
+    history.push({
+      pathname: pages.GUEST
+    });
+  }
+
   return (
     <>
       <UserBoxButton color="secondary" ref={ref} onClick={handleOpen}>
-        <Avatar variant="rounded" alt={user.name} src={user.avatar} />
+        <Avatar variant="rounded" alt={user.name} src={user.img} />
         <Hidden mdDown>
           <UserBoxText>
             <UserBoxLabel variant="body1">{user.name}</UserBoxLabel>
-            <UserBoxDescription variant="body2">
+            {/* <UserBoxDescription variant="body2">
               {user.jobtitle}
-            </UserBoxDescription>
+            </UserBoxDescription> */}
           </UserBoxText>
         </Hidden>
         <Hidden smDown>
@@ -106,24 +111,24 @@ function HeaderUserbox() {
         }}
       >
         <MenuUserBox sx={{ minWidth: 210 }} display="flex">
-          <Avatar variant="rounded" alt={user.name} src={user.avatar} />
+          <Avatar variant="rounded" alt={user.name} src={user.img} />
           <UserBoxText>
             <UserBoxLabel variant="body1">{user.name}</UserBoxLabel>
-            <UserBoxDescription variant="body2">
+            {/* <UserBoxDescription variant="body2">
               {user.jobtitle}
-            </UserBoxDescription>
+            </UserBoxDescription> */}
           </UserBoxText>
         </MenuUserBox>
         <Divider sx={{ mb: 0 }} />
         <List sx={{ p: 1 }} component="nav">
-          <ListItem button to="/management/profile/details" component={NavLink}>
+          <ListItem button to={pages.PROFILE} component={NavLink}>
             <AccountBoxTwoToneIcon fontSize="small" />
             <ListItemText primary="My Profile" />
           </ListItem>
-          <ListItem button to="/dashboards/messenger" component={NavLink}>
+          {/* <ListItem button to="/dashboards/messenger" component={NavLink}>
             <InboxTwoToneIcon fontSize="small" />
             <ListItemText primary="Messenger" />
-          </ListItem>
+          </ListItem> */}
           <ListItem
             button
             to="/management/profile/settings"
@@ -135,7 +140,7 @@ function HeaderUserbox() {
         </List>
         <Divider />
         <Box sx={{ m: 1 }}>
-          <Button color="primary" fullWidth>
+          <Button color="primary" fullWidth onClick={logoutAction}>
             <LockOpenTwoToneIcon sx={{ mr: 1 }} />
             Sign out
           </Button>
