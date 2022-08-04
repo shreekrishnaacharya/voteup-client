@@ -1,9 +1,9 @@
 import {
     Box,
-    CardMedia,
     Typography,
     Card,
     CardHeader,
+    CardContent,
     Divider,
     Avatar,
     IconButton,
@@ -26,6 +26,8 @@ import React, { useEffect, useState } from 'react';
 import { actionUpdate } from "../service";
 import CommentTwoToneIcon from '@mui/icons-material/CommentTwoTone';
 import VoteButton from 'components/buttons/VoteButtons';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
 
 const ActionType = {
     DISLIKE: 0,
@@ -80,6 +82,37 @@ function Post({ post, onMenu, userModel, viewPost }) {
             </Link>{" "}</>
         })
     }
+
+    function srcset(image, size, rows = 1, cols = 1) {
+        return {
+            src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
+            srcSet: `${image}?w=${size * cols}&h=${size * rows
+                }&fit=crop&auto=format&dpr=2 2x`,
+        };
+    }
+    const ImageView = () => {
+        if (post.meta.length == 0) {
+            return "";
+        }
+        return (<CardContent>
+            <ImageList
+                sx={{ width: "100%", height: "auto" }}
+                variant="quilted"
+                cols={2}
+                rowHeight={151}
+            >
+                {post.meta.map((item) => (
+                    <ImageListItem key={item.img} cols={item.cols || 1} rows={item.rows || 1}>
+                        <img
+                            {...srcset(item.img, 151, item.rows, item.cols)}
+                            alt={item.title}
+                            loading="lazy"
+                        />
+                    </ImageListItem>
+                ))}
+            </ImageList>
+        </CardContent>)
+    }
     return (
         <Box mb={2}>
             <Card>
@@ -123,11 +156,7 @@ function Post({ post, onMenu, userModel, viewPost }) {
                         {post.post_detail}
                     </Typography>
                 </Box>
-                {/* <CardMedia
-                    sx={{ minHeight: 280 }}
-                    image="/static/images/placeholders/covers/6.jpg"
-                    title="Card Cover"
-                /> */}
+                <ImageView />
                 <Box p={1}>
                     <Typography variant="subtitle2">
                         <ReactTimeAgo date={new Date(post.create_at)} locale="en-US" />

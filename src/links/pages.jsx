@@ -15,8 +15,8 @@ const sitePage = {
 }
 
 const pages = {
-    BASE_URL: "https://app-f51dd389-d290-44a4-914c-af2905391a7c.cleverapps.io",
-    // BASE_URL: "http://localhost:3000",
+    // BASE_URL: "https://app-f51dd389-d290-44a4-914c-af2905391a7c.cleverapps.io",
+    BASE_URL: "http://localhost:8080",
     LOCAL_URL: "http://localhost:3000",
     GUEST: "/guest",
     HOME: "/",

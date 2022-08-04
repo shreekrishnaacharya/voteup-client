@@ -20,19 +20,41 @@ const getUpdateKey = (jsData, keys) => {
     return jsData;
 };
 
-const getJsonForm = (jsData) => {
+const getJsonPhp = (jsData) => {
     const fData = new FormData();
-    for (const jd of Object.keys(jsData)) {
+    for (const jd in jsData) {
         if (jsData[jd] instanceof FileList) {
             fData.append(jd, jsData[jd][0]);
         } else if (jsData[jd] instanceof Array) {
             jsData[jd].forEach((val, index) => {
                 if (val instanceof Object) {
                     for (const jddd in jsData[jd][index]) {
-                        fData.append(`${jd}`, jsData[jd]);
+                        fData.append(`${jd}[${index}][${jddd}]`, jsData[jd][index][jddd]);
                     }
                 } else {
-                    fData.append(`${jd}`, jsData[jd]);
+                    fData.append(`${jd}[${index}]`, jsData[jd][index]);
+                }
+            });
+        } else {
+            fData.append(jd, jsData[jd]);
+        }
+    }
+    return fData;
+}
+
+const getJsonForm = (jsData) => {
+    const fData = new FormData();
+    for (const jd in jsData) {
+        if (jsData[jd] instanceof FileList) {
+            fData.append(jd, jsData[jd][0]);
+        } else if (jsData[jd] instanceof Array) {
+            jsData[jd].forEach((val, index) => {
+                if (val instanceof Object) {
+                    for (const jddd in jsData[jd][index]) {
+                        fData.append(`${jd}[${index}][${jddd}]`, jsData[jd][index][jddd]);
+                    }
+                } else {
+                    fData.append(`${jd}[${index}]`, jsData[jd][index]);
                 }
             });
         } else {
@@ -48,7 +70,7 @@ const getJsonForms = (jsData) => {
         if (jsData[jd] instanceof FileList) {
             for (const jdd of Object.keys(jsData[jd])) {
                 if (!isNaN(jdd)) {
-                    fData.append(jd, jsData[jd]);
+                    fData.append(`${jd}[${jdd}]`, jsData[jd][jdd]);
                 }
             }
         } else {

@@ -43,6 +43,8 @@ async function getRecent() {
 }
 
 async function addPost(idata) {
+    // console.log(getJsonForms(idata));
+    // return;
     return await getApiRequest({
         url: "/feeds/",
         method: "post",

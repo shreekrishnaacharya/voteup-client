@@ -65,8 +65,8 @@ const Add = ({ userModel }) => {
         enqueueSnackbar("Post uploaded", {
           variant: 'success',
         });
-        reset();
-        setOpen(false);
+        // reset();
+        // setOpen(false);
       }
     })
   }
