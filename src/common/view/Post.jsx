@@ -22,13 +22,12 @@ import ShareTwoToneIcon from '@mui/icons-material/ShareTwoTone';
 import Text from 'components/Text';
 import { ThumbDownAltTwoTone } from '@mui/icons-material';
 import ReactTimeAgo from 'react-time-ago'
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { actionUpdate } from "../service";
 import CommentTwoToneIcon from '@mui/icons-material/CommentTwoTone';
 import VoteButton from 'components/buttons/VoteButtons';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-
 const ActionType = {
     DISLIKE: 0,
     LIKE: 1
@@ -50,6 +49,7 @@ function Post({ post, onMenu, userModel, viewPost }) {
         review: post.review
     });
     const [anchorEl, setAnchorEl] = useState(null);
+  
     const open = Boolean(anchorEl);
     const handleOptionClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -101,12 +101,20 @@ function Post({ post, onMenu, userModel, viewPost }) {
                 cols={2}
                 rowHeight={151}
             >
-                {post.meta.map((item) => (
+                {post.meta.map((item, index) => (
                     <ImageListItem key={item.img} cols={item.cols || 1} rows={item.rows || 1}>
                         <img
                             {...srcset(item.img, 151, item.rows, item.cols)}
                             alt={item.title}
                             loading="lazy"
+                            // onClick={(e) => {
+                            //     openLightbox(e, {
+                            //         index,
+                            //         photo: photos[index],
+                            //         previous: photos[index - 1] || null,
+                            //         next: photos[index + 1] || null,
+                            //     })
+                            // }}
                         />
                     </ImageListItem>
                 ))}

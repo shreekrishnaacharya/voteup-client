@@ -41,12 +41,14 @@ const Rightbar = ({ tokenService }) => {
   const history = useHistory();
   const [loading, setLoading] = useState(true);
   const [postFeeds, setFeeds] = useState([]);
-  const userModel = tokenService.getUser();
 
-  const logoutAction = () => {
-    tokenService.removeUser()
+  const viewPost = (postid) => {
     history.push({
-      pathname: pages.GUEST
+      pathname: pages.POST,
+      search: `?id=${postid}`,
+      state: {
+        id: postid
+      }
     });
   }
 
@@ -78,19 +80,23 @@ const Rightbar = ({ tokenService }) => {
             <List sx={{ width: '100%', maxWidth: 380, bgcolor: 'background.paper', padding: "12px 0px" }}>
               {postFeeds.map(post => {
                 return <div key={'recent' + post._id}>
-                  <ListItem alignItems="flex-start">
-                    <ListItemAvatar>
-                      <Avatar alt={post.username} src={post.user_dp} />
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={post.username}
-                      secondary={
-                        <Typography noWrap style={{ color: "#6E759F" }}>
-                          {post.post_detail}
-                        </Typography>
-                      }
-                    />
-                  </ListItem>
+                  <a style={{cursor:"pointer"}} onClick={() => {
+                    viewPost(post._id)
+                  }}>
+                    <ListItem alignItems="flex-start">
+                      <ListItemAvatar>
+                        <Avatar alt={post.username} src={post.user_dp} />
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={post.username}
+                        secondary={
+                          <Typography noWrap style={{ color: "#6E759F" }}>
+                            {post.post_detail}
+                          </Typography>
+                        }
+                      />
+                    </ListItem>
+                  </a>
                   <Divider variant="inset" component="li" />
                 </div>
               })}
