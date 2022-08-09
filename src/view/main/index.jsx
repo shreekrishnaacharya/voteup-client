@@ -6,16 +6,19 @@ import ManagementUserProfile from './user/profile';
 import ViewPost from './post/view/ViewPost';
 import { Container } from '@mui/material';
 import Header from 'components/Header';
+import { SidebarProvider } from 'contexts/SidebarContext';
 
 function MainController() {
     return (
         <div key="MainController">
-            <Header />
-            <Container sx={{ pt: 7, mb: 5 }} maxWidth="lg">
-                <Route path={pages.PROFILE} component={ManagementUserProfile} />
-                <Route path={pages.POST} component={ViewPost} />
-                <Route exact path={pages.HOME} component={FeedController} />
-            </Container>
+            <SidebarProvider>
+                <Header />
+                <Container sx={{ pt: 7, mb: 5 }} maxWidth="lg">
+                    <Route path={pages.PROFILE} component={ManagementUserProfile} />
+                    <Route path={pages.POST} component={ViewPost} />
+                    <Route exact path={pages.HOME} component={FeedController} />
+                </Container>
+            </SidebarProvider>
         </div>
     );
 }
