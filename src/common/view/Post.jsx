@@ -49,7 +49,7 @@ function Post({ post, onMenu, userModel, viewPost }) {
         review: post.review
     });
     const [anchorEl, setAnchorEl] = useState(null);
-  
+
     const open = Boolean(anchorEl);
     const handleOptionClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -107,14 +107,14 @@ function Post({ post, onMenu, userModel, viewPost }) {
                             {...srcset(item.img, 151, item.rows, item.cols)}
                             alt={item.title}
                             loading="lazy"
-                            // onClick={(e) => {
-                            //     openLightbox(e, {
-                            //         index,
-                            //         photo: photos[index],
-                            //         previous: photos[index - 1] || null,
-                            //         next: photos[index + 1] || null,
-                            //     })
-                            // }}
+                        // onClick={(e) => {
+                        //     openLightbox(e, {
+                        //         index,
+                        //         photo: photos[index],
+                        //         previous: photos[index - 1] || null,
+                        //         next: photos[index + 1] || null,
+                        //     })
+                        // }}
                         />
                     </ImageListItem>
                 ))}
@@ -168,6 +168,10 @@ function Post({ post, onMenu, userModel, viewPost }) {
                 <Box p={1}>
                     <Typography variant="subtitle2">
                         <ReactTimeAgo date={new Date(post.create_at)} locale="en-US" />
+                        {' | '}Supporters{' : '}
+                        <Text>
+                            <b>{post.supporters}</b>
+                        </Text>
                     </Typography>
                 </Box>
                 <Divider />

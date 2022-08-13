@@ -44,7 +44,8 @@ const UserBox = styled(Box)({
 
 const schema = yup.object({
   image: yup.mixed(),
-  post_detail: yup.string()
+  post_detail: yup.string(),
+  supporters: yup.number().min(1),
 });
 const Add = ({ userModel }) => {
   const [open, setOpen] = useState(false);
@@ -56,6 +57,12 @@ const Add = ({ userModel }) => {
   const submitForm = (fdata) => {
     if (isEmpty(fdata.post_detail)) {
       enqueueSnackbar("Post cannot be blank", {
+        variant: 'error',
+      });
+      return false;
+    }
+    if (isEmpty(fdata.supporters) || fdata.supporters < 1) {
+      enqueueSnackbar("Please indicate your supporters", {
         variant: 'error',
       });
       return false;
@@ -123,6 +130,21 @@ const Add = ({ userModel }) => {
                     multiline
                     rows={3}
                     placeholder="What's on your mind?"
+                    variant="standard"
+                    {...field}
+                  />
+                </>
+              )}
+            />
+            <Controller
+              name="supporters"
+              control={control}
+              render={({ field, fieldState }) => (
+                <>
+                  <TextField
+                    // sx={{ width: "100%" }}
+                    multiline
+                    placeholder="Your supporters"
                     variant="standard"
                     {...field}
                   />

@@ -14,10 +14,6 @@ import coverImage from 'assets/images/cover_image.png'
 import ImageLoader from 'components/ImageLoader';
 
 
-const Input = styled('input')({
-  display: 'none'
-});
-
 const AvatarWrapper = styled(Card)(
   ({ theme }) => `
 
