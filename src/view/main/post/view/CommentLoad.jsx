@@ -36,10 +36,7 @@ export default function CommentLoad() {
             >
                 <Stack direction="row" spacing={0} justifyContent="space-between">
                     <Button disabled size='small' startIcon={<ThumbUpAltTwoTone />} variant={"outlined"}>
-                        Like
-                    </Button>
-                    <Button disabled size='small' startIcon={<ThumbDownAltTwoTone />} variant={"outlined"}>
-                        Dislike
+                        VOte
                     </Button>
                 </Stack>
             </CardActionsWrapper>

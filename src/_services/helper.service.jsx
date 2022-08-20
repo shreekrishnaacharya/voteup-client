@@ -20,6 +20,10 @@ const getUpdateKey = (jsData, keys) => {
     return jsData;
 };
 
+const getDateString = (date) => {
+    return new Date(date).toDateString()
+}
+
 const getJsonPhp = (jsData) => {
     const fData = new FormData();
     for (const jd in jsData) {
@@ -105,5 +109,6 @@ export {
     toBase64,
     getJsonForm,
     getJsonForms,
-    getUpdateKey
+    getUpdateKey,
+    getDateString
 }

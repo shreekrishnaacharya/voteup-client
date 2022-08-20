@@ -14,7 +14,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 const schema = yup.object({
-    comment: yup.string()
+    post_detail: yup.string()
 });
 
 const UserBox = styled(Box)({
@@ -42,7 +42,7 @@ const AddComment = ({ userModel, onAddComment }) => {
                                 </UserBox>
                                 <Box width={'100%'}>
                                     <Controller
-                                        name="comment"
+                                        name="post_detail"
                                         defaultValue={''}
                                         control={control}
                                         render={({ field, fieldState }) => (

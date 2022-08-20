@@ -120,7 +120,8 @@ const ProfileCover = ({ user, saveImage }) => {
         cancelName={'Cancel'}
         saveName={'Save'}
         onSave={(files, close) => {
-          saveImage({ 'pimage': files }, close);
+          console.log(files)
+          saveImage({ 'pimage': files.target.files }, close);
         }}
       />
       <ImageLoader
@@ -135,7 +136,7 @@ const ProfileCover = ({ user, saveImage }) => {
         saveName={'Save'}
         isModal={true}
         onSave={(files, close) => {
-          saveImage({ 'cimage': files }, close);
+          saveImage({ 'cimage': files.target.files }, close);
         }}
       />
     </>

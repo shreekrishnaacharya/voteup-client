@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { addComment, deleteComment, getComments, getViewPost } from "../service";
+import { addComment, deleteComment, getViewPost, actionUpdateAction } from "../service";
 import ConfirmDelete from "common/view/ConfirmDelete";
 import Post from "common/view/Post";
 import PostLoad from "common/view/PostLoad";
@@ -21,9 +21,7 @@ const ViewPost = () => {
     const location = useLocation();
     const history = useHistory();
     const [loading, setLoading] = useState(true);
-    const [cloading, setCLoading] = useState(true);
     const [postFeeds, setPost] = useState({});
-    const [comments, setComments] = useState([]);
     const { enqueueSnackbar } = useSnackbar();
 
     const params = new URLSearchParams(location.search);
@@ -41,8 +39,24 @@ const ViewPost = () => {
             pathname: pages.HOME
         });
     }
+
+    const initLoad = () => {
+        getViewPost(postid).then(res => {
+            if (res.flag) {
+                setPost(res.data);
+                setLoading(false);
+            }
+        })
+    }
+    const onVote = (id) => {
+        actionUpdateAction(id).then(e => {
+            if (e.flag) {
+                initLoad();
+            }
+        })
+    }
     const addCommentForm = (fdata) => {
-        if (isEmpty(fdata.comment)) {
+        if (isEmpty(fdata.post_detail)) {
             enqueueSnackbar("Review cannot be blank", {
                 variant: 'error',
             });
@@ -53,17 +67,7 @@ const ViewPost = () => {
                 enqueueSnackbar("Review uploaded", {
                     variant: 'success',
                 });
-                getComments(postid).then(res => {
-                    if (res.flag) {
-                        setComments(res.data);
-                    }
-                })
-                getViewPost(postid).then(res => {
-                    if (res.flag) {
-                        console.log("post load")
-                        setPost(res.data);
-                    }
-                })
+                initLoad()
             }
         })
     }
@@ -97,24 +101,14 @@ const ViewPost = () => {
 
     }
 
-    const deleteCommentPost = (fdata) => {
+    const deleteCommentPost = () => {
         deleteComment(confirm.postid).then((e) => {
             if (e.flag) {
                 enqueueSnackbar("Review deleted", {
                     variant: 'success',
                 });
                 setConfirm({ open: false, postid: null })
-                getComments(postid).then(res => {
-                    if (res.flag) {
-                        setComments(res.data);
-                    }
-                })
-                getViewPost(postid).then(res => {
-                    if (res.flag) {
-                        console.log("post load")
-                        setPost(res.data);
-                    }
-                })
+                initLoad()
             }
         })
     }
@@ -127,25 +121,10 @@ const ViewPost = () => {
             setConfirm({ postid: postid, open: true })
         }
     }
-    useEffect(() => {
-        getComments(postid).then(res => {
-            if (res.flag) {
-                setComments(res.data);
-                setCLoading(false);
-            }
-        })
-        return () => {
-            setComments([])
-        }
-    }, []);
+
 
     useEffect(() => {
-        getViewPost(postid).then(res => {
-            if (res.flag) {
-                setPost(res.data);
-                setLoading(false);
-            }
-        })
+        initLoad()
         return () => {
             setPost({})
         }
@@ -155,11 +134,11 @@ const ViewPost = () => {
         <Box sx={{ margin: '20px' }}>
             {loading ? (
                 <>
-                    <PostLoad />
+                    <PostLoad isOpen={true} />
                 </>
             ) : (
                 <>
-                    <Post key={postFeeds._id} post={postFeeds} onMenu={handleMenu} userModel={userModel} viewPost={() => { }} />
+                    <Post isOpen={true} onVote={() => { onVote(postid) }} key={postFeeds._id} post={postFeeds} onMenu={handleMenu} userModel={userModel} viewPost={() => { }} />
                 </>
             )
             }
@@ -167,15 +146,15 @@ const ViewPost = () => {
             <Box sx={{ marginLeft: '40px' }}>
                 <Text varient={'h1'}>Review</Text>
                 <AddComment userModel={userModel} onAddComment={addCommentForm} />
-                {cloading ? (
+                {loading ? (
                     <>
                         <CommentLoad />
                         <CommentLoad />
                     </>
                 ) : (
                     <>
-                        {comments.map(comment => {
-                            return <Comment key={comment._id} comment={comment} setReport={setReport} setConfirm={setConfirm} userModel={userModel} />
+                        {postFeeds.comments.map(comment => {
+                            return <Comment onVote={() => { onVote(comment._id) }} key={comment._id} comment={comment} setReport={setReport} setConfirm={setConfirm} userModel={userModel} />
                         })}
                     </>
                 )

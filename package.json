@@ -73,7 +73,6 @@
       ]
     }
   },
-  "proxy": "https://app-f51dd389-d290-44a4-914c-af2905391a7c.cleverapps.io",
   "devDependencies": {
     "eslint": "^7.30.0",
     "eslint-config-airbnb": "^18.2.1",

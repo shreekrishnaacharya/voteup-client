@@ -1,5 +1,5 @@
 import { LoadingButton } from '@mui/lab';
-import { ThumbUpAltTwoTone, ThumbDownAltTwoTone } from '@mui/icons-material';
+import { ThumbUpAltTwoTone } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -49,25 +49,24 @@ const LoaderIndicator = styled('div')(({ theme }) => ({
     }
 }));
 
-const VoteButton = ({ type, vote, onClick, ...rest }) => {
+const VoteButton = ({ hasVote, onClick, ...rest }) => {
     const [loading, setLoading] = useState(false)
-    console.log(vote, vote == null, 'vote')
     useEffect(() => {
         setLoading(false)
-    }, [vote])
+    }, [hasVote])
     return <LoadingButton
         onClick={() => {
-            onClick(type)
-            setLoading(true)
+            onClick()
+            setLoading(false)
         }}
-        color={type == 1 ? 'primary' : 'error'}
-        startIcon={type == 1 ? <ThumbUpAltTwoTone /> : <ThumbDownAltTwoTone />}
-        variant={vote != type ? 'outlined' : 'contained'}
+        color={hasVote == 1 ? 'primary' : 'info'}
+        startIcon={<ThumbUpAltTwoTone />}
+        variant={hasVote == 0 ? 'outlined' : 'contained'}
         loadingIndicator={<LoaderIndicator />}
         loading={loading}
         {...rest}
     >
-        {type == 0 ? 'Dislike' : 'Like'}
+        {hasVote == 0 ? 'Vote' : 'Voted'}
     </LoadingButton>
 }
 

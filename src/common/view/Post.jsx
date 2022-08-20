@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import {
     Box,
     Typography,
@@ -17,12 +18,10 @@ import {
 } from '@mui/material';
 
 import MoreHorizTwoToneIcon from '@mui/icons-material/MoreHorizTwoTone';
-import ThumbUpAltTwoToneIcon from '@mui/icons-material/ThumbUpAltTwoTone';
 import ShareTwoToneIcon from '@mui/icons-material/ShareTwoTone';
 import Text from 'components/Text';
-import { ThumbDownAltTwoTone } from '@mui/icons-material';
 import ReactTimeAgo from 'react-time-ago'
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { actionUpdate } from "../service";
 import CommentTwoToneIcon from '@mui/icons-material/CommentTwoTone';
 import VoteButton from 'components/buttons/VoteButtons';
@@ -40,14 +39,13 @@ const CardActionsWrapper = styled(CardActions)(
 );
 
 
-function Post({ post, onMenu, userModel, viewPost }) {
+function Post({ post, onMenu, onVote, userModel, viewPost, isOpen }) {
     // console.log(post)
-    const [paction, setPaction] = useState({
-        up_vote: post.up_vote,
-        down_vote: post.down_vote,
-        vtype: post.vtype,
-        review: post.review
-    });
+    // const [paction, setPaction] = useState({
+    //     votes: post.votes,
+    //     hasVote: post.hasVote,
+    //     review: post.review
+    // });
     const [anchorEl, setAnchorEl] = useState(null);
 
     const open = Boolean(anchorEl);
@@ -61,17 +59,10 @@ function Post({ post, onMenu, userModel, viewPost }) {
         onMenu(post._id, type)
         setAnchorEl(null);
     }
-    const updateAction = (type) => {
-        actionUpdate(post._id, type).then(e => {
-            if (e.flag) {
-                setPaction(e.data);
-            }
-        })
-    }
 
-    useEffect(() => {
-        setPaction(post);
-    }, [post]);
+    // useEffect(() => {
+    //     setPaction(post);
+    // }, [post]);
 
 
     let tagsList = [];
@@ -183,18 +174,20 @@ function Post({ post, onMenu, userModel, viewPost }) {
                     }}
                 >
                     <Stack direction="row" spacing={2} justifyContent="space-between">
-                        <VoteButton onClick={updateAction} type={ActionType.LIKE} vote={paction.vtype} />
-                        <VoteButton onClick={updateAction} type={ActionType.DISLIKE} vote={paction.vtype} />
-                        <Button
-                            startIcon={<CommentTwoToneIcon />}
-                            variant="outlined"
-                            sx={{ mx: 2 }}
-                            onClick={() => {
-                                viewPost(post._id)
-                            }}
-                        >
-                            Review
-                        </Button>
+                        {isOpen ? (
+                            <VoteButton post={post} onClick={onVote} hasVote={post.hasVote} />
+                        ) : (
+                            <Button
+                                startIcon={<CommentTwoToneIcon />}
+                                variant="outlined"
+                                sx={{ mx: 2 }}
+                                onClick={() => {
+                                    viewPost(post._id)
+                                }}
+                            >
+                                Review
+                            </Button>
+                        )}
                         <Button startIcon={<ShareTwoToneIcon />} variant="outlined">
                             Share
                         </Button>
@@ -202,17 +195,13 @@ function Post({ post, onMenu, userModel, viewPost }) {
                     <Box sx={{ mt: { xs: 2, md: 0 } }}>
                         <Typography variant="subtitle2" component="span">
                             <Text color="info">
-                                <b>{paction.review}</b>
+                                <b>{post.review}</b>
                             </Text>{' '}
                             Review{' | '}
                             <Text color="success">
-                                <b>{paction.up_vote}</b>
+                                <b>{post.votes}</b>
                             </Text>{' '}
-                            Likes{' | '}
-                            <Text color="error">
-                                <b>{paction.down_vote}</b>
-                            </Text>{' '}
-                            Dislike
+                            Votes
                         </Typography>
                     </Box>
                 </CardActionsWrapper>
@@ -221,4 +210,17 @@ function Post({ post, onMenu, userModel, viewPost }) {
     );
 }
 
+
+Post.propTypes = {
+    post: PropTypes.object.isRequired,
+    onMenu: PropTypes.func.isRequired,
+    userModel: PropTypes.object.isRequired,
+    viewPost: PropTypes.func.isRequired,
+    onVote: PropTypes.func,
+    isOpen: PropTypes.bool
+}
+
+Post.defaultProps = {
+    isOpen: false,
+}
 export default Post;  

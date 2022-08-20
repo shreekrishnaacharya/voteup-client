@@ -18,7 +18,7 @@ const getApiRequest = async (requestData) => {
 
 async function addComment(id, idata) {
     return await getApiRequest({
-        url: "/comment/" + id,
+        url: "/feeds/comment/" + id,
         method: "post",
         data: idata,
     }).then((result) => {
@@ -26,13 +26,12 @@ async function addComment(id, idata) {
     });
 }
 
-async function actionUpdate(id, type) {
+async function actionUpdateAction(id) {
     return await getApiRequest({
-        url: "/comment",
-        method: "put",
+        url: "/feeds/action",
+        method: "post",
         data: {
-            id,
-            type
+            id
         },
     }).then((result) => {
         return result;
@@ -47,16 +46,9 @@ async function getViewPost(id) {
     });
 }
 
-async function getComments(id) {
-    return await getApiRequest({
-        url: "/comment/" + id,
-    }).then((result) => {
-        return result;
-    });
-}
 async function deleteComment(id) {
     return await getApiRequest({
-        url: "/comment/" + id,
+        url: "/feeds/" + id,
         method: "delete",
     }).then((result) => {
         return result;
@@ -64,8 +56,7 @@ async function deleteComment(id) {
 }
 export {
     addComment,
-    actionUpdate,
+    actionUpdateAction,
     getViewPost,
-    getComments,
     deleteComment
 };

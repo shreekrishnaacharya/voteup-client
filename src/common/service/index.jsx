@@ -26,13 +26,12 @@ async function getPost() {
 }
 
 
-async function actionUpdate(id, type) {
+async function actionUpdate(id) {
     return await getApiRequest({
         url: "/feeds/action",
         method: "post",
         data: {
-            id,
-            type
+            id
         },
     }).then((result) => {
         return result;
