@@ -72,8 +72,8 @@ const Add = ({ userModel }) => {
         enqueueSnackbar("Post uploaded", {
           variant: 'success',
         });
-        // reset();
-        // setOpen(false);
+        reset();
+        setOpen(false);
       }
     })
   }
@@ -142,7 +142,7 @@ const Add = ({ userModel }) => {
               render={({ field, fieldState }) => (
                 <>
                   <TextField
-                    // sx={{ width: "100%" }}
+                    sx={{ marginTop: "15px" }}
                     multiline
                     placeholder="Your supporters"
                     variant="standard"

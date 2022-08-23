@@ -10,7 +10,7 @@ function FeedController() {
         <Box p={3} pb={15} color={"text.primary"}>
             <Stack direction="row" spacing={2} gap={2} justifyContent="space-between">
                 <Feed userModel={userModel} feedType={'feeds'} />
-                <Rightbar tokenService={tokenService} />
+                <Rightbar userModel={userModel} />
             </Stack>
             <Add userModel={userModel} />
         </Box>

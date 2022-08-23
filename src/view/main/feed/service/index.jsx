@@ -33,7 +33,7 @@ async function getPost() {
     });
 }
 
-async function getRecent() {
+async function getRecent(uid) {
     return await getApiRequest({
         url: "/feeds",
         data: { sort: "-id", size: "3" }

@@ -14,7 +14,9 @@ import {
     styled,
     Stack,
     Menu,
-    MenuItem
+    MenuItem,
+    Chip,
+    Grid
 } from '@mui/material';
 
 import MoreHorizTwoToneIcon from '@mui/icons-material/MoreHorizTwoTone';
@@ -27,17 +29,26 @@ import CommentTwoToneIcon from '@mui/icons-material/CommentTwoTone';
 import VoteButton from 'components/buttons/VoteButtons';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-const ActionType = {
-    DISLIKE: 0,
-    LIKE: 1
-}
+import Ranking from 'components/Ranking';
+import HowToVoteIcon from '@mui/icons-material/HowToVote';
+import InsertCommentIcon from '@mui/icons-material/InsertComment';
+import ErrorIcon from '@mui/icons-material/Error';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import PollIcon from '@mui/icons-material/Poll';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 const CardActionsWrapper = styled(CardActions)(
     ({ theme }) => `
        background: ${theme.colors.alpha.black[5]};
        padding: ${theme.spacing(3)};
   `
 );
-
+const statusList = {
+    0: { color: 'info', icon: <InsertCommentIcon sx={{ mr: 1 }} /> },
+    1: { color: 'primary', icon: <HowToVoteIcon sx={{ mr: 1 }} /> },
+    2: { color: 'success', icon: <CheckCircleIcon sx={{ mr: 1 }} /> },
+    3: { color: 'error', icon: <ErrorIcon sx={{ mr: 1 }} /> },
+}
 
 function Post({ post, onMenu, onVote, userModel, viewPost, isOpen }) {
     // console.log(post)
@@ -46,6 +57,8 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen }) {
     //     hasVote: post.hasVote,
     //     review: post.review
     // });
+
+
     const [anchorEl, setAnchorEl] = useState(null);
 
     const open = Boolean(anchorEl);
@@ -173,37 +186,79 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen }) {
                         justifyContent: 'space-between'
                     }}
                 >
-                    <Stack direction="row" spacing={2} justifyContent="space-between">
-                        {isOpen ? (
-                            <VoteButton post={post} onClick={onVote} hasVote={post.hasVote} />
-                        ) : (
-                            <Button
-                                startIcon={<CommentTwoToneIcon />}
-                                variant="outlined"
-                                sx={{ mx: 2 }}
-                                onClick={() => {
-                                    viewPost(post._id)
-                                }}
-                            >
-                                Review
-                            </Button>
-                        )}
-                        <Button startIcon={<ShareTwoToneIcon />} variant="outlined">
-                            Share
-                        </Button>
-                    </Stack>
-                    <Box sx={{ mt: { xs: 2, md: 0 } }}>
-                        <Typography variant="subtitle2" component="span">
-                            <Text color="info">
-                                <b>{post.review}</b>
-                            </Text>{' '}
-                            Review{' | '}
-                            <Text color="success">
-                                <b>{post.votes}</b>
-                            </Text>{' '}
-                            Votes
-                        </Typography>
-                    </Box>
+                    <Grid
+                        container
+                        direction={'row'}
+                        spacing={1}
+                        justifyContent="space-between"
+                        alignItems="center"
+                    >
+                        <Grid item xl={6} >
+                            <Grid container direction={'row'} spacing={1}>
+                                <Grid item xl={6}>
+                                    {isOpen ? (
+                                        <>
+                                            {post.statusCode == 1 && (
+                                                <VoteButton post={post} onClick={onVote} hasVote={post.hasVote} />
+                                            )}
+                                        </>
+                                    ) : (
+                                        <Button
+                                            startIcon={<CommentTwoToneIcon />}
+                                            variant="outlined"
+                                            sx={{ mx: 2 }}
+                                            onClick={() => {
+                                                viewPost(post._id)
+                                            }}
+                                        >
+                                            Review
+                                        </Button>
+                                    )}
+
+                                </Grid>
+                                <Grid item xl={6}>
+                                    <Button startIcon={<ShareTwoToneIcon />} variant="outlined">
+                                        Share
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid item xl={6} >
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                flexWrap: 'wrap',
+                            }}>
+                                <Text
+                                    sx={{ display: 'flex', mr: 1 }}
+                                    color={statusList[post.statusCode].color}
+                                >
+                                    {statusList[post.statusCode].icon}{post.status}
+                                </Text>{'|'}
+                                <Text
+                                    sx={{ display: 'flex', mx: 1 }}
+                                >
+                                    <QuestionAnswerIcon sx={{ mr: 1 }} />{post.review}
+                                </Text>
+                                {post.statusCode > 0 && (
+                                    <>{'|'}
+                                        <Text
+                                            sx={{ display: 'flex', mx: 1 }}
+                                        >
+                                            <PollIcon sx={{ mr: 1 }} />{post.tot_votes}
+                                        </Text>{'|'}
+                                        <Text
+                                            sx={{ display: 'flex', mx: 1 }}
+                                        >
+                                            <ThumbUpIcon sx={{ mr: 1 }} />{post.votes}
+                                        </Text>{'|'}
+                                        <Ranking voters={post.tot_votes} votes={post.votes} />
+                                    </>
+                                )}
+                            </div>
+                        </Grid>
+                    </Grid>
+
                 </CardActionsWrapper>
             </Card>
         </Box >

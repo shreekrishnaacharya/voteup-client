@@ -3,23 +3,20 @@ import {
     Typography,
     Card,
     CardHeader,
-    Divider,
     Avatar,
     IconButton,
-    Button,
     CardActions,
     styled,
     Stack,
-    Menu,
-    MenuItem
+    Chip,
 } from '@mui/material';
-
-import Text from 'components/Text';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import { Delete, Info } from '@mui/icons-material';
 import ReactTimeAgo from 'react-time-ago'
-import React, { useEffect, useState } from 'react';
-import { actionUpdate } from "../service";
+import React from 'react';
 import VoteButton from 'components/buttons/VoteButtons';
+import Ranking from 'components/Ranking';
+import Text from 'components/Text';
 
 const CardActionsWrapper = styled(CardActions)(
     ({ theme }) => `
@@ -29,7 +26,7 @@ const CardActionsWrapper = styled(CardActions)(
 );
 
 
-function Comment({ comment, onVote, setReport, setConfirm, userModel }) {
+function Comment({ comment, post, onVote, setReport, setConfirm, userModel }) {
     const handleOptionAction = (type) => {
         if (type == 0) {
             setReport({ postid: comment._id, open: true })
@@ -88,16 +85,29 @@ function Comment({ comment, onVote, setReport, setConfirm, userModel }) {
                     }}
                 >
                     <Stack direction="row" spacing={1} justifyContent="space-between">
-                        <VoteButton post={comment} size='small' onClick={onVote} hasVote={comment.hasVote} />
+                        <>
+                            {post.statusCode == 1 && (
+                                <VoteButton post={comment} size='small' onClick={onVote} hasVote={comment.hasVote} />
+                            )}
+                        </>
                     </Stack>
-                    <Box sx={{ mt: { xs: 1, md: 0 } }}>
-                        <Typography variant="subtitle2" component="span">
-                            <Text color="success">
-                                <b>{comment.votes}</b>
-                            </Text>{' '}
-                            Votes
-                        </Typography>
-                    </Box>
+                    {post.statusCode == 1 && (
+                        <Box sx={{ mt: { xs: 1, md: 0 } }}>
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                flexWrap: 'wrap',
+                            }}>
+                                <Text
+                                    sx={{ display: 'flex', mx: 1 }}
+                                >
+                                    <ThumbUpIcon sx={{ mr: 1 }} />{comment.votes}
+                                </Text>{'|'}
+                                <Ranking voters={post.tot_votes} votes={comment.votes} />
+                            </div>
+                        </Box>
+                    )}
+
                 </CardActionsWrapper>
             </Card>
         </Box >

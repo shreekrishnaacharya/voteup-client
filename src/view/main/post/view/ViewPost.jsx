@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { addComment, deleteComment, getViewPost, actionUpdateAction } from "../service";
 import ConfirmDelete from "common/view/ConfirmDelete";
@@ -145,7 +145,9 @@ const ViewPost = () => {
 
             <Box sx={{ marginLeft: '40px' }}>
                 <Text varient={'h1'}>Review</Text>
-                <AddComment userModel={userModel} onAddComment={addCommentForm} />
+                {postFeeds.statusCode == 0 && (
+                    <AddComment userModel={userModel} onAddComment={addCommentForm} />
+                )}
                 {loading ? (
                     <>
                         <CommentLoad />
@@ -154,7 +156,7 @@ const ViewPost = () => {
                 ) : (
                     <>
                         {postFeeds.comments.map(comment => {
-                            return <Comment onVote={() => { onVote(comment._id) }} key={comment._id} comment={comment} setReport={setReport} setConfirm={setConfirm} userModel={userModel} />
+                            return <Comment post={postFeeds} onVote={() => { onVote(comment._id) }} key={comment._id} comment={comment} setReport={setReport} setConfirm={setConfirm} userModel={userModel} />
                         })}
                     </>
                 )

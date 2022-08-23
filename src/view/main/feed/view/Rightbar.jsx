@@ -37,7 +37,7 @@ const Loading = () => {
   </ListItem>
 }
 
-const Rightbar = ({ tokenService }) => {
+const Rightbar = ({ userModel }) => {
   const history = useHistory();
   const [loading, setLoading] = useState(true);
   const [postFeeds, setFeeds] = useState([]);
@@ -53,7 +53,7 @@ const Rightbar = ({ tokenService }) => {
   }
 
   useEffect(() => {
-    getRecent().then(res => {
+    getRecent(userModel._id).then(res => {
       if (res.flag) {
         setFeeds(res.data);
         setLoading(false);
@@ -62,7 +62,7 @@ const Rightbar = ({ tokenService }) => {
   }, []);
 
   return (
-    <Box sx={{ display: { xs: "none", sm: "block" } }}>
+    <Box sx={{ display: { xs: "none", sm: "none", md: "block" } }}>
       <Box position="sticky" width={350}>
         <Typography variant="h6" fontWeight={100}>
           Recent Posts
@@ -80,7 +80,7 @@ const Rightbar = ({ tokenService }) => {
             <List sx={{ width: '100%', maxWidth: 380, bgcolor: 'background.paper', padding: "12px 0px" }}>
               {postFeeds.map(post => {
                 return <div key={'recent' + post._id}>
-                  <a style={{cursor:"pointer"}} onClick={() => {
+                  <a style={{ cursor: "pointer" }} onClick={() => {
                     viewPost(post._id)
                   }}>
                     <ListItem alignItems="flex-start">
