@@ -6,7 +6,7 @@ import Post from "common/view/Post";
 import PostLoad from "common/view/PostLoad";
 import Report from "common/view/Report";
 import { useLocation, useHistory } from "react-router-dom";
-import { pages } from "links";
+import { pages, StatusCode } from "links";
 import tokenService from "_services/token.service";
 import Comment from "./Comment";
 import AddComment from "./AddComment";
@@ -104,11 +104,18 @@ const ViewPost = () => {
     const deleteCommentPost = () => {
         deleteComment(confirm.postid).then((e) => {
             if (e.flag) {
-                enqueueSnackbar("Review deleted", {
-                    variant: 'success',
-                });
-                setConfirm({ open: false, postid: null })
-                initLoad()
+                if (confirm.postid == postid) {
+                    enqueueSnackbar("Post deleted", {
+                        variant: 'success',
+                    });
+                    homePage()
+                } else {
+                    enqueueSnackbar("Review deleted", {
+                        variant: 'success',
+                    });
+                    setConfirm({ open: false, postid: null })
+                    initLoad()
+                }
             }
         })
     }
@@ -127,6 +134,7 @@ const ViewPost = () => {
         initLoad()
         return () => {
             setPost({})
+            setConfirm({ open: false, postid: null })
         }
     }, []);
 
@@ -145,7 +153,7 @@ const ViewPost = () => {
 
             <Box sx={{ marginLeft: '40px' }}>
                 <Text varient={'h1'}>Review</Text>
-                {postFeeds.statusCode == 0 && (
+                {postFeeds.statusCode == StatusCode.REVIEW && (
                     <AddComment userModel={userModel} onAddComment={addCommentForm} />
                 )}
                 {loading ? (

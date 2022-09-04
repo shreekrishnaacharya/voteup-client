@@ -8,7 +8,7 @@ import {
     CardActions,
     styled,
     Stack,
-    Chip,
+    Grid,
 } from '@mui/material';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import { Delete, Info } from '@mui/icons-material';
@@ -17,6 +17,7 @@ import React from 'react';
 import VoteButton from 'components/buttons/VoteButtons';
 import Ranking from 'components/Ranking';
 import Text from 'components/Text';
+import { StatusCode, StatusList } from "links";
 
 const CardActionsWrapper = styled(CardActions)(
     ({ theme }) => `
@@ -84,30 +85,44 @@ function Comment({ comment, post, onVote, setReport, setConfirm, userModel }) {
                         justifyContent: 'space-between'
                     }}
                 >
-                    <Stack direction="row" spacing={1} justifyContent="space-between">
-                        <>
-                            {post.statusCode == 1 && (
-                                <VoteButton post={comment} size='small' onClick={onVote} hasVote={comment.hasVote} />
+                    <Grid
+                        container
+                        direction={'row'}
+                        spacing={1}
+                        justifyContent="space-between"
+                    >
+                        <Grid item xl={6} >
+                            {post.statusCode == StatusCode.VOTING && (
+                                <Stack direction="row" spacing={1} justifyContent="space-between">
+                                    <VoteButton post={comment} size='small' onClick={onVote} hasVote={comment.hasVote} />
+                                </Stack>
                             )}
-                        </>
-                    </Stack>
-                    {post.statusCode == 1 && (
-                        <Box sx={{ mt: { xs: 1, md: 0 } }}>
-                            <div style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                flexWrap: 'wrap',
-                            }}>
-                                <Text
-                                    sx={{ display: 'flex', mx: 1 }}
-                                >
-                                    <ThumbUpIcon sx={{ mr: 1 }} />{comment.votes}
-                                </Text>{'|'}
-                                <Ranking voters={post.tot_votes} votes={comment.votes} />
-                            </div>
-                        </Box>
-                    )}
-
+                        </Grid>
+                        <Grid item xl={6} >
+                            {post.statusCode > StatusCode.REVIEW && (
+                                <Box sx={{ mt: { xs: 1, md: 0 } }}>
+                                    <div style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        flexWrap: 'wrap',
+                                    }}>
+                                        <Text
+                                            sx={{ display: 'flex', mr: 1 }}
+                                            color={StatusList[comment.statusCode].color}
+                                        >
+                                            {StatusList[comment.statusCode].icon}{comment.status}
+                                        </Text>{'|'}
+                                        <Text
+                                            sx={{ display: 'flex', mx: 1 }}
+                                        >
+                                            <ThumbUpIcon sx={{ mr: 1 }} />{comment.votes}
+                                        </Text>{'|'}
+                                        <Ranking voters={post.tot_votes} votes={comment.votes} />
+                                    </div>
+                                </Box>
+                            )}
+                        </Grid>
+                    </Grid>
                 </CardActionsWrapper>
             </Card>
         </Box >

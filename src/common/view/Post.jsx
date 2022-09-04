@@ -30,25 +30,19 @@ import VoteButton from 'components/buttons/VoteButtons';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import Ranking from 'components/Ranking';
-import HowToVoteIcon from '@mui/icons-material/HowToVote';
-import InsertCommentIcon from '@mui/icons-material/InsertComment';
-import ErrorIcon from '@mui/icons-material/Error';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import PollIcon from '@mui/icons-material/Poll';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import { StatusCode, StatusList } from 'links/constant';
 const CardActionsWrapper = styled(CardActions)(
     ({ theme }) => `
        background: ${theme.colors.alpha.black[5]};
        padding: ${theme.spacing(3)};
   `
 );
-const statusList = {
-    0: { color: 'info', icon: <InsertCommentIcon sx={{ mr: 1 }} /> },
-    1: { color: 'primary', icon: <HowToVoteIcon sx={{ mr: 1 }} /> },
-    2: { color: 'success', icon: <CheckCircleIcon sx={{ mr: 1 }} /> },
-    3: { color: 'error', icon: <ErrorIcon sx={{ mr: 1 }} /> },
-}
+
+
 
 function Post({ post, onMenu, onVote, userModel, viewPost, isOpen }) {
     // console.log(post)
@@ -198,7 +192,7 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen }) {
                                 <Grid item xl={6}>
                                     {isOpen ? (
                                         <>
-                                            {post.statusCode == 1 && (
+                                            {post.statusCode == StatusCode.VOTING && (
                                                 <VoteButton post={post} onClick={onVote} hasVote={post.hasVote} />
                                             )}
                                         </>
@@ -231,16 +225,16 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen }) {
                             }}>
                                 <Text
                                     sx={{ display: 'flex', mr: 1 }}
-                                    color={statusList[post.statusCode].color}
+                                    color={StatusList[post.statusCode].color}
                                 >
-                                    {statusList[post.statusCode].icon}{post.status}
+                                    {StatusList[post.statusCode].icon}{post.status}
                                 </Text>{'|'}
                                 <Text
                                     sx={{ display: 'flex', mx: 1 }}
                                 >
                                     <QuestionAnswerIcon sx={{ mr: 1 }} />{post.review}
                                 </Text>
-                                {post.statusCode > 0 && (
+                                {post.statusCode > StatusCode.REVIEW && (
                                     <>{'|'}
                                         <Text
                                             sx={{ display: 'flex', mx: 1 }}
