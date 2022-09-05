@@ -11,8 +11,10 @@ import { addReport } from "common/service";
 import { deletePost } from "common/service";
 import { useSnackbar } from 'notistack';
 import { isEmpty } from "_services";
+import { useSelector } from "react-redux";
 
 const Feed = ({ userModel, feedType }) => {
+  const search = useSelector(state => state.search);
   const history = useHistory();
   const [loading, setLoading] = useState(true);
   const [postFeeds, setFeeds] = useState([]);
@@ -66,6 +68,7 @@ const Feed = ({ userModel, feedType }) => {
       }
     })
   }
+
   const handleMenu = (postid, type) => {
     if (type == 0) {
       setReport({ postid: postid, open: true })
@@ -89,27 +92,49 @@ const Feed = ({ userModel, feedType }) => {
     setConfirm({ open: false, postid: null });
   };
 
+  // useEffect(() => {
+  //   if (feedType == 'profile') {
+  //     getPost({ status: search.cat, post_detail: search.text }).then(res => {
+  //       if (res.flag) {
+  //         setFeeds(res.data);
+  //         setLoading(false);
+  //       }
+  //     })
+  //   } else {
+  //     getFeeds({ status: search.cat, post_detail: search.text }).then(res => {
+  //       if (res.flag) {
+  //         setFeeds(res.data);
+  //         setLoading(false);
+  //       }
+  //     })
+  //   }
+
+  //   return () => {
+  //     setFeeds([])
+  //   }
+  // }, []);
+
   useEffect(() => {
+    setLoading(true);
     if (feedType == 'profile') {
-      getPost().then(res => {
+      getPost({ status: search.cat, post_detail: search.text }).then(res => {
         if (res.flag) {
           setFeeds(res.data);
           setLoading(false);
         }
       })
     } else {
-      getFeeds().then(res => {
+      getFeeds({ status: search.cat, post_detail: search.text }).then(res => {
         if (res.flag) {
           setFeeds(res.data);
           setLoading(false);
         }
       })
     }
-
     return () => {
       setFeeds([])
     }
-  }, []);
+  }, [search]);
 
   return (
     <Box sx={{ width: '100%' }}>

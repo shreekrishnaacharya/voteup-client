@@ -17,17 +17,19 @@ const getApiRequest = async (requestData) => {
     return result;
 }
 
-async function getFeeds() {
+async function getFeeds(data = {}) {
     return await getApiRequest({
         url: "/feeds",
+        data
     }).then((result) => {
         return result;
     });
 }
 
-async function getPost() {
+async function getPost(data = {}) {
     return await getApiRequest({
         url: "/user/mypost",
+        data
     }).then((result) => {
         return result;
     });

@@ -3,7 +3,7 @@ import { userReducer } from "./userReducer";
 import { profileReducer } from "./profileReducer";
 // import { menuReducer } from "./menuReducer";
 // import { itemDetailReducer, itemListReducer } from "./itemReducer";
-// import { vendDetailReducer, vendListReducer } from "./vendReducer";
+import { searchReducer } from "./searchReducer";
 // import { contactDetailReducer, contactListReducer } from "./contactReducer";
 // import { navPathReducer } from "./navPathReducer";
 import { alertReducer } from "./alertReducer";
@@ -15,8 +15,7 @@ const reducers = combineReducers({
     // menu: menuReducer,
     // itemDetail: itemDetailReducer,
     // itemList: itemListReducer,
-    // vendDetail: vendDetailReducer,
-    // vendList: vendListReducer,
+    search: searchReducer,
     // contactList: contactListReducer,
     // contactDetail: contactDetailReducer,
     // navPath: navPathReducer,

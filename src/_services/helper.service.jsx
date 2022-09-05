@@ -103,6 +103,25 @@ const isEmpty = (value) => {
     return false;
 };
 
+const CapitalText = (text) => {
+    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+}
+
+const Rid = () => {
+    // 65 to 90. ASCII value of lowercase alphabets – 97 to 122. ASCII value of UPPERCASE alphabets
+    const rndlst = [];
+    for (let i = 5; i > 0; i--) {
+        const rand = [];
+        for (let j = 2; j > 0; j--) {
+            rand.push(String.fromCharCode(Math.floor(Math.random() * 25) + 65));
+            rand.push(Math.floor(Math.random() * 9));
+            rand.push(String.fromCharCode(Math.floor(Math.random() * 25) + 97));
+        }
+        rndlst.push(rand.join(''));
+    }
+    return rndlst.join('-');
+};
+
 
 export {
     isEmpty,
@@ -110,5 +129,7 @@ export {
     getJsonForm,
     getJsonForms,
     getUpdateKey,
-    getDateString
+    getDateString,
+    CapitalText,
+    Rid
 }

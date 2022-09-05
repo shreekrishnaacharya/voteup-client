@@ -26,6 +26,9 @@ import * as yup from "yup";
 import { addPost } from "../service";
 import { isEmpty } from "_services";
 import ImageLoader from "components/ImageLoader";
+import { useDispatch, useSelector } from "react-redux";
+import { setSearch } from "redux/action/searchAction";
+import { Rid } from "_services";
 
 
 
@@ -48,6 +51,8 @@ const schema = yup.object({
   supporters: yup.number().min(1),
 });
 const Add = ({ userModel }) => {
+  const search = useSelector(state => state.search);
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const { handleSubmit, control, reset, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
@@ -74,6 +79,7 @@ const Add = ({ userModel }) => {
         });
         reset();
         setOpen(false);
+        dispatch(setSearch({ ...search, update: Rid() }));
       }
     })
   }
