@@ -208,7 +208,6 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen }) {
                                             Review
                                         </Button>
                                     )}
-
                                 </Grid>
                                 <Grid item xl={6}>
                                     <Button startIcon={<ShareTwoToneIcon />} variant="outlined">

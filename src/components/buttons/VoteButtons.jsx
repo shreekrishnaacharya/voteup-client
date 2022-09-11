@@ -57,7 +57,7 @@ const VoteButton = ({ hasVote, onClick, ...rest }) => {
     return <LoadingButton
         onClick={() => {
             onClick()
-            setLoading(false)
+            setLoading(true)
         }}
         color={hasVote == 1 ? 'primary' : 'info'}
         startIcon={<ThumbUpAltTwoTone />}
