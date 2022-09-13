@@ -148,8 +148,8 @@ const Add = ({ userModel }) => {
               render={({ field, fieldState }) => (
                 <>
                   <TextField
+                    type={'number'}
                     sx={{ marginTop: "15px" }}
-                    multiline
                     placeholder="Your supporters"
                     variant="standard"
                     {...field}

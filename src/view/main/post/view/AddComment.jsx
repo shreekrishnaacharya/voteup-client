@@ -48,7 +48,7 @@ const AddComment = ({ userModel, onAddComment }) => {
                                         render={({ field, fieldState }) => (
                                             <>
                                                 <TextField
-                                                    // multiline
+                                                    multiline
                                                     // rows={2}
                                                     sx={{ width: "100%" }}
                                                     placeholder="Add your review"

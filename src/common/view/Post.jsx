@@ -139,7 +139,6 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen }) {
                             >
                                 {post.userid === userModel._id ? (
                                     [
-                                        <MenuItem key={'edit'} onClick={() => { handleOptionAction(1) }}>Edit</MenuItem>,
                                         <MenuItem key={'delete'} onClick={() => { handleOptionAction(2) }}>Delete</MenuItem>
                                     ]
                                 ) : (
@@ -175,7 +174,7 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen }) {
                 <Divider />
                 <CardActionsWrapper
                     sx={{
-                        display: { xs: 'block', md: 'flex' },
+                        display: { xs: 'flex', md: 'flex' },
                         alignItems: 'center',
                         justifyContent: 'space-between'
                     }}
@@ -188,7 +187,7 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen }) {
                         alignItems="center"
                     >
                         <Grid item xl={6} >
-                            <Grid container direction={'row'} spacing={1}>
+                            <Grid container direction={'row'} spacing={{ xs: 0, md: 1 }}>
                                 <Grid item xl={6}>
                                     {isOpen ? (
                                         <>
@@ -200,7 +199,7 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen }) {
                                         <Button
                                             startIcon={<CommentTwoToneIcon />}
                                             variant="outlined"
-                                            sx={{ mx: 2 }}
+                                            sx={{ mr: { xs: 0.5, md: 2 } }}
                                             onClick={() => {
                                                 viewPost(post._id)
                                             }}
@@ -251,7 +250,6 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen }) {
                             </div>
                         </Grid>
                     </Grid>
-
                 </CardActionsWrapper>
             </Card>
         </Box >
