@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from "react-redux";
 import { useLocation, useHistory } from "react-router-dom";
 import { pages, guestPage } from "links/pages";
 import TokenService from '_services/token.service';

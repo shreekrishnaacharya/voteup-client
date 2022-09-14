@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { CapitalText } from '_services';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearch } from "redux/action/searchAction";
+import { setFeedList } from 'redux/action/feedsAction';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -66,6 +67,7 @@ export default function HeaderSearch() {
     const [stext, setStext] = useState("")
     const dispatch = useDispatch();
     const handleChange = (event) => {
+        console.log(search)
         if (event.key === 'Enter') {
             dispatch(setSearch({ ...search, text: stext }));
         }
@@ -76,9 +78,11 @@ export default function HeaderSearch() {
     };
     const handleCatChange = (event) => {
         dispatch(setSearch({ ...search, cat: event.target.value }));
+        dispatch(setFeedList([]));
     };
     const handleClear = (event) => {
         dispatch(setSearch({ ...search, text: "" }));
+        dispatch(setFeedList([]));
         setStext("")
     };
     return (
@@ -105,7 +109,6 @@ export default function HeaderSearch() {
                         <ClearIcon />
                     </SearchClearIconWrapper>
                 </Search>
-
             </Tooltip>
             <FormControl sx={{ minWidth: 120 }}>
                 <Select
@@ -118,7 +121,6 @@ export default function HeaderSearch() {
                     {Object.keys(StatusCode).map(e => {
                         return <MenuItem value={StatusCode[e]}>{CapitalText(e)}</MenuItem>
                     })}
-
                 </Select>
             </FormControl>
         </>

@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import { userReducer } from "./userReducer";
 import { profileReducer } from "./profileReducer";
 // import { menuReducer } from "./menuReducer";
-// import { itemDetailReducer, itemListReducer } from "./itemReducer";
+import { feedListReducer } from "./feedReducer";
 import { searchReducer } from "./searchReducer";
 // import { contactDetailReducer, contactListReducer } from "./contactReducer";
 // import { navPathReducer } from "./navPathReducer";
@@ -14,7 +14,7 @@ const reducers = combineReducers({
     profile: profileReducer,
     // menu: menuReducer,
     // itemDetail: itemDetailReducer,
-    // itemList: itemListReducer,
+    feedList: feedListReducer,
     search: searchReducer,
     // contactList: contactListReducer,
     // contactDetail: contactDetailReducer,

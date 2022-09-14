@@ -11,13 +11,14 @@ import { addReport } from "common/service";
 import { deletePost } from "common/service";
 import { useSnackbar } from 'notistack';
 import { isEmpty } from "_services";
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import { setFeedList } from "redux/action/feedsAction";
 const Feed = ({ userModel, feedType }) => {
   const search = useSelector(state => state.search);
   const history = useHistory();
   const [loading, setLoading] = useState(true);
-  const [postFeeds, setFeeds] = useState([]);
+  const postFeeds = useSelector(state => state.feedList.feeds);
+  const dispatch = useDispatch();
   const [report, setReport] = useState({
     open: false,
     postid: null
@@ -38,7 +39,7 @@ const Feed = ({ userModel, feedType }) => {
   }
 
   const filterPost = (pid) => {
-    setFeeds(postFeeds.filter(e => e._id !== pid));
+    dispatch(setFeedList(postFeeds.filter(e => e._id !== pid)));
   }
 
   const submitReportForm = (fdata, reset) => {
@@ -92,53 +93,28 @@ const Feed = ({ userModel, feedType }) => {
     setConfirm({ open: false, postid: null });
   };
 
-  // useEffect(() => {
-  //   if (feedType == 'profile') {
-  //     getPost({ status: search.cat, post_detail: search.text }).then(res => {
-  //       if (res.flag) {
-  //         setFeeds(res.data);
-  //         setLoading(false);
-  //       }
-  //     })
-  //   } else {
-  //     getFeeds({ status: search.cat, post_detail: search.text }).then(res => {
-  //       if (res.flag) {
-  //         setFeeds(res.data);
-  //         setLoading(false);
-  //       }
-  //     })
-  //   }
-
-  //   return () => {
-  //     setFeeds([])
-  //   }
-  // }, []);
-
   useEffect(() => {
     setLoading(true);
     if (feedType == 'profile') {
       getPost({ status: search.cat, post_detail: search.text }).then(res => {
         if (res.flag) {
-          setFeeds(res.data);
+          dispatch(setFeedList(res.data));
           setLoading(false);
         }
       })
     } else {
       getFeeds({ status: search.cat, post_detail: search.text }).then(res => {
         if (res.flag) {
-          setFeeds(res.data);
+          dispatch(setFeedList(res.data));
           setLoading(false);
         }
       })
-    }
-    return () => {
-      setFeeds([])
     }
   }, [search]);
 
   return (
     <Box sx={{ width: '100%' }}>
-      {loading ? (
+      {loading && postFeeds.length == 0 ? (
         <>
           <PostLoad />
           <PostLoad />
@@ -147,7 +123,7 @@ const Feed = ({ userModel, feedType }) => {
       ) : (
         <>
           {postFeeds.map(post => {
-            return <Post key={post._id} post={post} onMenu={handleMenu} userModel={userModel} viewPost={viewPost} />
+            return <Post toaster={enqueueSnackbar} key={post._id} post={post} onMenu={handleMenu} userModel={userModel} viewPost={viewPost} />
           })}
         </>
       )

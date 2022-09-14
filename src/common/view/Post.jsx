@@ -35,6 +35,7 @@ import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import PollIcon from '@mui/icons-material/Poll';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import { StatusCode, StatusList } from 'links/constant';
+import { CopyToClipboard } from '_services';
 const CardActionsWrapper = styled(CardActions)(
     ({ theme }) => `
        background: ${theme.colors.alpha.black[5]};
@@ -44,7 +45,7 @@ const CardActionsWrapper = styled(CardActions)(
 
 
 
-function Post({ post, onMenu, onVote, userModel, viewPost, isOpen }) {
+function Post({ post, onMenu, onVote, userModel, viewPost, isOpen, toaster }) {
     // console.log(post)
     // const [paction, setPaction] = useState({
     //     votes: post.votes,
@@ -175,6 +176,7 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen }) {
                 <CardActionsWrapper
                     sx={{
                         display: { xs: 'flex', md: 'flex' },
+                        py: 1.5,
                         alignItems: 'center',
                         justifyContent: 'space-between'
                     }}
@@ -187,12 +189,14 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen }) {
                         alignItems="center"
                     >
                         <Grid item xl={6} >
-                            <Grid container direction={'row'} spacing={{ xs: 0, md: 1 }}>
+                            <Grid container direction={'row'}>
                                 <Grid item xl={6}>
                                     {isOpen ? (
                                         <>
                                             {post.statusCode == StatusCode.VOTING && (
-                                                <VoteButton post={post} onClick={onVote} hasVote={post.hasVote} />
+                                                <VoteButton post={post}
+                                                    sx={{ mr: { xs: 0.5, md: 2 } }}
+                                                    onClick={onVote} hasVote={post.hasVote} />
                                             )}
                                         </>
                                     ) : (
@@ -209,7 +213,14 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen }) {
                                     )}
                                 </Grid>
                                 <Grid item xl={6}>
-                                    <Button startIcon={<ShareTwoToneIcon />} variant="outlined">
+                                    <Button
+                                        startIcon={<ShareTwoToneIcon />}
+                                        variant="outlined"
+                                        onClick={() => {
+                                            CopyToClipboard(post.link)
+                                            toaster('Link copied!!!')
+                                        }}
+                                    >
                                         Share
                                     </Button>
                                 </Grid>
@@ -232,7 +243,7 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen }) {
                                 >
                                     <QuestionAnswerIcon sx={{ mr: 1 }} />{post.review}
                                 </Text>
-                                {post.statusCode > StatusCode.REVIEW && (
+                                {post.statusCode > StatusCode.VOTING && (
                                     <>{'|'}
                                         <Text
                                             sx={{ display: 'flex', mx: 1 }}

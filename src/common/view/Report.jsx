@@ -16,6 +16,8 @@ import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import AnimateButton from "components/@extended/AnimateButton";
+import { useEffect } from "react";
 
 
 const schema = yup.object({
@@ -24,10 +26,13 @@ const schema = yup.object({
 });
 
 const Report = ({ open, onReport, onClose, title }) => {
-  const { handleSubmit, control, reset } = useForm({
+  const { handleSubmit, control, reset, formState: { errors, isSubmitting } } = useForm({
     resolver: yupResolver(schema)
   });
 
+  useEffect(() => {
+    return reset()
+  }, [])
   return (
     <>
       <Dialog
@@ -40,7 +45,6 @@ const Report = ({ open, onReport, onClose, title }) => {
             {title ? title : "Repost this content"}
           </DialogTitle>
           <DialogContent sx={{ padding: '20px' }}>
-
             <Stack direction="column" gap={5}>
               <Controller
                 name="rtype"
@@ -59,6 +63,8 @@ const Report = ({ open, onReport, onClose, title }) => {
                       <MenuItem value={1}>Advertisment</MenuItem>
                       <MenuItem value={2}>Abuse</MenuItem>
                       <MenuItem value={3}>Sexual Content</MenuItem>
+                      <MenuItem value={4}>Territorial Integrity</MenuItem>
+                      <MenuItem value={5}>Sovereignity of Country</MenuItem>
                     </Select>
                   </div>
                 )}
@@ -83,21 +89,26 @@ const Report = ({ open, onReport, onClose, title }) => {
             </Stack>
           </DialogContent>
           <DialogActions sx={{ padding: '20px' }}>
-            <Button
-              variant='outlined'
-              color={'warning'}
-              onClick={() => {
-                onClose()
-              }}>Cancel</Button>
-            <Button color={'success'} variant='outlined'
-              type="submit"
-              autoFocus>
-              Submit
-            </Button>
+            <Stack direction="row" gap={2}>
+              <Button
+                variant='contained'
+                color={'warning'}
+                onClick={() => {
+                  onClose()
+                }}>Cancel</Button>
+              <AnimateButton>
+                <Button color={'success'} variant='contained'
+                  type="submit"
+                  disableElevation
+                  disabled={isSubmitting}
+                  autoFocus>
+                  Submit
+                </Button>
+              </AnimateButton>
+            </Stack>
           </DialogActions>
         </form>
       </Dialog>
-
     </>
   );
 };

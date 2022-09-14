@@ -39,6 +39,7 @@ function PostLoad({ isOpen }) {
                     alignItems: 'center',
                     justifyContent: 'space-between'
                 }}
+                mx={1.5}
             >
                 <Stack direction="row" spacing={2} justifyContent="space-between">
                     {isOpen ? (

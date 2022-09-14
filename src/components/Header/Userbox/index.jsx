@@ -129,14 +129,14 @@ function HeaderUserbox() {
             <InboxTwoToneIcon fontSize="small" />
             <ListItemText primary="Messenger" />
           </ListItem> */}
-          <ListItem
+          {/* <ListItem
             button
             to="/management/profile/settings"
             component={NavLink}
           >
             <AccountTreeTwoToneIcon fontSize="small" />
             <ListItemText primary="Account Settings" />
-          </ListItem>
+          </ListItem> */}
         </List>
         <Divider />
         <Box sx={{ m: 1 }}>

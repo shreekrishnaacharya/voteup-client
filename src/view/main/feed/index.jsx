@@ -6,6 +6,7 @@ import tokenService from "_services/token.service";
 
 function FeedController() {
     const userModel = tokenService.getUser();
+    // localStorage.setItem("scrollPos", window.pageYOffset)
     return (
         <Box pt={2} pb={15} color={"text.primary"}>
             <Stack direction="row" spacing={2} gap={2} justifyContent="space-between">

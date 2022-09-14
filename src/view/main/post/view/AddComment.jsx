@@ -51,7 +51,7 @@ const AddComment = ({ userModel, onAddComment }) => {
                                                     multiline
                                                     // rows={2}
                                                     sx={{ width: "100%" }}
-                                                    placeholder="Add your review"
+                                                    placeholder="Post your idea, issue and agenda here!"
                                                     // variant="standard"
                                                     {...field}
                                                 />

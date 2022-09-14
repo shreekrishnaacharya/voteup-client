@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { addComment, deleteComment, getViewPost, actionUpdateAction } from "../service";
 import ConfirmDelete from "common/view/ConfirmDelete";
 import Post from "common/view/Post";
@@ -23,7 +23,8 @@ const ViewPost = () => {
     const [loading, setLoading] = useState(true);
     const [postFeeds, setPost] = useState({});
     const { enqueueSnackbar } = useSnackbar();
-
+    // const myRef = useRef(null)
+    // const executeScroll = () => myRef.current.scrollIntoView()
     const params = new URLSearchParams(location.search);
     const postid = params.get('id');
     const [report, setReport] = useState({
@@ -34,19 +35,20 @@ const ViewPost = () => {
         open: false,
         postid: postid
     })
+    let isLink = postid.match(/^[a-z]+$/) ? true : false
+
     const homePage = () => {
         history.push({
             pathname: pages.HOME
         });
     }
 
-    const initLoad = () => {
-        getViewPost(postid).then(res => {
-            if (res.flag) {
-                setPost(res.data);
-                setLoading(false);
-            }
-        })
+    const initLoad = async () => {
+        const res = await getViewPost(postid);
+        if (res.flag) {
+            setPost(res.data);
+            setLoading(false);
+        }
     }
     const onVote = (id) => {
         actionUpdateAction(id).then(e => {
@@ -124,19 +126,21 @@ const ViewPost = () => {
         if (type == 0) {
             setReport({ postid: postid, open: true })
         } else if (type == 2) {
-            console.log('delete confirm open')
             setConfirm({ postid: postid, open: true })
         }
     }
 
-
     useEffect(() => {
-        initLoad()
+        initLoad().then((e) => {
+            if (isLink) {
+                executeScroll()
+            }
+        })
         return () => {
             setPost({})
             setConfirm({ open: false, postid: null })
         }
-    }, []);
+    }, [postid]);
 
     return (
         <Box sx={{ pt: 2 }}>
@@ -146,30 +150,44 @@ const ViewPost = () => {
                 </>
             ) : (
                 <>
-                    <Post isOpen={true} onVote={() => { onVote(postid) }} key={postFeeds._id} post={postFeeds} onMenu={handleMenu} userModel={userModel} viewPost={() => { }} />
+                    {postFeeds.ptype == 0 ? (
+                        <Post toaster={enqueueSnackbar}
+                            // flash={postid === postFeeds.post_id} 
+                            isOpen={true} onVote={() => { onVote(postid) }} key={postFeeds._id} post={postFeeds} onMenu={handleMenu} userModel={userModel} viewPost={() => { }} />
+                    ) : (
+                        <Comment toaster={enqueueSnackbar}
+                            // flash={postid === postFeeds.post_id} 
+                            post={postFeeds} onVote={() => { onVote(postFeeds._id) }} key={postFeeds._id} comment={postFeeds} setReport={setReport} setConfirm={setConfirm} userModel={userModel} />
+                    )}
                 </>
             )
             }
+            {postFeeds.ptype == 0 && (
+                <Box sx={{ marginLeft: '40px' }}>
+                    <Text varient={'h1'}>Amend/Dissent</Text>
+                    {postFeeds.statusCode == StatusCode.REVIEW && (
+                        <AddComment userModel={userModel} onAddComment={addCommentForm} />
+                    )}
+                    {loading ? (
+                        <>
+                            <CommentLoad />
+                            <CommentLoad />
+                        </>
+                    ) : (
+                        <>
+                            {postFeeds.comments.map(comment => {
+                                return <Comment toaster={enqueueSnackbar}
+                                    // ref={postid === comment.post_id ? myRef : null} 
+                                    // flash={postid === comment.post_id}
+                                    post={postFeeds}
+                                    onVote={() => { onVote(comment._id) }} key={comment._id} comment={comment} setReport={setReport} setConfirm={setConfirm} userModel={userModel} />
+                            })}
+                        </>
+                    )
+                    }
+                </Box>
+            )}
 
-            <Box sx={{ marginLeft: '40px' }}>
-                <Text varient={'h1'}>Review</Text>
-                {postFeeds.statusCode == StatusCode.REVIEW && (
-                    <AddComment userModel={userModel} onAddComment={addCommentForm} />
-                )}
-                {loading ? (
-                    <>
-                        <CommentLoad />
-                        <CommentLoad />
-                    </>
-                ) : (
-                    <>
-                        {postFeeds.comments.map(comment => {
-                            return <Comment post={postFeeds} onVote={() => { onVote(comment._id) }} key={comment._id} comment={comment} setReport={setReport} setConfirm={setConfirm} userModel={userModel} />
-                        })}
-                    </>
-                )
-                }
-            </Box>
             <Report open={report.open} onReport={submitReportForm} onClose={() => { setReport({ open: false, postid: null }) }} />
             <ConfirmDelete open={confirm.open} onDelete={deleteCommentPost} onClose={() => { setConfirm({ open: false, postid: null }) }} />
         </Box>

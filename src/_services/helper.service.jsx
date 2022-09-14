@@ -107,6 +107,9 @@ const CapitalText = (text) => {
     return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
 }
 
+const CopyToClipboard = (text) => {
+    window.navigator.clipboard.writeText(text);
+}
 const Rid = () => {
     // 65 to 90. ASCII value of lowercase alphabets – 97 to 122. ASCII value of UPPERCASE alphabets
     const rndlst = [];
@@ -131,5 +134,6 @@ export {
     getUpdateKey,
     getDateString,
     CapitalText,
-    Rid
+    Rid,
+    CopyToClipboard
 }

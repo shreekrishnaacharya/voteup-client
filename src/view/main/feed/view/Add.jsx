@@ -1,7 +1,6 @@
 import {
   Avatar,
   Button,
-  ButtonGroup,
   Fab,
   Modal,
   Stack,
@@ -13,11 +12,9 @@ import {
 import React, { useState } from "react";
 import {
   Add as AddIcon,
-  EmojiEmotions,
   Image,
-  PersonAdd,
-  VideoCameraBack,
 } from "@mui/icons-material";
+import AnimateButton from 'components/@extended/AnimateButton';
 import { Box } from "@mui/system";
 import { Controller, useForm } from "react-hook-form";
 import { useSnackbar } from 'notistack';
@@ -54,7 +51,7 @@ const Add = ({ userModel }) => {
   const search = useSelector(state => state.search);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const { handleSubmit, control, reset, formState: { errors } } = useForm({
+  const { handleSubmit, control, reset, formState: { errors, isSubmitting } } = useForm({
     resolver: yupResolver(schema)
   });
   const { enqueueSnackbar } = useSnackbar();
@@ -114,7 +111,7 @@ const Add = ({ userModel }) => {
           borderRadius={3}
         >
           <Typography variant="h6" color="gray" textAlign="center">
-            Create post
+            Post your idea, issue and agenda
           </Typography>
           <UserBox>
             <Avatar
@@ -135,7 +132,7 @@ const Add = ({ userModel }) => {
                     sx={{ width: "100%" }}
                     multiline
                     rows={3}
-                    placeholder="What's on your mind?"
+                    placeholder="Your your idea, issue and agenda here!"
                     variant="standard"
                     {...field}
                   />
@@ -182,13 +179,18 @@ const Add = ({ userModel }) => {
                 </>
               )}
             />
-            <ButtonGroup
-              fullWidth
-              variant="contained"
-              aria-label="outlined primary button group"
-            >
-              <Button type="submit">Post</Button>
-            </ButtonGroup>
+            <AnimateButton>
+              <Button
+                variant="contained"
+                type="submit"
+                color="primary"
+                disableElevation
+                disabled={isSubmitting}
+                fullWidth
+              >
+                Post
+              </Button>
+            </AnimateButton>
           </form>
         </Box>
       </SytledModal>

@@ -9,10 +9,18 @@ loadProgressBar();
 
 export default function App() {
   const { pathname } = useLocation();
-  useEffect(() => {
-    document.documentElement.scrollTop = 0;
-    document.scrollingElement.scrollTop = 0;
-  }, [pathname]);
+
+  // useEffect(() => {
+  //   if (pathname == "/") {
+  //     const pos = localStorage.getItem("scrollPos");
+  //     console.log(pos)
+  //     document.documentElement.scrollTop = pos;
+  //     document.scrollingElement.scrollTop = pos;
+  //   } else {
+  //     document.documentElement.scrollTop = 0;
+  //     document.scrollingElement.scrollTop = 0;
+  //   }
+  // }, [pathname]);
 
   return (
     <ThemeProvider>
