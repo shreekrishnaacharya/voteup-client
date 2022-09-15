@@ -7,11 +7,18 @@ import { Grid, Stack, Typography } from '@mui/material';
 import FirebaseRegister from './auth-forms/AuthRegister';
 import AuthWrapper from './AuthWrapper';
 import { pages } from 'links';
+import { Helmet } from 'react-helmet';
 
 // ================================|| REGISTER ||================================ //
 
 const Register = () => (
     <AuthWrapper>
+        <Helmet>
+            <title>Register | Ventvoila</title>
+            <meta property="description" content="Express your idea, agenda with your communitity. And land to a common ground with democratic voting" />
+            <meta property="og:title" content={"Login | Ventvoila"} />
+            <meta property="og:description" content={"Express your idea, agenda with your communitity. And land to a common ground with democratic voting"} />
+        </Helmet>
         <Grid container spacing={3}>
             <Grid item xs={12}>
                 <Stack direction="row" justifyContent="space-between" alignItems="baseline" sx={{ mb: { xs: -0.5, sm: 0.5 } }}>

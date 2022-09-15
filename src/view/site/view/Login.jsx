@@ -7,11 +7,17 @@ import { Grid, Stack, Typography } from '@mui/material';
 import AuthLogin from './auth-forms/AuthLogin';
 import AuthWrapper from './AuthWrapper';
 import { pages } from 'links';
+import { Helmet } from 'react-helmet';
 
 // ================================|| LOGIN ||================================ //
 
 const Login = () => (
     <AuthWrapper>
+        <Helmet>
+            <title>Login | Ventvoila</title>
+            <meta name="title" property="og:title" content={"Login | Ventvoila"} />
+            <meta name="description" property="og:description" content={"Enter your email and password to login into the system"} />
+        </Helmet>
         <Grid container spacing={3}>
             <Grid item xs={12}>
                 <Stack direction="row" justifyContent="space-between" alignItems="baseline" sx={{ mb: { xs: -0.5, sm: 0.5 } }}>

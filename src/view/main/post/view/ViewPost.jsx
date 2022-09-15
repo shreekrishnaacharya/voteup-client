@@ -15,6 +15,7 @@ import CommentLoad from "./CommentLoad";
 import { isEmpty } from "_services";
 import { useSnackbar } from 'notistack';
 import { addReport } from "common/service";
+import { Helmet } from "react-helmet";
 
 const ViewPost = () => {
     const userModel = tokenService.getUser();
@@ -131,66 +132,62 @@ const ViewPost = () => {
     }
 
     useEffect(() => {
-        initLoad().then((e) => {
-            if (isLink) {
-                executeScroll()
-            }
-        })
+        initLoad()
         return () => {
             setPost({})
             setConfirm({ open: false, postid: null })
         }
     }, [postid]);
 
+    let tagsList = "";
+    if ("tags" in postFeeds && postFeeds.tags !== null) {
+        tagsList = postFeeds.tags.replace(/,/gi, " | ")
+    }
     return (
-        <Box sx={{ pt: 2 }}>
-            {loading ? (
-                <>
-                    <PostLoad isOpen={true} />
-                </>
-            ) : (
-                <>
-                    {postFeeds.ptype == 0 ? (
-                        <Post toaster={enqueueSnackbar}
-                            // flash={postid === postFeeds.post_id} 
-                            isOpen={true} onVote={() => { onVote(postid) }} key={postFeeds._id} post={postFeeds} onMenu={handleMenu} userModel={userModel} viewPost={() => { }} />
-                    ) : (
-                        <Comment toaster={enqueueSnackbar}
-                            // flash={postid === postFeeds.post_id} 
-                            post={postFeeds} onVote={() => { onVote(postFeeds._id) }} key={postFeeds._id} comment={postFeeds} setReport={setReport} setConfirm={setConfirm} userModel={userModel} />
-                    )}
-                </>
-            )
-            }
-            {postFeeds.ptype == 0 && (
-                <Box sx={{ marginLeft: '40px' }}>
-                    <Text varient={'h1'}>Amend/Dissent</Text>
-                    {postFeeds.statusCode == StatusCode.REVIEW && (
-                        <AddComment userModel={userModel} onAddComment={addCommentForm} />
-                    )}
-                    {loading ? (
-                        <>
-                            <CommentLoad />
-                            <CommentLoad />
-                        </>
-                    ) : (
-                        <>
-                            {postFeeds.comments.map(comment => {
-                                return <Comment toaster={enqueueSnackbar}
-                                    // ref={postid === comment.post_id ? myRef : null} 
-                                    // flash={postid === comment.post_id}
-                                    post={postFeeds}
-                                    onVote={() => { onVote(comment._id) }} key={comment._id} comment={comment} setReport={setReport} setConfirm={setConfirm} userModel={userModel} />
-                            })}
-                        </>
-                    )
-                    }
-                </Box>
-            )}
+        <>
+            <Box sx={{ pt: 2 }}>
+                {loading ? (
+                    <>
+                        <PostLoad isOpen={true} />
+                    </>
+                ) : (
+                    <>
+                        
+                        {postFeeds.ptype == 0 ? (
+                            <Post toaster={enqueueSnackbar}
+                                // flash={postid === postFeeds.post_id} 
+                                isOpen={true} onVote={() => { onVote(postid) }} key={postFeeds._id} post={postFeeds} onMenu={handleMenu} userModel={userModel} viewPost={() => { }} />
+                        ) : (
+                            <Comment toaster={enqueueSnackbar}
+                                // flash={postid === postFeeds.post_id} 
+                                post={postFeeds} onVote={() => { onVote(postFeeds._id) }} key={postFeeds._id} comment={postFeeds} setReport={setReport} setConfirm={setConfirm} userModel={userModel} />
+                        )}
 
-            <Report open={report.open} onReport={submitReportForm} onClose={() => { setReport({ open: false, postid: null }) }} />
-            <ConfirmDelete open={confirm.open} onDelete={deleteCommentPost} onClose={() => { setConfirm({ open: false, postid: null }) }} />
-        </Box>
+
+                        {postFeeds.ptype == 0 && (
+                            <Box sx={{ marginLeft: '40px' }}>
+                                <Text varient={'h1'}>Amend/Dissent</Text>
+                                {postFeeds.statusCode == StatusCode.REVIEW && (
+                                    <AddComment userModel={userModel} onAddComment={addCommentForm} />
+                                )}
+                                {postFeeds.comments.map(comment => {
+                                    return <Comment toaster={enqueueSnackbar}
+                                        // ref={postid === comment.post_id ? myRef : null} 
+                                        // flash={postid === comment.post_id}
+                                        post={postFeeds}
+                                        onVote={() => { onVote(comment._id) }} key={comment._id} comment={comment} setReport={setReport} setConfirm={setConfirm} userModel={userModel} />
+                                })}
+                            </Box>
+                        )}
+
+                        <Report open={report.open} onReport={submitReportForm} onClose={() => { setReport({ open: false, postid: null }) }} />
+                        <ConfirmDelete open={confirm.open} onDelete={deleteCommentPost} onClose={() => { setConfirm({ open: false, postid: null }) }} />
+
+                    </>
+                )
+                }
+            </Box>
+        </>
     );
 };
 

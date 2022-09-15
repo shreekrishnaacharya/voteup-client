@@ -3,15 +3,46 @@ import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
-import { FormControl, MenuItem, Select, Tooltip } from '@mui/material';
+import { Box, Dialog, DialogTitle, FormControl, IconButton, InputAdornment, MenuItem, Select, Slide, TextField, Tooltip } from '@mui/material';
 import { StatusCode } from 'links';
-import { useState } from 'react';
+import { useState, forwardRef } from 'react';
 import { CapitalText } from '_services';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearch } from "redux/action/searchAction";
 import { setFeedList } from 'redux/action/feedsAction';
 
+const Transition = forwardRef(function Transition(props, ref) {
+    return <Slide direction="down" ref={ref} {...props} />;
+});
 
+const DialogWrapper = styled(Dialog)(
+    () => `
+      .MuiDialog-container {
+          height: auto;
+      }
+      
+      .MuiDialog-paperScrollPaper {
+          max-height: calc(100vh - 64px)
+      }
+  `
+);
+
+const SearchInputWrapper = styled(TextField)(
+    ({ theme }) => `
+      background: ${theme.colors.alpha.white[100]};
+  
+      .MuiInputBase-input {
+          font-size: ${theme.typography.pxToRem(17)};
+      }
+  `
+);
+
+const DialogTitleWrapper = styled(DialogTitle)(
+    ({ theme }) => `
+      background: ${theme.colors.alpha.black[5]};
+      padding: ${theme.spacing(3)}
+  `
+);
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -64,15 +95,23 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function HeaderSearch() {
     const search = useSelector(state => state.search);
-    const [stext, setStext] = useState("")
+    const [stext, setStext] = useState(search.text)
     const dispatch = useDispatch();
     const handleChange = (event) => {
-        console.log(search)
         if (event.key === 'Enter') {
             dispatch(setSearch({ ...search, text: stext }));
         }
     };
 
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
     const handleTextChange = (event) => {
         setStext(event.target.value)
     };
@@ -87,42 +126,109 @@ export default function HeaderSearch() {
     };
     return (
         <>
-            <Tooltip arrow title="Search">
-                <Search>
-                    <SearchIconWrapper>
-                        <SearchIcon />
-                    </SearchIconWrapper>
-                    <StyledInputBase
-                        placeholder="Search…"
-                        value={stext}
-                        onChange={handleTextChange}
-                        onKeyPress={handleChange}
-                        inputProps={{ 'aria-label': 'search' }}
-                    />
-                    <SearchClearIconWrapper
-                        onClick={handleClear}
-                        style={(stext == "" ? { opacity: 0 } : {
-                            cursor: 'pointer',
-                            opacity: 1
-                        })}
+            <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+                <Tooltip arrow title="Search">
+                    <Search>
+                        <SearchIconWrapper>
+                            <SearchIcon />
+                        </SearchIconWrapper>
+                        <StyledInputBase
+                            placeholder="Search…"
+                            value={stext}
+                            onChange={handleTextChange}
+                            onKeyPress={handleChange}
+                            inputProps={{ 'aria-label': 'search' }}
+                        />
+                        <SearchClearIconWrapper
+                            onClick={handleClear}
+                            style={(stext == "" ? { opacity: 0 } : {
+                                cursor: 'pointer',
+                                opacity: 1
+                            })}
+                        >
+                            <ClearIcon />
+                        </SearchClearIconWrapper>
+                    </Search>
+                </Tooltip>
+                <FormControl sx={{ minWidth: 120 }}>
+                    <Select
+                        size="small"
+                        value={search.cat}
+                        displayEmpty
+                        onChange={handleCatChange}
                     >
-                        <ClearIcon />
-                    </SearchClearIconWrapper>
-                </Search>
-            </Tooltip>
-            <FormControl sx={{ minWidth: 120 }}>
-                <Select
-                    size="small"
-                    value={search.cat}
-                    displayEmpty
-                    onChange={handleCatChange}
+                        <MenuItem keys={'all'} value="">All</MenuItem>
+                        {Object.keys(StatusCode).map(e => {
+                            return <MenuItem keys={e} value={StatusCode[e]}>{CapitalText(e)}</MenuItem>
+                        })}
+                    </Select>
+                </FormControl>
+            </Box>
+            <Box sx={{ display: { xs: 'block', md: 'none' } }}>
+                <Tooltip arrow title="Search">
+                    <IconButton color="primary" onClick={handleClickOpen}>
+                        <SearchIcon />
+                    </IconButton>
+                </Tooltip>
+                <DialogWrapper
+                    open={open}
+                    TransitionComponent={Transition}
+                    keepMounted
+                    maxWidth="md"
+                    fullWidth
+                    scroll="paper"
+                    onClose={handleClose}
                 >
-                    <MenuItem value="">All</MenuItem>
-                    {Object.keys(StatusCode).map(e => {
-                        return <MenuItem value={StatusCode[e]}>{CapitalText(e)}</MenuItem>
-                    })}
-                </Select>
-            </FormControl>
+                    <DialogTitleWrapper>
+                        <Box sx={{ display: 'flex' }} gap={1}>
+                            <SearchInputWrapper
+                                value={stext}
+                                autoFocus
+                                onChange={handleTextChange}
+                                onKeyPress={handleChange}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <SearchIcon />
+                                        </InputAdornment>
+                                    ),
+                                    endAdornment: (
+                                        <SearchClearIconWrapper
+                                            onClick={handleClear}
+                                            style={(stext == "" ? { opacity: 0 } : {
+                                                cursor: 'pointer',
+                                                opacity: 1
+                                            })}
+                                        >
+                                            <ClearIcon />
+                                        </SearchClearIconWrapper>
+                                    )
+                                }}
+                                placeholder="Search terms here..."
+                                fullWidth
+                                label="Search"
+                            />
+                            <FormControl sx={{ minWidth: 100 }}>
+                                <Select
+                                    size="small"
+                                    value={search.cat}
+                                    displayEmpty
+                                    onChange={handleCatChange}
+                                    sx={{
+                                        fontSize: 15,
+                                        py: 0.81
+                                    }}
+                                >
+                                    <MenuItem keys={'all'} value="">All</MenuItem>
+                                    {Object.keys(StatusCode).map(e => {
+                                        return <MenuItem keys={e} value={StatusCode[e]}>{CapitalText(e)}</MenuItem>
+                                    })}
+                                </Select>
+                            </FormControl>
+                        </Box>
+                    </DialogTitleWrapper>
+                </DialogWrapper>
+            </Box>
         </>
     );
 }

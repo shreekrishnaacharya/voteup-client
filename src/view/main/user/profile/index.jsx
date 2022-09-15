@@ -11,6 +11,7 @@ import tokenService from "_services/token.service";
 import { useDispatch, useSelector } from "react-redux";
 import { setProfile } from "redux/action/profileAction";
 import { useSnackbar } from 'notistack';
+import { Helmet } from 'react-helmet';
 
 const TabsWrapper = styled(Tabs)(
   () => `
@@ -57,37 +58,40 @@ function ManagementUserProfile() {
 
   return (
     <>
-      
-        <Grid
-          container
-          direction="row"
-          justifyContent="center"
-          alignItems="stretch"
-          spacing={3}
-        >
-          <Grid item xs={12}>
-            <ProfileCover user={userProfile} saveImage={saveImage} />
-          </Grid>
-          <Grid item xs={12}>
-            <TabsWrapper
-              onChange={handleTabsChange}
-              value={currentTab}
-              variant="scrollable"
-              scrollButtons="auto"
-              indicator={true}
-            >
-              {tabs.map((tab) => (
-                <Tab key={tab.value} label={tab.label} value={tab.value} />
-              ))}
-              <Link to={pages.HOME}><Button>Home</Button></Link>
-            </TabsWrapper>
-          </Grid>
-          <Grid item xs={12}>
-            {currentTab === 'activity' && <Feed userModel={userModel} feedType={'profile'} />}
-            {currentTab === 'edit_profile' && <EditProfileTab userProfile={userProfile} />}
-            {currentTab === 'populat_tags' && <PopularTags />}
-          </Grid>
+      <Helmet>
+        <title>{userProfile.name + ' | Ventvoila'}</title>
+        <meta property="og:title" content={userProfile.name} />
+        <meta property="og:description" content={userProfile.mystory} />
+      </Helmet>
+      <Grid
+        container
+        direction="row"
+        justifyContent="center"
+        alignItems="stretch"
+        spacing={3}
+      >
+        <Grid item xs={12}>
+          <ProfileCover user={userProfile} saveImage={saveImage} />
         </Grid>
+        <Grid item xs={12}>
+          <TabsWrapper
+            onChange={handleTabsChange}
+            value={currentTab}
+            variant="scrollable"
+            scrollButtons="auto"
+            indicator={true}
+          >
+            {tabs.map((tab) => (
+              <Tab key={tab.value} label={tab.label} value={tab.value} />
+            ))}
+          </TabsWrapper>
+        </Grid>
+        <Grid item xs={12}>
+          {currentTab === 'activity' && <Feed userModel={userModel} feedType={'profile'} />}
+          {currentTab === 'edit_profile' && <EditProfileTab userProfile={userProfile} />}
+          {currentTab === 'populat_tags' && <PopularTags />}
+        </Grid>
+      </Grid>
     </>
   );
 }
