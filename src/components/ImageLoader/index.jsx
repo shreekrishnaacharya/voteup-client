@@ -31,7 +31,7 @@ const SizeType = {
     lg: [[12, 12, 6], '180px'],
 }
 
-function ImageLoader({ title, InputProps, size, cancelName, saveName, onSave, multiple, isModal, onChange }) {
+function ImageLoader({ title, InputProps, size, cancelName, saveName, onSave, multiple, isModal, onChange, initFile }) {
 
     const [profileImg, setProfile] = React.useState(null)
     const [totSize, setTotSize] = React.useState(0)
@@ -116,6 +116,43 @@ function ImageLoader({ title, InputProps, size, cancelName, saveName, onSave, mu
         return imageList
     }
 
+    const InitImageList = () => {
+        let imageList = [];
+        const pImg = initFile
+        for (let i = 0; i < pImg.length; i++) {
+            imageList.push(
+                <Grid item xs={SizeType[size][0][0]} md={SizeType[size][0][1]} lg={SizeType[size][0][2]}>
+                    <Card
+                        raised
+                        sx={{
+                            margin: "0 auto",
+                            padding: "0",
+                        }}
+                    >
+                        <div style={{ height: SizeType[size][1], overflow: 'hidden', position: 'relative' }}>
+                            <CardMedia
+                                component="img"
+                                sx={{
+                                    p: 5,
+                                    height: 'auto',
+                                    position: 'absolute',
+                                    margin: 'auto',
+                                    top: 0,
+                                    bottom: 0,
+                                    left: 0,
+                                    right: 0,
+                                }}
+                                image={pImg[i]}
+                                alt={"image " + i}
+                            />
+                        </div>
+                    </Card>
+                </Grid>
+            )
+        }
+        return imageList
+    }
+
     const ImageBox = () => {
         if (Boolean(profileImg)) {
             return <Box my={2}>
@@ -133,7 +170,7 @@ function ImageLoader({ title, InputProps, size, cancelName, saveName, onSave, mu
                         <Grid item xs={6}>
                             <Box display="flex" flexDirection="column" justifyContent="flex-start">
                                 <Typography variant="subtitle2">
-                                    Total Files : {Boolean(profileImg) ? profileImg.target.files.length : 0}
+                                    Total Files : {Boolean(profileImg) ? profileImg.length : 0}
                                 </Typography>
                                 <Typography variant="subtitle2">
                                     Size : {getSize(totSize)}
@@ -148,6 +185,17 @@ function ImageLoader({ title, InputProps, size, cancelName, saveName, onSave, mu
                     </Grid >
                 </Box >
             </Box >
+        } else if (Boolean(initFile)) {
+            return <Box my={2}>
+                <Typography variant="subtitle2">
+                    <Grid
+                        container
+                        spacing={2}
+                    >
+                        <InitImageList />
+                    </Grid>
+                </Typography>
+            </Box>
         }
         return "";
     }
@@ -205,6 +253,7 @@ ImageLoader.defaultProps = {
     columns: 5,
     size: 'md',
     title: 'Image Upload',
+    initFile: [],
     onChange: (e) => { }
 }
 

@@ -132,7 +132,7 @@ const Add = ({ userModel }) => {
                     sx={{ width: "100%" }}
                     multiline
                     rows={3}
-                    placeholder="Your your idea, issue and agenda here!"
+                    placeholder="Your idea, issue and agenda here!"
                     variant="standard"
                     {...field}
                   />

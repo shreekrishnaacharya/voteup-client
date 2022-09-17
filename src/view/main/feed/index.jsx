@@ -9,9 +9,9 @@ function FeedController() {
     const userModel = tokenService.getUser();
     return (
         <>
-            <Helmet>
+            {/* <Helmet>
                 <title>Feeds | Ventvoila</title>
-            </Helmet>
+            </Helmet> */}
             <Box pt={2} pb={15} color={"text.primary"}>
                 <Stack direction="row" spacing={2} gap={2} justifyContent="space-between">
                     <Feed userModel={userModel} feedType={'feeds'} />

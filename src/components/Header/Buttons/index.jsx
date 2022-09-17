@@ -6,9 +6,9 @@ function HeaderButtons() {
   return (
     <Box sx={{ mr: 1, display: 'flex' }}>
       <HeaderSearch />
-      <Box sx={{ mx: 0.5 }} component="span">
+      {/* <Box sx={{ mx: 0.5 }} component="span">
         <HeaderNotifications />
-      </Box>
+      </Box> */}
     </Box>
   );
 }

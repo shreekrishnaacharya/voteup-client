@@ -1,14 +1,10 @@
 import {
-  Typography,
   Card,
   CardHeader,
   Divider,
   List,
   ListItem,
-  ListItemAvatar,
-  ListSubheader,
   ListItemText,
-  Avatar,
   useTheme,
   styled
 } from '@mui/material';

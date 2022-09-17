@@ -13,6 +13,8 @@ import { useSnackbar } from 'notistack';
 import { isEmpty } from "_services";
 import { useDispatch, useSelector } from "react-redux";
 import { setFeedList } from "redux/action/feedsAction";
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import Text from "components/Text";
 const Feed = ({ userModel, feedType }) => {
   const search = useSelector(state => state.search);
   const history = useHistory();
@@ -122,14 +124,43 @@ const Feed = ({ userModel, feedType }) => {
         </>
       ) : (
         <>
-          {postFeeds.map(post => {
-            return <Post toaster={enqueueSnackbar} key={post._id} post={post} onMenu={handleMenu} userModel={userModel} viewPost={viewPost} />
-          })}
+          {postFeeds.length == 0 ? (
+            <>
+              {(search.text != "") ? (
+                <Box
+                  display={'grid'}
+                  sx={{ textAlign: 'center' }}
+                  justifyContent={'center'}
+                  alignContent={'center'}
+                  alignItems={'center'}
+                  py={10}>
+                  <p><Text>No result found for '{search.text}'</Text></p>
+                  <p><WarningAmberIcon sx={{ fontSize: "50px" }} /></p>
+                </Box>
+              ) : (
+                <Box
+                  display={'grid'}
+                  sx={{ textAlign: 'center' }}
+                  justifyContent={'center'}
+                  alignContent={'center'}
+                  alignItems={'center'}
+                  py={10}>
+                  <p><Text>No post to display</Text></p>
+                  <p><WarningAmberIcon sx={{ fontSize: "50px" }} /></p>
+                </Box>
+              )}
+            </>
+          ) : (
+            <>
+              {postFeeds.map(post => {
+                return <Post toaster={enqueueSnackbar} key={post._id} post={post} onMenu={handleMenu} userModel={userModel} viewPost={viewPost} />
+              })}
+              <Report open={report.open} onReport={submitReportForm} onClose={() => { setReport({ open: false, postid: null }) }} />
+              <ConfirmDelete open={confirm.open} onDelete={handleDeleteAction} onClose={() => { setConfirm({ open: false, postid: null }) }} />
+            </>
+          )}
         </>
-      )
-      }
-      <Report open={report.open} onReport={submitReportForm} onClose={() => { setReport({ open: false, postid: null }) }} />
-      <ConfirmDelete open={confirm.open} onDelete={handleDeleteAction} onClose={() => { setConfirm({ open: false, postid: null }) }} />
+      )}
     </Box >
   );
 };

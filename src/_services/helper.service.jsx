@@ -103,13 +103,38 @@ const isEmpty = (value) => {
     return false;
 };
 
-const CapitalText = (text) => {
+const CapitalText = (text, sanitize = false) => {
+    if (sanitize) {
+        text = text.replace('_', ' ')
+    }
     return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
 }
 
 const CopyToClipboard = (text) => {
-    window.navigator.clipboard.writeText(text);
+    // window.navigator.clipboard.writeText(text);
+
+    if (navigator.clipboard && window.isSecureContext) {
+        // navigator clipboard api method'
+        return navigator.clipboard.writeText(text);
+    } else {
+        // text area method
+        let textArea = document.createElement("textarea");
+        textArea.value = text;
+        // make the textarea out of viewport
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        textArea.style.top = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        return new Promise((res, rej) => {
+            // here the magic happens
+            document.execCommand('copy') ? res() : rej();
+            textArea.remove();
+        });
+    }
 }
+
 const Rid = () => {
     // 65 to 90. ASCII value of lowercase alphabets – 97 to 122. ASCII value of UPPERCASE alphabets
     const rndlst = [];

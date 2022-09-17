@@ -22,7 +22,8 @@ import {
   styled,
   FormControl,
   Select,
-  MenuItem
+  MenuItem,
+  Grid
 } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import SearchTwoToneIcon from '@mui/icons-material/SearchTwoTone';
@@ -116,42 +117,43 @@ function HeaderSearch() {
         open={open}
         TransitionComponent={Transition}
         keepMounted
-        maxWidth="md"
+        maxWidth="lg"
         fullWidth
         scroll="paper"
         onClose={handleClose}
-
       >
         <DialogTitleWrapper>
-          <Box sx={{ display: 'flex' }} gap={1}>
-            <SearchInputWrapper
-              value={searchValue}
-              autoFocus
-              onChange={handleTextChange}
-              onKeyPress={handleChange}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchTwoToneIcon />
-                  </InputAdornment>
-                ),
-                endAdornment: (
-                  <SearchClearIconWrapper
-                    onClick={handleClear}
-                    style={(searchValue == "" ? { opacity: 0 } : {
-                      cursor: 'pointer',
-                      opacity: 1
-                    })}
-                  >
-                    <ClearIcon />
-                  </SearchClearIconWrapper>
-                )
-              }}
-              placeholder="Search terms here..."
-              fullWidth
-              label="Search"
-            />
-            <FormControl sx={{ minWidth: 120 }}>
+          <Grid container gap={1}>
+            <Grid item xs={12} sm={12}>
+              <SearchInputWrapper
+                value={searchValue}
+                autoFocus
+                onChange={handleTextChange}
+                onKeyPress={handleChange}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchTwoToneIcon />
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <SearchClearIconWrapper
+                      onClick={handleClear}
+                      style={(searchValue == "" ? { opacity: 0 } : {
+                        cursor: 'pointer',
+                        opacity: 1
+                      })}
+                    >
+                      <ClearIcon />
+                    </SearchClearIconWrapper>
+                  )
+                }}
+                placeholder="Search terms here...."
+                fullWidth
+                label="Searchh"
+              />
+            </Grid>
+            <Grid item xs={6} sm={12}>
               <Select
                 size="small"
                 value={search.cat}
@@ -167,8 +169,8 @@ function HeaderSearch() {
                   return <MenuItem keys={e} value={StatusCode[e]}>{CapitalText(e)}</MenuItem>
                 })}
               </Select>
-            </FormControl>
-          </Box>
+            </Grid>
+          </Grid>
         </DialogTitleWrapper>
       </DialogWrapper>
     </Box>

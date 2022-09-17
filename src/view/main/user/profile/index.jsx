@@ -3,15 +3,12 @@ import PopularTags from './PopularTags';
 import { useState, useEffect } from 'react';
 import { getProfile, updateProfile } from '../service';
 import EditProfileTab from './EditProfileTab';
-import { Link } from 'react-router-dom'
-import { Container, Tabs, Tab, Grid, styled, Button } from '@mui/material';
-import { pages } from 'links';
+import { Tabs, Tab, Grid, styled } from '@mui/material';
 import Feed from 'view/main/feed/view/Feed';
 import tokenService from "_services/token.service";
 import { useDispatch, useSelector } from "react-redux";
 import { setProfile } from "redux/action/profileAction";
 import { useSnackbar } from 'notistack';
-import { Helmet } from 'react-helmet';
 
 const TabsWrapper = styled(Tabs)(
   () => `
@@ -58,11 +55,11 @@ function ManagementUserProfile() {
 
   return (
     <>
-      <Helmet>
+      {/* <Helmet>
         <title>{userProfile.name + ' | Ventvoila'}</title>
         <meta property="og:title" content={userProfile.name} />
         <meta property="og:description" content={userProfile.mystory} />
-      </Helmet>
+      </Helmet> */}
       <Grid
         container
         direction="row"

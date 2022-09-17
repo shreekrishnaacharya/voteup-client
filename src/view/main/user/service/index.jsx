@@ -55,6 +55,17 @@ async function updateProfile(fdata) {
     });
 }
 
+async function updateKyc(fdata) {
+    return await getApiRequest({
+        url: "/user/kyc",
+        method: "put",
+        data: getJsonForm(fdata),
+        headers: { 'Content-Type': 'multipart/form-data' }
+    }).then((result) => {
+        return result;
+    });
+}
+
 async function updatePassword(fdata) {
     return await getApiRequest({
         url: "/user/change-password",
@@ -71,5 +82,6 @@ export {
     getProfile,
     updateStory,
     updateProfile,
-    updatePassword
+    updatePassword,
+    updateKyc
 };

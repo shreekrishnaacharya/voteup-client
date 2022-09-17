@@ -3,7 +3,7 @@ import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
-import { Box, Dialog, DialogTitle, FormControl, IconButton, InputAdornment, MenuItem, Select, Slide, TextField, Tooltip } from '@mui/material';
+import { Box, Button, Dialog, DialogContent, DialogTitle, FormControl, Grid, IconButton, InputAdornment, MenuItem, Select, Slide, TextField, Tooltip } from '@mui/material';
 import { StatusCode } from 'links';
 import { useState, forwardRef } from 'react';
 import { CapitalText } from '_services';
@@ -97,13 +97,20 @@ export default function HeaderSearch() {
     const search = useSelector(state => state.search);
     const [stext, setStext] = useState(search.text)
     const dispatch = useDispatch();
+
+
+    const [open, setOpen] = useState(false);
+
     const handleChange = (event) => {
         if (event.key === 'Enter') {
             dispatch(setSearch({ ...search, text: stext }));
         }
     };
 
-    const [open, setOpen] = useState(false);
+    const handleSaveChange = (event) => {
+        dispatch(setSearch({ ...search, text: stext }));
+        setOpen(false);
+    };
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -133,7 +140,7 @@ export default function HeaderSearch() {
                             <SearchIcon />
                         </SearchIconWrapper>
                         <StyledInputBase
-                            placeholder="Search…"
+                            placeholder="Search"
                             value={stext}
                             onChange={handleTextChange}
                             onKeyPress={handleChange}
@@ -174,59 +181,89 @@ export default function HeaderSearch() {
                     open={open}
                     TransitionComponent={Transition}
                     keepMounted
-                    maxWidth="md"
-                    fullWidth
+                    maxWidth="lg"
+                    // fullWidth
+                    // fullScreen
                     scroll="paper"
                     onClose={handleClose}
                 >
-                    <DialogTitleWrapper>
-                        <Box sx={{ display: 'flex' }} gap={1}>
-                            <SearchInputWrapper
-                                value={stext}
-                                autoFocus
-                                onChange={handleTextChange}
-                                onKeyPress={handleChange}
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <SearchIcon />
-                                        </InputAdornment>
-                                    ),
-                                    endAdornment: (
-                                        <SearchClearIconWrapper
-                                            onClick={handleClear}
-                                            style={(stext == "" ? { opacity: 0 } : {
-                                                cursor: 'pointer',
-                                                opacity: 1
-                                            })}
-                                        >
-                                            <ClearIcon />
-                                        </SearchClearIconWrapper>
-                                    )
-                                }}
-                                placeholder="Search terms here..."
-                                fullWidth
-                                label="Search"
-                            />
-                            <FormControl sx={{ minWidth: 100 }}>
-                                <Select
-                                    size="small"
-                                    value={search.cat}
-                                    displayEmpty
-                                    onChange={handleCatChange}
-                                    sx={{
-                                        fontSize: 15,
-                                        py: 0.81
-                                    }}
-                                >
-                                    <MenuItem keys={'all'} value="">All</MenuItem>
-                                    {Object.keys(StatusCode).map(e => {
-                                        return <MenuItem keys={e} value={StatusCode[e]}>{CapitalText(e)}</MenuItem>
-                                    })}
-                                </Select>
-                            </FormControl>
-                        </Box>
+                    <DialogTitleWrapper sx={{ m: 0, p: 2 }}>
+                        {"Search"}
+                        <IconButton
+                            aria-label="close"
+                            onClick={handleClose}
+                            sx={{
+                                position: 'absolute',
+                                right: 8,
+                                top: 8,
+                                color: (theme) => theme.palette.grey[500],
+                            }}
+                        >
+                            <ClearIcon />
+                        </IconButton>
                     </DialogTitleWrapper>
+                    <DialogContent >
+                        <Grid py={1} container spacing={1}>
+                            <Grid item xs={12}>
+                                <SearchInputWrapper
+                                    value={stext}
+                                    autoFocus
+                                    onChange={handleTextChange}
+                                    onKeyPress={handleChange}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <SearchIcon />
+                                            </InputAdornment>
+                                        ),
+                                        endAdornment: (
+                                            <SearchClearIconWrapper
+                                                onClick={handleClear}
+                                                style={(stext == "" ? { opacity: 0 } : {
+                                                    cursor: 'pointer',
+                                                    opacity: 1
+                                                })}
+                                            >
+                                                <ClearIcon />
+                                            </SearchClearIconWrapper>
+                                        )
+                                    }}
+                                    placeholder="Search terms here."
+                                    fullWidth
+                                    label="Search"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <FormControl fullWidth>
+                                    <Select
+                                        fullWidth
+                                        size="small"
+                                        value={search.cat}
+                                        displayEmpty
+                                        onChange={handleCatChange}
+                                        sx={{
+                                            fontSize: 15,
+                                            py: 0.81
+                                        }}
+                                    >
+                                        <MenuItem keys={'all'} value="">All</MenuItem>
+                                        {Object.keys(StatusCode).map(e => {
+                                            return <MenuItem keys={e} value={StatusCode[e]}>{CapitalText(e)}</MenuItem>
+                                        })}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Button
+                                    fullWidth
+                                    variant="contained"
+                                    color="info"
+                                    disabled={stext == ""}
+                                    onClick={handleSaveChange}
+                                >Search</Button>
+                            </Grid>
+                        </Grid>
+                    </DialogContent>
                 </DialogWrapper>
             </Box>
         </>
