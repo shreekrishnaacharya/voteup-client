@@ -16,16 +16,16 @@ import { isEmpty } from "_services";
 import { useSnackbar } from 'notistack';
 import { addReport } from "common/service";
 import { Helmet } from "react-helmet";
+import { useSelector } from "react-redux";
 
 const ViewPost = () => {
+    const search = useSelector(state => state.search);
     const userModel = tokenService.getUser();
     const location = useLocation();
     const history = useHistory();
     const [loading, setLoading] = useState(true);
     const [postFeeds, setPost] = useState({});
     const { enqueueSnackbar } = useSnackbar();
-    // const myRef = useRef(null)
-    // const executeScroll = () => myRef.current.scrollIntoView()
     const params = new URLSearchParams(location.search);
     const postid = params.get('id');
     const [report, setReport] = useState({
@@ -36,18 +36,19 @@ const ViewPost = () => {
         open: false,
         postid: postid
     })
-    let isLink = postid.match(/^[a-z]+$/) ? true : false
 
     const homePage = () => {
         history.push({
             pathname: pages.HOME
         });
     }
+    const postStatic = useRef({});
 
     const initLoad = async () => {
         const res = await getViewPost(postid);
         if (res.flag) {
             setPost(res.data);
+            postStatic.current = res.data
             setLoading(false);
         }
     }
@@ -139,6 +140,19 @@ const ViewPost = () => {
         }
     }, [postid]);
 
+    useEffect(() => {
+        if ('comments' in postFeeds && search.text != "") {
+            const comments = postFeeds.comments.filter(e => {
+                if (e.post_detail.indexOf(search.text) > -1 || e.username.indexOf(search.text) > -1) {
+                    return true
+                }
+                return false
+            })
+            setPost({ ...postFeeds, comments })
+        } else {
+            setPost({ ...postStatic.current })
+        }
+    }, [search]);
     let tagsList = "";
     if ("tags" in postFeeds && postFeeds.tags !== null) {
         tagsList = postFeeds.tags.replace(/,/gi, " | ")
@@ -152,7 +166,7 @@ const ViewPost = () => {
                     </>
                 ) : (
                     <>
-                        
+
                         {postFeeds.ptype == 0 ? (
                             <Post toaster={enqueueSnackbar}
                                 // flash={postid === postFeeds.post_id} 
@@ -166,7 +180,7 @@ const ViewPost = () => {
 
                         {postFeeds.ptype == 0 && (
                             <Box sx={{ marginLeft: '40px' }}>
-                                <Text varient={'h1'}>Amend/Dissent</Text>
+                                <Text varient={'h1'}>Post amend/dissent to above idea, issues and agenda if you have any.</Text>
                                 {postFeeds.statusCode == StatusCode.REVIEW && (
                                     <AddComment userModel={userModel} onAddComment={addCommentForm} />
                                 )}

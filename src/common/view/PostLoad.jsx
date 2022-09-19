@@ -39,7 +39,6 @@ function PostLoad({ isOpen }) {
                     py: 1.5,
                     justifyContent: 'space-between'
                 }}
-
             >
                 <Stack direction="row" spacing={1} justifyContent="space-between">
                     {isOpen ? (
@@ -48,7 +47,7 @@ function PostLoad({ isOpen }) {
                         </Button>
                     ) : (
                         <Button disabled startIcon={<CommentTwoTone />} variant="outlined">
-                            Review
+                            View
                         </Button>
                     )}
                     <Button disabled startIcon={<ShareTwoTone />} variant="outlined">

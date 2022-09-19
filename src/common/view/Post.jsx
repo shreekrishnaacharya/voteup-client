@@ -127,25 +127,30 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen, toaster }) {
                     avatar={<Avatar src={post.user_dp} />}
                     action={
                         <>
-                            <IconButton
-                                color="primary"
-                                onClick={handleOptionClick}
-                            >
-                                <MoreHorizTwoToneIcon fontSize="medium" />
-                            </IconButton>
-                            <Menu
-                                anchorEl={anchorEl}
-                                open={open}
-                                onClose={handleOptionClose}
-                            >
-                                {post.userid === userModel._id ? (
-                                    [
-                                        <MenuItem key={'delete'} onClick={() => { handleOptionAction(2) }}>Delete</MenuItem>
-                                    ]
-                                ) : (
-                                    <MenuItem onClick={() => { handleOptionAction(0) }}>Report</MenuItem>
-                                )}
-                            </Menu>
+                            {post.statusCode == StatusCode.REVIEW && (
+                                <>
+                                    <IconButton
+                                        color="primary"
+                                        onClick={handleOptionClick}
+                                    >
+                                        <MoreHorizTwoToneIcon fontSize="medium" />
+                                    </IconButton>
+                                    <Menu
+                                        anchorEl={anchorEl}
+                                        open={open}
+                                        onClose={handleOptionClose}
+                                    >
+                                        {post.userid === userModel._id ? (
+                                            [
+                                                <MenuItem key={'delete'} onClick={() => { handleOptionAction(2) }}>Delete</MenuItem>
+                                            ]
+                                        ) : (
+                                            <MenuItem onClick={() => { handleOptionAction(0) }}>Report</MenuItem>
+                                        )}
+                                    </Menu>
+                                </>
+                            )}
+
                         </>
                     }
                     titleTypographyProps={{ variant: 'h4' }}
@@ -208,7 +213,7 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen, toaster }) {
                                                 viewPost(post._id)
                                             }}
                                         >
-                                            Review
+                                            View
                                         </Button>
                                     )}
                                 </Grid>

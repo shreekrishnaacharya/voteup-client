@@ -47,24 +47,28 @@ function Comment({ comment, post, onVote, setReport, setConfirm, userModel, toas
                     avatar={<Avatar src={comment.user_dp} />}
                     action={
                         <>
-                            {comment.userid === userModel._id ? (
-                                <IconButton
-                                    color="error"
-                                    onClick={() => {
-                                        handleOptionAction(2)
-                                    }}
-                                >
-                                    <Delete fontSize="medium" />
-                                </IconButton>
-                            ) : (
-                                <IconButton
-                                    color="info"
-                                    onClick={() => {
-                                        handleOptionAction(0)
-                                    }}
-                                >
-                                    <Info fontSize="medium" />
-                                </IconButton>
+                            {comment.statusCode == StatusCode.REVIEW && (
+                                <>
+                                    {comment.userid === userModel._id ? (
+                                        <IconButton
+                                            color="error"
+                                            onClick={() => {
+                                                handleOptionAction(2)
+                                            }}
+                                        >
+                                            <Delete fontSize="medium" />
+                                        </IconButton>
+                                    ) : (
+                                        <IconButton
+                                            color="info"
+                                            onClick={() => {
+                                                handleOptionAction(0)
+                                            }}
+                                        >
+                                            <Info fontSize="medium" />
+                                        </IconButton>
+                                    )}
+                                </>
                             )}
                         </>
                     }
@@ -132,14 +136,14 @@ function Comment({ comment, post, onVote, setReport, setConfirm, userModel, toas
                                     alignItems: 'center',
                                     flexWrap: 'wrap',
                                 }}>
-                                    {post.ptype == 1 && (
+                                    {/* {post.statusCode == 1 && (
                                         <Text
                                             sx={{ display: 'flex', mr: 1 }}
                                             color={StatusList[comment.statusCode].color}
                                         >
                                             {StatusList[comment.statusCode].icon}{comment.status}
                                         </Text>
-                                    )}
+                                    )} */}
                                     {post.statusCode > StatusCode.VOTING && (
                                         <>
                                             <Text

@@ -64,7 +64,7 @@ const Report = ({ open, onReport, onClose, title }) => {
                       <MenuItem value={2}>Abuse</MenuItem>
                       <MenuItem value={3}>Sexual Content</MenuItem>
                       <MenuItem value={4}>Territorial Integrity</MenuItem>
-                      <MenuItem value={5}>Sovereignity of Country</MenuItem>
+                      <MenuItem value={5}>Sovereignty of Country</MenuItem>
                     </Select>
                   </div>
                 )}

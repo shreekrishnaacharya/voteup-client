@@ -113,7 +113,7 @@ const Feed = ({ userModel, feedType }) => {
       })
     }
   }, [search]);
-
+console.log(userModel)
   return (
     <Box sx={{ width: '100%' }}>
       {loading && postFeeds.length == 0 ? (

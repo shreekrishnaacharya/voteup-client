@@ -26,7 +26,7 @@ import ImageLoader from "components/ImageLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearch } from "redux/action/searchAction";
 import { Rid } from "_services";
-
+import InfoIcon from '@mui/icons-material/Info';
 
 
 const SytledModal = styled(Modal)({
@@ -110,9 +110,19 @@ const Add = ({ userModel }) => {
           p={3}
           borderRadius={3}
         >
-          <Typography variant="h6" color="gray" textAlign="center">
-            Post your idea, issue and agenda
-          </Typography>
+          <Box display={'flex'} justifyContent={'center'}>
+            <Typography variant="h6" color="gray" textAlign="center">
+              Post Your Idea, Issue and Agenda
+            </Typography>
+            <Tooltip
+              title="Issue/ Agenda involving problem, perception, opinion and solution that will be more precies. For eg. throwing shell of chocolate bar indiscriminately went into the drain(perception / opinion) and got stuck in the drainage (problem). Only paper shell should be allowed for manufacturing (solution)."
+              sx={{
+                ml: 2,
+              }}
+            >
+              <InfoIcon color={'info'} />
+            </Tooltip>
+          </Box>
           <UserBox>
             <Avatar
               src={userModel.img}
@@ -132,7 +142,7 @@ const Add = ({ userModel }) => {
                     sx={{ width: "100%" }}
                     multiline
                     rows={3}
-                    placeholder="Your idea, issue and agenda here!"
+                    placeholder="Your Idea, Issue and Agenda here!"
                     variant="standard"
                     {...field}
                   />
@@ -147,7 +157,7 @@ const Add = ({ userModel }) => {
                   <TextField
                     type={'number'}
                     sx={{ marginTop: "15px" }}
-                    placeholder="Your supporters"
+                    placeholder="Your Supporters"
                     variant="standard"
                     {...field}
                   />
