@@ -154,7 +154,7 @@ const AuthRegister = () => {
                                 render={({ field, fieldState }) => {
                                     return (
                                         <>
-                                            <InputLabel htmlFor="phone-signup">Phone</InputLabel>
+                                            <InputLabel htmlFor="phone-signup">Phone*</InputLabel>
                                             <OutlinedInput
                                                 {...field}
                                                 fullWidth
@@ -164,7 +164,7 @@ const AuthRegister = () => {
                                             />
                                             {fieldState.error && (
                                                 <FormHelperText error >
-                                                    {fieldState.error}
+                                                    {fieldState.error.message}
                                                 </FormHelperText>
                                             )}
 
