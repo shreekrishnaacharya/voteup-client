@@ -36,19 +36,19 @@ import { pages } from 'links';
 import { getLogin } from 'view/site/service';
 
 const schema = yup.object({
-    username: yup.string().required("Email cannot be blank").email(),
+    code: yup.string().required("Email cannot be blank").min(6).max(6),
     password: yup.string().required("Password cannot be blank"),
 });
 
-const AuthLogin = () => {
+const AuthVerify = () => {
     const [checked, setChecked] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState({ new: false, confirm: false });
     const history = useHistory();
     const { handleSubmit, control, formState: { errors, isSubmitting } } = useForm({
         resolver: yupResolver(schema),
     });
-    const handleClickShowPassword = () => {
-        setShowPassword(!showPassword);
+    const handleClickShowPassword = (type) => {
+        setShowPassword({ ...showPassword, [type]: !showPassword[type] });
     };
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
@@ -82,17 +82,17 @@ const AuthLogin = () => {
                     <Grid item xs={12}>
                         <Stack spacing={1}>
                             <Controller
-                                name="username"
+                                name="code"
                                 defaultValue=""
                                 control={control}
                                 render={({ field, fieldState }) => {
                                     return (
                                         <>
-                                            <InputLabel htmlFor="email-login">Email Address</InputLabel>
+                                            <InputLabel htmlFor="email-login">Code</InputLabel>
                                             <OutlinedInput
                                                 id="email-login"
-                                                type="email"
-                                                placeholder="Enter email address"
+                                                type="text"
+                                                placeholder="Enter code"
                                                 fullWidth
                                                 {...field}
                                             // error={Boolean(fieldState.error)}
@@ -118,30 +118,30 @@ const AuthLogin = () => {
                                 render={({ field, fieldState }) => {
                                     return (
                                         <>
-                                            <InputLabel htmlFor="password-login">Password</InputLabel>
+                                            <InputLabel htmlFor="password-new">New Password</InputLabel>
                                             <OutlinedInput
                                                 fullWidth
                                                 // error={Boolean(fieldState.error)}
-                                                id="-password-login"
+                                                id="password-new"
                                                 type={showPassword ? 'text' : 'password'}
                                                 {...field}
                                                 endAdornment={
                                                     <InputAdornment position="end">
                                                         <IconButton
                                                             aria-label="toggle password visibility"
-                                                            onClick={handleClickShowPassword}
+                                                            onClick={() => handleClickShowPassword('new')}
                                                             onMouseDown={handleMouseDownPassword}
                                                             edge="end"
                                                             size="large"
                                                         >
-                                                            {showPassword ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+                                                            {showPassword['new'] ? <EyeOutlined /> : <EyeInvisibleOutlined />}
                                                         </IconButton>
                                                     </InputAdornment>
                                                 }
-                                                placeholder="Enter password"
+                                                placeholder="Enter new password"
                                             />
                                             {fieldState.error && (
-                                                <FormHelperText error id="standard-weight-helper-text-password-login">
+                                                <FormHelperText error >
                                                     {fieldState.error?.message}
                                                 </FormHelperText>
                                             )}
@@ -152,31 +152,49 @@ const AuthLogin = () => {
                             />
                         </Stack>
                     </Grid>
+                    <Grid item xs={12}>
+                        <Stack spacing={1}>
+                            <Controller
+                                name="confirm"
+                                defaultValue=""
+                                control={control}
+                                render={({ field, fieldState }) => {
+                                    return (
+                                        <>
+                                            <InputLabel htmlFor="password-confirm">Confirm Password</InputLabel>
+                                            <OutlinedInput
+                                                fullWidth
+                                                // error={Boolean(fieldState.error)}
+                                                id="password-confirm"
+                                                type={showPassword ? 'text' : 'password'}
+                                                {...field}
+                                                endAdornment={
+                                                    <InputAdornment position="end">
+                                                        <IconButton
+                                                            aria-label="toggle password visibility"
+                                                            onClick={() => handleClickShowPassword('confirm')}
+                                                            onMouseDown={handleMouseDownPassword}
+                                                            edge="end"
+                                                            size="large"
+                                                        >
+                                                            {showPassword['confirm'] ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+                                                        </IconButton>
+                                                    </InputAdornment>
+                                                }
+                                                placeholder="Reenter password"
+                                            />
+                                            {fieldState.error && (
+                                                <FormHelperText error >
+                                                    {fieldState.error?.message}
+                                                </FormHelperText>
+                                            )}
 
-                    <Grid item xs={12} sx={{ mt: -1 }}>
-                        <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        checked={checked}
-                                        onChange={(event) => setChecked(event.target.checked)}
-                                        name="checked"
-                                        color="primary"
-                                        size="small"
-                                    />
-                                }
-                                label={<Typography variant="h6">Keep me sign in</Typography>}
+                                        </>
+                                    )
+                                }}
                             />
-                            <Link variant="h6" component={RouterLink} to={pages.FORGOT_PASSWORD} color="text.primary">
-                                Forgot Password?
-                            </Link>
                         </Stack>
                     </Grid>
-                    {/* {errors.submit && (
-                        <Grid item xs={12}>
-                            <FormHelperText error>{errors.submit}</FormHelperText>
-                        </Grid>
-                    )} */}
                     <Grid item xs={12}>
                         <AnimateButton>
                             <Button
@@ -188,7 +206,7 @@ const AuthLogin = () => {
                                 variant="contained"
                                 color="primary"
                             >
-                                Login
+                                Submit
                             </Button>
                         </AnimateButton>
                     </Grid>
@@ -198,4 +216,4 @@ const AuthLogin = () => {
     );
 };
 
-export default AuthLogin;
+export default AuthVerify;
