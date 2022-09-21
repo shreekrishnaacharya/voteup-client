@@ -7,7 +7,7 @@ import { Grid, Stack, Typography } from '@mui/material';
 import AuthWrapper from './AuthWrapper';
 import { pages } from 'links';
 import { Helmet } from 'react-helmet';
-import AuthVerify from './auth-forms/AuthVerify';
+import AuthChangePassword from './auth-forms/AuthChangePassword';
 
 // ================================|| LOGIN ||================================ //
 
@@ -28,7 +28,7 @@ const ChangePassword = () => (
                 </Stack>
             </Grid>
             <Grid item xs={12}>
-                <AuthVerify />
+                <AuthChangePassword />
             </Grid>
         </Grid>
     </AuthWrapper>

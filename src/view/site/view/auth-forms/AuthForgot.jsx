@@ -39,11 +39,7 @@ const AuthForgot = () => {
                     variant: 'success',
                 });
                 history.push({
-                    pathname: pages.NEW_PASSWORD,
-                    state: {
-                        id: data.id,
-                        email: data.email
-                    }
+                    pathname: pages.NEW_PASSWORD
                 });
             } else {
                 enqueueSnackbar(data.message, {

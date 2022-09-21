@@ -5,17 +5,13 @@ import { useForm, Controller } from "react-hook-form";
 // material-ui
 import {
     Button,
-    Checkbox,
-    FormControlLabel,
     FormHelperText,
     Grid,
-    Link,
     IconButton,
     InputAdornment,
     InputLabel,
     OutlinedInput,
-    Stack,
-    Typography
+    Stack
 } from '@mui/material';
 
 // third party
@@ -31,17 +27,18 @@ import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
-import TokenService from "_services/token.service";
+import { getNewPassword } from 'view/site/service';
 import { pages } from 'links';
-import { getLogin } from 'view/site/service';
 
 const schema = yup.object({
-    code: yup.string().required("Email cannot be blank").min(6).max(6),
-    password: yup.string().required("Password cannot be blank"),
+    code: yup.string().required("Verify code is required").test('len', 'Must be exactly 6 characters', val => val.length === 6),
+    password: yup.string().required("New password is required"),
+    confirm: yup.string()
+        .oneOf([yup.ref('password'), null], "Does not match with new password!")
+        .required('Confirm Password is required')
 });
 
-const AuthVerify = () => {
-    const [checked, setChecked] = useState(false);
+const AuthChangePassword = () => {
     const [showPassword, setShowPassword] = useState({ new: false, confirm: false });
     const history = useHistory();
     const { handleSubmit, control, formState: { errors, isSubmitting } } = useForm({
@@ -56,20 +53,17 @@ const AuthVerify = () => {
     const { enqueueSnackbar } = useSnackbar();
 
     const onSubmitHandler = async (fdata) => {
-        await getLogin(fdata).then((res) => {
+        await getNewPassword(fdata).then((res) => {
             if (res.flag == true) {
-                enqueueSnackbar("Login success", {
+                enqueueSnackbar("Password change success", {
                     variant: 'success',
                 });
-                TokenService.setUser({
-                    ...res.data
-                });
                 history.push({
-                    pathname: pages.HOME
+                    pathname: pages.LOGIN
                 });
             } else {
-                enqueueSnackbar("Invalid login detail", {
-                    variant: 'error',
+                enqueueSnackbar("Password not changed", {
+                    variant: 'warning',
                 });
             }
         });
@@ -123,7 +117,7 @@ const AuthVerify = () => {
                                                 fullWidth
                                                 // error={Boolean(fieldState.error)}
                                                 id="password-new"
-                                                type={showPassword ? 'text' : 'password'}
+                                                type={showPassword['new'] ? 'text' : 'password'}
                                                 {...field}
                                                 endAdornment={
                                                     <InputAdornment position="end">
@@ -166,7 +160,7 @@ const AuthVerify = () => {
                                                 fullWidth
                                                 // error={Boolean(fieldState.error)}
                                                 id="password-confirm"
-                                                type={showPassword ? 'text' : 'password'}
+                                                type={showPassword['confirm'] ? 'text' : 'password'}
                                                 {...field}
                                                 endAdornment={
                                                     <InputAdornment position="end">
@@ -216,4 +210,4 @@ const AuthVerify = () => {
     );
 };
 
-export default AuthVerify;
+export default AuthChangePassword;
