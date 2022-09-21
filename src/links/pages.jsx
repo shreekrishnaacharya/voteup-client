@@ -15,8 +15,8 @@ const sitePage = {
 }
 
 const pages = {
-    BASE_URL: "http://ventvoila.com",
-    // BASE_URL: "http://localhost:8080",
+    // BASE_URL: "http://ventvoila.com",
+    BASE_URL: "http://localhost:8080",
     // LOCAL_URL: "http://localhost:3000",
     GUEST: "/guest",
     HOME: "/",

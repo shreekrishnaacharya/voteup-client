@@ -11,13 +11,11 @@ import tokenService from "_services/token.service";
 import Comment from "./Comment";
 import AddComment from "./AddComment";
 import Text from "components/Text";
-import CommentLoad from "./CommentLoad";
 import { isEmpty } from "_services";
 import { useSnackbar } from 'notistack';
 import { addReport } from "common/service";
-import { Helmet } from "react-helmet";
 import { useSelector } from "react-redux";
-
+import Status404 from "view/pages/Status404";
 const ViewPost = () => {
     const search = useSelector(state => state.search);
     const userModel = tokenService.getUser();
@@ -50,6 +48,8 @@ const ViewPost = () => {
             setPost(res.data);
             postStatic.current = res.data
             setLoading(false);
+        } else if (res.status == 404) {
+            setLoading(404);
         }
     }
     const onVote = (id) => {
@@ -157,6 +157,10 @@ const ViewPost = () => {
     if ("tags" in postFeeds && postFeeds.tags !== null) {
         tagsList = postFeeds.tags.replace(/,/gi, " | ")
     }
+    console.log(loading)
+    if (loading === 404) {
+        return <Status404 />;
+    }
     return (
         <>
             <Box sx={{ pt: 2 }}>
@@ -193,10 +197,8 @@ const ViewPost = () => {
                                 })}
                             </Box>
                         )}
-
                         <Report open={report.open} onReport={submitReportForm} onClose={() => { setReport({ open: false, postid: null }) }} />
                         <ConfirmDelete open={confirm.open} onDelete={deleteCommentPost} onClose={() => { setConfirm({ open: false, postid: null }) }} />
-
                     </>
                 )
                 }

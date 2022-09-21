@@ -124,7 +124,7 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen, toaster }) {
         <Box mb={2}>
             <Card>
                 <CardHeader
-                    avatar={<Avatar src={post.user_dp} />}
+                    avatar={post.statusCode == StatusCode.REVIEW ? <Avatar src={post.user_dp} /> : <></>}
                     action={
                         <>
                             {post.statusCode == StatusCode.REVIEW && (
@@ -155,7 +155,7 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen, toaster }) {
                     }
                     titleTypographyProps={{ variant: 'h4' }}
                     subheaderTypographyProps={{ variant: 'subtitle2' }}
-                    title={post.username}
+                    title={post.statusCode == StatusCode.REVIEW ? post.username : ""}
                     subheader={
                         <>
                             {tagsList}

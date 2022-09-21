@@ -84,9 +84,6 @@ const Rightbar = ({ userModel }) => {
                     viewPost(post._id)
                   }}>
                     <ListItem alignItems="flex-start">
-                      <ListItemAvatar>
-                        <Avatar alt={post.username} src={post.user_dp} />
-                      </ListItemAvatar>
                       <ListItemText
                         primary={post.username}
                         secondary={
@@ -97,7 +94,7 @@ const Rightbar = ({ userModel }) => {
                       />
                     </ListItem>
                   </a>
-                  <Divider variant="inset" component="li" />
+                  <Divider component="li" />
                 </div>
               })}
             </List>

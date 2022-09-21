@@ -167,9 +167,9 @@ const AuthLogin = () => {
                                 }
                                 label={<Typography variant="h6">Keep me sign in</Typography>}
                             />
-                            <Link variant="h6" component={RouterLink} to={pages.FORGOT_PASSWORD} color="text.primary">
+                            {/* <Link variant="h6" component={RouterLink} to={pages.FORGOT_PASSWORD} color="text.primary">
                                 Forgot Password?
-                            </Link>
+                            </Link> */}
                         </Stack>
                     </Grid>
                     {/* {errors.submit && (

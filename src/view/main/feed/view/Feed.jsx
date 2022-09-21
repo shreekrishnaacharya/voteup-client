@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { getFeeds, getPost } from "../service";
 import ConfirmDelete from "common/view/ConfirmDelete";
 import Post from "common/view/Post";
@@ -15,12 +15,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { setFeedList } from "redux/action/feedsAction";
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import Text from "components/Text";
+import { setFeedReset } from "redux/action/feedsAction";
 const Feed = ({ userModel, feedType }) => {
   const search = useSelector(state => state.search);
   const history = useHistory();
   const [loading, setLoading] = useState(true);
-  const postFeeds = useSelector(state => state.feedList.feeds);
+  const postFeeds = useSelector(state => state.feedList);
   const dispatch = useDispatch();
+  const loaderRef = useRef(null);
+  const pageNo = useRef(1);
   const [report, setReport] = useState({
     open: false,
     postid: null
@@ -41,7 +44,7 @@ const Feed = ({ userModel, feedType }) => {
   }
 
   const filterPost = (pid) => {
-    dispatch(setFeedList(postFeeds.filter(e => e._id !== pid)));
+    dispatch(setFeedReset(postFeeds.filter(e => e._id !== pid)));
   }
 
   const submitReportForm = (fdata, reset) => {
@@ -97,70 +100,120 @@ const Feed = ({ userModel, feedType }) => {
 
   useEffect(() => {
     setLoading(true);
+    pageNo.current = 1
     if (feedType == 'profile') {
-      getPost({ status: search.cat, post_detail: search.text }).then(res => {
+      getPost({ status: search.cat, post_detail: search.text, size: 10 }).then(res => {
         if (res.flag) {
-          dispatch(setFeedList(res.data));
-          setLoading(false);
+          dispatch(setFeedReset(res.data));
+          if (res.data.length < 10) {
+            setLoading(false);
+          }
         }
       })
     } else {
-      getFeeds({ status: search.cat, post_detail: search.text }).then(res => {
+      getFeeds({ status: search.cat, post_detail: search.text, size: 10 }).then(res => {
         if (res.flag) {
-          dispatch(setFeedList(res.data));
-          setLoading(false);
+          dispatch(setFeedReset(res.data));
+          if (res.data.length < 10) {
+            setLoading(false);
+          }
         }
       })
     }
   }, [search]);
-console.log(userModel)
+
+  const appendFeeds = () => {
+    if (feedType == 'profile') {
+      getPost({ status: search.cat, post_detail: search.text, page: pageNo.current, size: 10 }).then(res => {
+        if (res.flag) {
+          dispatch(setFeedList(res.data));
+          if (res.data.length < 10) {
+            setLoading(false);
+          }
+        }
+      })
+    } else {
+      getFeeds({ status: search.cat, post_detail: search.text, page: pageNo.current, size: 10 }).then(res => {
+        if (res.flag) {
+          dispatch(setFeedList(res.data));
+          if (res.data.length < 10) {
+            setLoading(false);
+          }
+        }
+      })
+    }
+  }
+
+  const handleObserver = useCallback((entries) => {
+    const target = entries[0];
+    if (target.isIntersecting) {
+      pageNo.current += 1;
+      appendFeeds();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      return false;
+    }
+    const option = {
+      root: null,
+      rootMargin: "20px",
+      threshold: 0
+    };
+    const observer = new IntersectionObserver(handleObserver, option);
+    if (loaderRef.current) observer.observe(loaderRef.current);
+    return () => {
+      observer.unobserve(loaderRef.current);
+    }
+  }, [loading]);
+
   return (
     <Box sx={{ width: '100%' }}>
-      {loading && postFeeds.length == 0 ? (
-        <>
-          <PostLoad />
-          <PostLoad />
-          <PostLoad />
-        </>
-      ) : (
-        <>
-          {postFeeds.length == 0 ? (
-            <>
-              {(search.text != "") ? (
-                <Box
-                  display={'grid'}
-                  sx={{ textAlign: 'center' }}
-                  justifyContent={'center'}
-                  alignContent={'center'}
-                  alignItems={'center'}
-                  py={10}>
-                  <p><Text>No result found for '{search.text}'</Text></p>
-                  <p><WarningAmberIcon sx={{ fontSize: "50px" }} /></p>
-                </Box>
-              ) : (
-                <Box
-                  display={'grid'}
-                  sx={{ textAlign: 'center' }}
-                  justifyContent={'center'}
-                  alignContent={'center'}
-                  alignItems={'center'}
-                  py={10}>
-                  <p><Text>No post to display</Text></p>
-                  <p><WarningAmberIcon sx={{ fontSize: "50px" }} /></p>
-                </Box>
-              )}
-            </>
-          ) : (
-            <>
-              {postFeeds.map(post => {
-                return <Post toaster={enqueueSnackbar} key={post._id} post={post} onMenu={handleMenu} userModel={userModel} viewPost={viewPost} />
-              })}
-              <Report open={report.open} onReport={submitReportForm} onClose={() => { setReport({ open: false, postid: null }) }} />
-              <ConfirmDelete open={confirm.open} onDelete={handleDeleteAction} onClose={() => { setConfirm({ open: false, postid: null }) }} />
-            </>
-          )}
-        </>
-      )}
+      <>
+        {!loading && postFeeds.length == 0 ? (
+          <>
+            {(search.text != "") ? (
+              <Box
+                display={'grid'}
+                sx={{ textAlign: 'center' }}
+                justifyContent={'center'}
+                alignContent={'center'}
+                alignItems={'center'}
+                py={10}>
+                <p><Text>No result found for '{search.text}'</Text></p>
+                <p><WarningAmberIcon sx={{ fontSize: "50px" }} /></p>
+              </Box>
+            ) : (
+              <Box
+                display={'grid'}
+                sx={{ textAlign: 'center' }}
+                justifyContent={'center'}
+                alignContent={'center'}
+                alignItems={'center'}
+                py={10}>
+                <p><Text>No post to display</Text></p>
+                <p><WarningAmberIcon sx={{ fontSize: "50px" }} /></p>
+              </Box>
+            )}
+          </>
+        ) : (
+          <>
+            {postFeeds.map(post => {
+              return <Post toaster={enqueueSnackbar} key={post._id} post={post} onMenu={handleMenu} userModel={userModel} viewPost={viewPost} />
+            })}
+            <Report open={report.open} onReport={submitReportForm} onClose={() => { setReport({ open: false, postid: null }) }} />
+            <ConfirmDelete open={confirm.open} onDelete={handleDeleteAction} onClose={() => { setConfirm({ open: false, postid: null }) }} />
+          </>
+        )}
+        <div ref={loaderRef} />
+        {loading && (
+          <>
+            <PostLoad />
+            <PostLoad />
+          </>
+        )}
+      </>
     </Box >
   );
 };

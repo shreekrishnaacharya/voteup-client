@@ -44,7 +44,7 @@ function Comment({ comment, post, onVote, setReport, setConfirm, userModel, toas
         <Box mb={1}>
             <Card>
                 <CardHeader
-                    avatar={<Avatar src={comment.user_dp} />}
+                    avatar={comment.statusCode == StatusCode.REVIEW ? <Avatar src={comment.user_dp} /> : <></>}
                     action={
                         <>
                             {comment.statusCode == StatusCode.REVIEW && (
@@ -74,7 +74,7 @@ function Comment({ comment, post, onVote, setReport, setConfirm, userModel, toas
                     }
                     titleTypographyProps={{ variant: 'h5' }}
                     subheaderTypographyProps={{ variant: 'subtitle2' }}
-                    title={comment.username}
+                    title={comment.statusCode == StatusCode.REVIEW ? comment.username : ""}
                 />
                 <Box px={2} pb={1}>
                     <Typography variant="h5" fontWeight="normal">
@@ -83,7 +83,7 @@ function Comment({ comment, post, onVote, setReport, setConfirm, userModel, toas
                 </Box>
                 <Box px={2}>
                     <Typography variant="subtitle2">
-                        {/* <ReactTimeAgo date={new Date(comment.create_at)} locale="en-US" /> */}
+                        <ReactTimeAgo date={new Date(comment.create_at)} locale="en-US" />
                     </Typography>
                 </Box>
                 <CardActionsWrapper
