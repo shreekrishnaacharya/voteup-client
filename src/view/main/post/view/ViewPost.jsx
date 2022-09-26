@@ -52,21 +52,21 @@ const ViewPost = () => {
             setLoading(404);
         }
     }
-    const onVote = (id) => {
-        actionUpdateAction(id).then(e => {
+    const onVote = async (id) => {
+        await actionUpdateAction(id).then(e => {
             if (e.flag) {
                 initLoad();
             }
         })
     }
-    const addCommentForm = (fdata) => {
+    const addCommentForm = async (fdata) => {
         if (isEmpty(fdata.post_detail)) {
             enqueueSnackbar("Review cannot be blank", {
                 variant: 'error',
             });
             return false;
         }
-        addComment(postid, fdata).then(e => {
+        await addComment(postid, fdata).then(e => {
             if (e.flag) {
                 enqueueSnackbar("Review uploaded", {
                     variant: 'success',
@@ -76,14 +76,14 @@ const ViewPost = () => {
         })
     }
 
-    const submitReportForm = (fdata) => {
+    const submitReportForm = async (fdata) => {
         if (fdata.rtype == 0 || isEmpty(fdata.remark)) {
             enqueueSnackbar("Please complete the from", {
                 variant: 'warning',
             });
             return;
         }
-        addReport(report.postid, fdata).then(e => {
+        await addReport(report.postid, fdata).then(e => {
             if (e.status == 208) {
                 enqueueSnackbar("Already reported", {
                     variant: 'info',
@@ -105,8 +105,8 @@ const ViewPost = () => {
 
     }
 
-    const deleteCommentPost = () => {
-        deleteComment(confirm.postid).then((e) => {
+    const deleteCommentPost = async () => {
+        await deleteComment(confirm.postid).then((e) => {
             if (e.flag) {
                 if (confirm.postid == postid) {
                     enqueueSnackbar("Post deleted", {

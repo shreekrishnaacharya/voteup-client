@@ -47,14 +47,14 @@ const Feed = ({ userModel, feedType }) => {
     dispatch(setFeedReset(postFeeds.filter(e => e._id !== pid)));
   }
 
-  const submitReportForm = (fdata, reset) => {
+  const submitReportForm = async (fdata, reset) => {
     if (fdata.rtype == 0 || isEmpty(fdata.remark)) {
       enqueueSnackbar("Please complete the from", {
         variant: 'warning',
       });
       return;
     }
-    addReport(report.postid, fdata).then(e => {
+    await addReport(report.postid, fdata).then(e => {
       if (e.status == 208) {
         enqueueSnackbar("Already reported", {
           variant: 'info',
@@ -82,8 +82,8 @@ const Feed = ({ userModel, feedType }) => {
       setConfirm({ postid: postid, open: true })
     }
   }
-  const handleDeleteAction = () => {
-    deletePost(confirm.postid).then(e => {
+  const handleDeleteAction = async () => {
+    await deletePost(confirm.postid).then(e => {
       if (e.flag) {
         enqueueSnackbar("Post deleted", {
           variant: 'success',

@@ -35,9 +35,18 @@ async function getPost(data = {}) {
     });
 }
 
-async function getRecent(uid) {
+async function getRecent() {
     return await getApiRequest({
         url: "/feeds",
+        data: { sort: "-id", size: "3" }
+    }).then((result) => {
+        return result;
+    });
+}
+
+async function getResult() {
+    return await getApiRequest({
+        url: "/feeds/result",
         data: { sort: "-id", size: "3" }
     }).then((result) => {
         return result;
@@ -84,5 +93,6 @@ export {
     addPost,
     actionUpdate,
     getViewPost,
-    getPost
+    getPost,
+    getResult
 };

@@ -56,7 +56,7 @@ const Add = ({ userModel }) => {
   });
   const { enqueueSnackbar } = useSnackbar();
 
-  const submitForm = (fdata) => {
+  const submitForm = async (fdata) => {
     if (isEmpty(fdata.post_detail)) {
       enqueueSnackbar("Post cannot be blank", {
         variant: 'error',
@@ -69,7 +69,7 @@ const Add = ({ userModel }) => {
       });
       return false;
     }
-    addPost(fdata).then(e => {
+    await addPost(fdata).then(e => {
       if (e.flag) {
         enqueueSnackbar("Post uploaded", {
           variant: 'success',
@@ -80,7 +80,7 @@ const Add = ({ userModel }) => {
       }
     })
   }
-
+  console.log(isSubmitting, "submiting")
   return (
     <>
       <Tooltip

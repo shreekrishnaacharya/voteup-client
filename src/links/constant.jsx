@@ -9,7 +9,7 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 const StatusCode = Object.freeze({
     REVIEW: 0,
     VOTING: 1,
-    RESULT: [3, 4],
+    RESULT: 2,
     ACCEPT: 3,
     REJECT: 4
 })

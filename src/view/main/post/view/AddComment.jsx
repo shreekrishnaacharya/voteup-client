@@ -23,7 +23,7 @@ const UserBox = styled(Box)({
     gap: "50px",
 });
 const AddComment = ({ userModel, onAddComment }) => {
-    const { handleSubmit, control, reset, formState: { errors } } = useForm({
+    const { handleSubmit, control, reset, formState: { errors, isSubmitting } } = useForm({
         resolver: yupResolver(schema)
     });
 
@@ -64,7 +64,11 @@ const AddComment = ({ userModel, onAddComment }) => {
                                     variant="contained"
                                     aria-label="outlined primary button group"
                                 >
-                                    <Button type="submit">Add</Button>
+                                    <Button
+                                        disableElevation
+                                        disabled={isSubmitting}
+                                        type="submit"
+                                    >Add</Button>
                                 </ButtonGroup>
                             </Box>
                         </form>

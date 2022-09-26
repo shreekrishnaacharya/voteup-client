@@ -1,25 +1,18 @@
 import {
-  Avatar,
   Box,
   Card,
-  CardMedia,
   Divider,
   List,
   ListItem,
   ListItemAvatar,
   ListItemText,
   Typography,
-  CardContent,
-  CardActions,
-  IconButton,
   Skeleton
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import Text from 'components/Text';
-import LogoutIcon from '@mui/icons-material/Logout';
-import { getRecent } from "../service";
+import { getRecent, getResult } from "../service";
 
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { pages } from 'links';
 
 const Loading = () => {
@@ -37,10 +30,11 @@ const Loading = () => {
   </ListItem>
 }
 
-const Rightbar = ({ userModel }) => {
+const Rightbar = () => {
   const history = useHistory();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState({ rec: true, res: true });
   const [postFeeds, setFeeds] = useState([]);
+  const [resultFeeds, setResult] = useState([]);
 
   const viewPost = (postid) => {
     history.push({
@@ -53,10 +47,19 @@ const Rightbar = ({ userModel }) => {
   }
 
   useEffect(() => {
-    getRecent(userModel._id).then(res => {
+    getRecent().then(res => {
       if (res.flag) {
         setFeeds(res.data);
-        setLoading(false);
+        setLoading({ ...loading, rec: false });
+      }
+    })
+  }, []);
+
+  useEffect(() => {
+    getResult().then(res => {
+      if (res.flag) {
+        setResult(res.data);
+        setLoading({ ...loading, res: false });
       }
     })
   }, []);
@@ -68,7 +71,7 @@ const Rightbar = ({ userModel }) => {
           Recent Posts
         </Typography>
         <Card>
-          {loading ? (
+          {loading.rec ? (
             <List sx={{ width: '100%', maxWidth: 380, bgcolor: 'background.paper', padding: "12px 0px" }}>
               <Loading />
               <Divider variant="inset" />
@@ -79,6 +82,44 @@ const Rightbar = ({ userModel }) => {
           ) : (
             <List sx={{ width: '100%', maxWidth: 380, bgcolor: 'background.paper', padding: "12px 0px" }}>
               {postFeeds.map(post => {
+                return <div key={'recent' + post._id}>
+                  <a style={{ cursor: "pointer" }} onClick={() => {
+                    viewPost(post._id)
+                  }}>
+                    <ListItem alignItems="flex-start">
+                      <ListItemText
+                        primary={post.username}
+                        secondary={
+                          <Typography noWrap style={{ color: "#6E759F" }}>
+                            {post.post_detail}
+                          </Typography>
+                        }
+                      />
+                    </ListItem>
+                  </a>
+                  <Divider component="li" />
+                </div>
+              })}
+            </List>
+          )}
+        </Card>
+      </Box>
+      <Box position="sticky" width={350}>
+        <Typography variant="h6" fontWeight={100}>
+          Results
+        </Typography>
+        <Card>
+          {loading.res ? (
+            <List sx={{ width: '100%', maxWidth: 380, bgcolor: 'background.paper', padding: "12px 0px" }}>
+              <Loading />
+              <Divider variant="inset" />
+              <Loading />
+              <Divider variant="inset" />
+              <Loading />
+            </List>
+          ) : (
+            <List sx={{ width: '100%', maxWidth: 380, bgcolor: 'background.paper', padding: "12px 0px" }}>
+              {resultFeeds.map(post => {
                 return <div key={'recent' + post._id}>
                   <a style={{ cursor: "pointer" }} onClick={() => {
                     viewPost(post._id)
