@@ -11,7 +11,7 @@ import {
     Stack,
 } from '@mui/material';
 
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { pages } from "links/pages";
 
 import { getUserByEmail } from '../../service';
@@ -19,7 +19,7 @@ import { getUserByEmail } from '../../service';
 import AnimateButton from 'components/@extended/AnimateButton';
 
 const schema = yup.object({
-    email: yup.string().required("Email cannot be blank").email(),
+    email: yup.string().required("Email cannot be blank").email()
 });
 
 const AuthForgot = () => {
@@ -32,7 +32,6 @@ const AuthForgot = () => {
 
 
     const onSubmitHandler = async (fdata) => {
-        console.log(fdata)
         await getUserByEmail(fdata).then(({ flag, data }) => {
             if (flag == true) {
                 enqueueSnackbar("Email send success. Check your email for password reset code", {

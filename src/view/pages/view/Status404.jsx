@@ -1,16 +1,10 @@
 import {
   Box,
-  Card,
   Typography,
   Container,
-  Divider,
   Button,
-  FormControl,
-  OutlinedInput,
-  InputAdornment,
   styled
 } from '@mui/material';
-import SearchTwoToneIcon from '@mui/icons-material/SearchTwoTone';
 
 const MainContent = styled(Box)(
   () => `
@@ -21,18 +15,6 @@ const MainContent = styled(Box)(
     flex-direction: column;
     align-items: center;
     justify-content: center;
-`
-);
-
-const OutlinedInputWrapper = styled(OutlinedInput)(
-  ({ theme }) => `
-    background-color: ${theme.colors.alpha.white[100]};
-`
-);
-
-const ButtonSearch = styled(Button)(
-  ({ theme }) => `
-    margin-right: -${theme.spacing(1)};
 `
 );
 

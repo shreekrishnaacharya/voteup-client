@@ -13,13 +13,21 @@ const sitePage = {
     FORGOT_PASSWORD: "/guest/forgot-password",
     VERIFY_TOKEN: "/guest/verify-token",
 }
+const otherPages = {
+    PAGES: "/page",
+    STATUS_404: "/page/404",
+    PRIVACY: "/page/privacy-policy",
+    FAQ: "/page/faq",
+    BLOG: "/page/blog",
+}
 
 const pages = {
-    // BASE_URL: "http://ventvoila.com",
-    BASE_URL: "http://localhost:8080",
+    BASE_URL: "http://ventvoila.com",
+    // BASE_URL: "http://localhost:8080",
     // LOCAL_URL: "http://localhost:3000",
     GUEST: "/guest",
     HOME: "/",
+    ...otherPages,
     ...sitePage,
     ...votePages
 };
@@ -30,11 +38,20 @@ const guestPage = [
     pages.SIGNUP,
     pages.NEW_PASSWORD,
     pages.VERIFY_ACCOUNT,
-    pages.VERIFY_TOKEN
+    pages.VERIFY_TOKEN,
+
 ];
+
+const staticPages = [
+    otherPages.BLOG,
+    otherPages.FAQ,
+    otherPages.PAGES,
+    otherPages.PRIVACY,
+    otherPages.STATUS_404
+]
 
 const getFullUrl = (page) => {
     return pages.LOCAL_URL + "#" + page;
 }
 
-export { pages, sitePage, votePages, guestPage, getFullUrl };
+export { pages, sitePage, votePages, guestPage, otherPages, staticPages, getFullUrl };

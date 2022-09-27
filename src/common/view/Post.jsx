@@ -44,7 +44,6 @@ const CardActionsWrapper = styled(CardActions)(
 );
 
 
-
 function Post({ post, onMenu, onVote, userModel, viewPost, isOpen, toaster }) {
     // console.log(post)
     // const [paction, setPaction] = useState({

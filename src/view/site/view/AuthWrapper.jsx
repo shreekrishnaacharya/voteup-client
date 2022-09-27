@@ -10,6 +10,7 @@ import Logo from 'components/Logo';
 // assets
 import AuthBackground from './AuthBackground';
 import { pages } from 'links';
+import Footer from 'components/Footer';
 
 // ==============================|| AUTHENTICATION - WRAPPER ||============================== //
 
@@ -24,7 +25,7 @@ const AuthWrapper = ({ children }) => (
                 minHeight: '60vh'
             }}
         >
-            <Grid item xs={12} sx={{ ml: 2, mt: 2 }}>
+            <Grid item xs={12} sx={{ px: 2, py: 1 }}>
                 <Logo to={pages.HOME} />
             </Grid>
             <Grid item xs={12}>
@@ -34,7 +35,7 @@ const AuthWrapper = ({ children }) => (
                     container
                     justifyContent="center"
                     alignItems="center"
-                    sx={{ minHeight: { xs: 'calc(100vh - 250px)', md: 'calc(100vh - 200px)' } }}
+                    // sx={{ minHeight: { xs: 'calc(100vh - 250px)', md: 'calc(100vh - 200px)' } }}
                 >
                     <Grid item>
                         <AuthCard>{children}</AuthCard>
@@ -42,6 +43,7 @@ const AuthWrapper = ({ children }) => (
                 </Grid>
             </Grid>
         </Grid>
+        <Footer />
     </Box>
 );
 

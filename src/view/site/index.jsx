@@ -4,6 +4,7 @@ import Login from './view/Login';
 import Signup from "./view/Register"
 import ForgotPassword from "./view/ForgotPassword";
 import ChangePassword from "./view/ChangePassword";
+// import Footer from 'components/Footer';
 // import VerifyToken from "./view/verifyToken";
 
 function SiteController() {
@@ -14,6 +15,7 @@ function SiteController() {
             {/* {/* <Route exact path={pages.VERIFY_TOKEN} component={VerifyToken} /> */}
             <Route exact path={pages.NEW_PASSWORD} component={ChangePassword} />
             <Route exact path={pages.SIGNUP} component={Signup} />
+            
         </>
     );
 }

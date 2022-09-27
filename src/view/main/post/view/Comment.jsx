@@ -81,11 +81,11 @@ function Comment({ comment, post, onVote, setReport, setConfirm, userModel, toas
                         {comment.post_detail}
                     </Typography>
                 </Box>
-                <Box px={2}>
+                {/* <Box px={2}>
                     <Typography variant="subtitle2">
                         <ReactTimeAgo date={new Date(comment.create_at)} locale="en-US" />
                     </Typography>
-                </Box>
+                </Box> */}
                 <CardActionsWrapper
                     sx={{
                         display: { xs: 'block', md: 'flex' },

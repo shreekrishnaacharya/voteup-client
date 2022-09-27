@@ -6,7 +6,7 @@ import ViewPost from './post/view/ViewPost';
 import { Container } from '@mui/material';
 import Header from 'components/Header';
 import { SidebarProvider } from 'contexts/SidebarContext';
-import Status404 from 'view/pages/Status404';
+import Status404 from 'view/pages/view/Status404';
 
 function MainController() {
     return (

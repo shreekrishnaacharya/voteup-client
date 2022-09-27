@@ -14,7 +14,7 @@ import logo from 'assets/images/logo.png'
 
 const Logo = () => {
     return (
-        <img src={logo} alt="Janamat" width="150" />
+        <img src={logo} alt="Ventvoila" width="150" />
     );
 };
 

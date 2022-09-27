@@ -15,7 +15,7 @@ import { isEmpty } from "_services";
 import { useSnackbar } from 'notistack';
 import { addReport } from "common/service";
 import { useSelector } from "react-redux";
-import Status404 from "view/pages/Status404";
+import Status404 from "view/pages/view/Status404";
 const ViewPost = () => {
     const search = useSelector(state => state.search);
     const userModel = tokenService.getUser();

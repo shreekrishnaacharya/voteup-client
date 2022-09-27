@@ -2,6 +2,7 @@ import React from 'react';
 import { useLocation, useHistory } from "react-router-dom";
 import { pages, guestPage } from "links/pages";
 import TokenService from '_services/token.service';
+import { staticPages } from 'links';
 
 const Auth = ({ children }) => {
     const userModel = TokenService.getUser();
@@ -14,7 +15,7 @@ const Auth = ({ children }) => {
                 return true;
             }
         } else {
-            if (!guestPage.includes(location.pathname)) {
+            if (!staticPages.includes(location.pathname) && !guestPage.includes(location.pathname)) {
                 // window.location.href = pages.LOGIN
                 history.push(pages.LOGIN);
                 return false;

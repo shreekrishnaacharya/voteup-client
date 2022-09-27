@@ -46,8 +46,8 @@ async function getRecent() {
 
 async function getResult() {
     return await getApiRequest({
-        url: "/feeds/result",
-        data: { sort: "-id", size: "3" }
+        url: "/feeds/",
+        data: { sort: "-id", size: "3", status: 2 }
     }).then((result) => {
         return result;
     });

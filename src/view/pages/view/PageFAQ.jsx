@@ -1,0 +1,60 @@
+export default () => {
+
+    return (
+        <div>
+            <h2 style={{ textAlign: 'center' }}>Frequently Asked Questions</h2>
+            <p style={{ textAlign: 'justify' }}>&nbsp;</p>
+            <blockquote>
+                <h2>What is this app?</h2>
+            </blockquote>
+            <p style={{ textAlign: 'justify' }}>It is a platform designed to enable dynamic decision-making, liquid representation, and sound governance through collective intelligence in any political culture.</p>
+            <blockquote>
+                <h2>Who can run the app?</h2>
+            </blockquote>
+            <p style={{ textAlign: 'justify' }}>Every citizen of each country can raise issues, problems and solutions to their country and society.</p>
+            <blockquote>
+                <h2>Why&nbsp;liquid democracy?</h2>
+            </blockquote>
+            <p style={{ textAlign: 'justify' }}>Liquid democracy is the latest political invention. It is a mixture of direct and representative democracy. You can either vote on issues you care about or you know, or he or she can delegate his or her opinion to you on other issues of their lesser interest. In a liquid democracy, decision-making power and ability, special values, attitudes, and ideas can be reflected.</p>
+            <blockquote>
+                <h2>Do we need a revolution for liquid democracy?</h2>
+            </blockquote>
+            <p style={{ textAlign: 'justify' }}>No. Even in the existing political culture, dynamic decision-making, liquid representation, and strong governance are possible through collective intelligence.</p>
+            <h2>&nbsp;</h2>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <blockquote>
+                <h2>Is liquid democracy a matter of capitalism and communism?</h2>
+            </blockquote>
+            <p style={{ textAlign: 'justify' }}>Not in totality. When the question of the problem of society arises, discussing the solution, the opinion of the last citizen is included; these two ideologies are also included as collective intelligence.</p>
+            <blockquote>
+                <h2>&nbsp;How and by whom will the issues and problems of society can be raised?</h2>
+            </blockquote>
+            <p style={{ textAlign: 'justify' }}>You can either raise issues you care about or you know, or he or she can delegate his or her opinion to you on other issues of their lesser interest, being your supporter.</p>
+            <blockquote>
+                <h2>Is it possible to raise issues in the current policy and law?</h2>
+            </blockquote>
+            <p style={{ textAlign: 'justify' }}>Yes. You can raise an issue if it’s problematic for a country or society, excluding the territorial integrity and sovereignty of each country and privacy of a person.</p>
+            <p style={{ textAlign: 'justify' }}>&nbsp;</p>
+            <p style={{ textAlign: 'justify' }}>&nbsp;</p>
+            <blockquote>
+                <h2>What happens next to the mandate?</h2>
+            </blockquote>
+            <p style={{ textAlign: 'justify' }}>Issues/ agenda&nbsp;and&nbsp;the&nbsp;solutions can be streamlined. We can formally address legislative bodies with the mandate to acknowledge sovereign people's wills. This system and the opinions expressed in it become mandatory when the law is made as a policy address.&nbsp;If you feel that someone is ignoring the mandate, you can come forward by proposing&nbsp;yourself as a representative&nbsp;as the people are sovereign in any modern democracy. You&nbsp;have both that right and responsibility. The difference is that you have to redefine yourself a little more.&nbsp;It is a reference system for the time being.&nbsp; We are preparing and training the needs of the country from today while encouraging both the user and the uninterrupted entities of the country.</p>
+            <blockquote>
+                <h2>Is this against the current system?</h2>
+            </blockquote>
+            <p style={{ textAlign: 'justify' }}>It is not against anyone.&nbsp;It’s about what caused the problem in a country or society, how to solve it, what is the way to solve it and the process of reaching a conclusion through collective intelligence.&nbsp;</p>
+            <blockquote>
+                <h2>How did collective intelligence and classified intelligence come to be here?</h2>
+            </blockquote>
+            <p style={{ textAlign: 'justify' }}>The opinion and mandate of the sovereign people and the last citizen of the country is carried by collective intelligence while the classified intelligence carries the opinion and mandate of a class only.&nbsp;</p>
+            <blockquote>
+                <h2>What is the status of privacy?</h2>
+            </blockquote>
+            <p style={{ textAlign: 'justify' }}>As is the case with paper and electronic voting.&nbsp; Privacy is paramount and there is no compromise.</p>
+            <p>&nbsp;</p>
+        </div>
+
+    )
+}

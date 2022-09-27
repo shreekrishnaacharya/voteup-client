@@ -14,6 +14,7 @@ import { getRecent, getResult } from "../service";
 
 import { useHistory } from 'react-router-dom';
 import { pages } from 'links';
+import Footer from "components/Footer";
 
 const Loading = () => {
 
@@ -32,7 +33,8 @@ const Loading = () => {
 
 const Rightbar = () => {
   const history = useHistory();
-  const [loading, setLoading] = useState({ rec: true, res: true });
+  const [loadrec, setLoadRec] = useState(true);
+  const [loadres, setLoadRes] = useState(true);
   const [postFeeds, setFeeds] = useState([]);
   const [resultFeeds, setResult] = useState([]);
 
@@ -50,7 +52,7 @@ const Rightbar = () => {
     getRecent().then(res => {
       if (res.flag) {
         setFeeds(res.data);
-        setLoading({ ...loading, rec: false });
+        setLoadRec(false);
       }
     })
   }, []);
@@ -59,7 +61,7 @@ const Rightbar = () => {
     getResult().then(res => {
       if (res.flag) {
         setResult(res.data);
-        setLoading({ ...loading, res: false });
+        setLoadRes(false);
       }
     })
   }, []);
@@ -71,7 +73,7 @@ const Rightbar = () => {
           Recent Posts
         </Typography>
         <Card>
-          {loading.rec ? (
+          {loadrec ? (
             <List sx={{ width: '100%', maxWidth: 380, bgcolor: 'background.paper', padding: "12px 0px" }}>
               <Loading />
               <Divider variant="inset" />
@@ -109,7 +111,7 @@ const Rightbar = () => {
           Results
         </Typography>
         <Card>
-          {loading.res ? (
+          {loadres ? (
             <List sx={{ width: '100%', maxWidth: 380, bgcolor: 'background.paper', padding: "12px 0px" }}>
               <Loading />
               <Divider variant="inset" />
@@ -142,6 +144,7 @@ const Rightbar = () => {
           )}
         </Card>
       </Box>
+      <Footer mini={true} />
     </Box>
   );
 };
