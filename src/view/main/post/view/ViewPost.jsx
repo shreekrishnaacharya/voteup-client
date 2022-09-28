@@ -157,7 +157,6 @@ const ViewPost = () => {
     if ("tags" in postFeeds && postFeeds.tags !== null) {
         tagsList = postFeeds.tags.replace(/,/gi, " | ")
     }
-    console.log(loading)
     if (loading === 404) {
         return <Status404 />;
     }
@@ -181,10 +180,9 @@ const ViewPost = () => {
                                 post={postFeeds} onVote={() => { onVote(postFeeds._id) }} key={postFeeds._id} comment={postFeeds} setReport={setReport} setConfirm={setConfirm} userModel={userModel} />
                         )}
 
-
                         {postFeeds.ptype == 0 && (
                             <Box sx={{ marginLeft: '40px' }}>
-                                <Text varient={'h1'}>Post amend/dissent to above idea, issues and agenda if you have any.</Text>
+                                <Text varient={'h1'}>Post amendment/disseminate to above idea, issues and agenda if you have any.</Text>
                                 {postFeeds.statusCode == StatusCode.REVIEW && (
                                     <AddComment userModel={userModel} onAddComment={addCommentForm} />
                                 )}

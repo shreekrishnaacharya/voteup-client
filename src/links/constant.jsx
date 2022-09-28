@@ -10,8 +10,8 @@ const StatusCode = Object.freeze({
     REVIEW: 0,
     VOTING: 1,
     RESULT: 2,
-    ACCEPT: 3,
-    REJECT: 4
+    ACCEPTANCE: 3,
+    REJECTANCE: 4
 })
 
 
@@ -40,8 +40,8 @@ const KycStatusList = {
 const StatusList = {
     [StatusCode.REVIEW]: { color: 'info', icon: <InsertCommentIcon sx={{ mr: 1 }} /> },
     [StatusCode.VOTING]: { color: 'primary', icon: <HowToVoteIcon sx={{ mr: 1 }} /> },
-    [StatusCode.ACCEPT]: { color: 'success', icon: <CheckCircleIcon sx={{ mr: 1 }} /> },
-    [StatusCode.REJECT]: { color: 'error', icon: <ErrorIcon sx={{ mr: 1 }} /> },
+    [StatusCode.ACCEPTANCE]: { color: 'success', icon: <CheckCircleIcon sx={{ mr: 1 }} /> },
+    [StatusCode.REJECTANCE]: { color: 'error', icon: <ErrorIcon sx={{ mr: 1 }} /> },
     [StatusCode.RESULT]: { color: 'warning', icon: <PendingActionsIcon sx={{ mr: 1 }} /> },
 }
 
