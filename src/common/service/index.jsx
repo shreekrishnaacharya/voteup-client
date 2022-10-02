@@ -2,7 +2,6 @@ import { getApiRequest as getApi, getJsonForm } from '_services';
 
 
 const getApiRequest = async (requestData) => {
-    // console.log(requestData);
     const result = await getApi({
         ...requestData
     }).then(function (response) {
@@ -10,7 +9,6 @@ const getApiRequest = async (requestData) => {
     }).then(function (finalJson) {
         return finalJson;
     }).catch((error) => {
-        // console.log(error);
         return { flag: false, status: error.status, message: "Error", data: error.data };
     });
     return result;

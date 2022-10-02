@@ -29,9 +29,7 @@ instance.interceptors.response.use(
         return res;
     },
     async (err) => {
-        // console.log(err);
         let originalConfig = err.config;
-        // console.log(refreshTokenRequest);
         if (originalConfig.url != pages.LOGIN && err.response) {
             // Access Token was expired
             if (err.response.status === 401 && !refreshTokenRequest) {
@@ -77,4 +75,31 @@ const getApiRequest = async (options) => {
 }
 
 
-export { getApiRequest };
+const getDownload = async (url) => {
+    await getApiRequest({
+        url,
+        responseType: "blob"
+    }).then(({ data }) => {
+        const a = document.createElement("a");
+        // creating a reference to the file
+        const url = window.URL.createObjectURL(data);
+        // setting anchor tag's href attribute to the blob's URL
+        a.href = url;
+        // setting anchor tag's download attribute to the filename
+        a.download = "Report.pdf";
+        document.body.append(a);
+        // click on the <a> tag
+        a.click();
+        // after clicking it, remove it from the DOM
+        a.remove();
+        // release an existing object URL which was previously 
+        // created by calling URL.createObjectURL()
+        // once we have finished using an object URL, let the
+        // browser know not to keep the reference to the file any longer.
+        window.URL.revokeObjectURL(url);
+    })
+
+}
+
+
+export { getApiRequest, getDownload };

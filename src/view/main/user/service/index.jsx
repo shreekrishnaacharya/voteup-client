@@ -33,7 +33,6 @@ async function getProfile() {
 }
 
 async function updateStory(fdata) {
-    console.log(fdata)
     return await getApiRequest({
         url: "/user/story",
         method: "post",
@@ -44,7 +43,6 @@ async function updateStory(fdata) {
 }
 
 async function updateProfile(fdata) {
-    console.log(fdata)
     return await getApiRequest({
         url: "/user",
         method: "put",

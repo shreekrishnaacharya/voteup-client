@@ -64,9 +64,16 @@ const AuthLogin = () => {
                 TokenService.setUser({
                     ...res.data
                 });
-                history.push({
-                    pathname: pages.HOME
-                });
+                const refurl = localStorage.getItem("REFEERER_URL");
+                if (Boolean(refurl)) {
+                    localStorage.removeItem("REFEERER_URL")
+                    window.location.href = refurl;
+                } else {
+                    history.push({
+                        pathname: pages.HOME
+                    });
+                }
+
             } else {
                 enqueueSnackbar("Invalid login detail", {
                     variant: 'error',

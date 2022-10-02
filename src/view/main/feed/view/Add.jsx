@@ -80,7 +80,6 @@ const Add = ({ userModel }) => {
       }
     })
   }
-  console.log(isSubmitting, "submiting")
   return (
     <>
       <Tooltip
@@ -115,7 +114,7 @@ const Add = ({ userModel }) => {
               Post Your Idea, Issue and Agenda
             </Typography>
             <Tooltip
-              title="Issue/ Agenda involving problem, perception, opinion and solution that will be more precies. For eg. throwing shell of chocolate bar indiscriminately went into the drain(perception / opinion) and got stuck in the drainage (problem). Only paper shell should be allowed for manufacturing (solution)."
+              title="Issue / Agenda involving problem, perception, opinion and solution that will be more precious. For eg. throwing shell of chocolate bar indiscriminately went into the drain(perception / opinion) and got stuck in the drainage (problem). Only paper shell should be allowed for manufacturing (solution)."
               sx={{
                 ml: 2,
               }}

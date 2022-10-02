@@ -30,6 +30,7 @@ import { strengthColor, strengthIndicator } from 'utils/password-strength';
 // assets
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import { getSignup } from 'view/site/service';
+import { pages } from 'links';
 
 
 const schema = yup.object({
@@ -263,11 +264,11 @@ const AuthRegister = () => {
                     <Grid item xs={12}>
                         <Typography variant="body2">
                             By Signing up, you agree to our &nbsp;
-                            <Link variant="subtitle2" component={RouterLink} to="#">
+                            <Link variant="subtitle2" component={RouterLink} to={pages.PRIVACY}>
                                 Terms of Service
                             </Link>
                             &nbsp; and &nbsp;
-                            <Link variant="subtitle2" component={RouterLink} to="#">
+                            <Link variant="subtitle2" component={RouterLink} to={pages.PRIVACY}>
                                 Privacy Policy
                             </Link>
                         </Typography>

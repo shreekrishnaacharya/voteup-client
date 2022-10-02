@@ -10,7 +10,6 @@ const getApiRequest = async (requestData) => {
         return finalJson;
     }).catch((res) => {
         // return error.data;
-        console.log(res);
         return { flag: false, status: res.status, message: res.data ? res.data.message : "Error", data: res.data };
     });
     return result;

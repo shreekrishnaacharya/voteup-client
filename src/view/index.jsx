@@ -7,7 +7,11 @@ const MainController = React.lazy(() => import('view/main'));
 const PagesController = React.lazy(() => import('view/pages'));
 function StoreController() {
     return (
-        <Suspense fallback={<Stack spacing={2} direction="row">
+        <Suspense fallback={<Stack spacing={2} sx={{
+            marginTop: 25,
+            alignItems: 'center',
+            justifyContent: 'center',
+        }} direction="row">
             <CircularProgress color="success" />
         </Stack>}>
             <div style={{ position: 'relative', 'minHeight': '100vh', paddingBottom: '2.5rem' }}>

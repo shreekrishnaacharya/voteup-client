@@ -11,6 +11,7 @@ import {
     Grid,
     Button,
 } from '@mui/material';
+import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import ShareTwoToneIcon from '@mui/icons-material/ShareTwoTone';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import LaunchIcon from '@mui/icons-material/Launch';
@@ -23,6 +24,7 @@ import Text from 'components/Text';
 import { StatusCode, StatusList } from "links";
 import { CopyToClipboard } from '_services';
 import { Link } from 'react-router-dom';
+import { getDownload } from '_services';
 
 const CardActionsWrapper = styled(CardActions)(
     ({ theme }) => `
@@ -157,7 +159,18 @@ function Comment({ comment, post, onVote, setReport, setConfirm, userModel, toas
                                             >
                                                 <ThumbUpIcon sx={{ mr: 1 }} />{comment.votes}
                                             </Text>{'|'}
-                                            <Ranking voters={post.tot_votes} votes={comment.votes} />
+                                            <Ranking sx={{ mx: 1 }} voters={post.tot_votes} votes={comment.votes} />
+                                            {'|'}
+                                            <a
+                                                style={{ textDecoration: 'none', color: '#6E759F' }}
+                                                href={post.dlink}
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    getDownload(comment.dlink)
+                                                }}
+                                            >
+                                                <DownloadForOfflineIcon sx={{ ml: 1, mt: '4px' }} />
+                                            </a>
                                         </>
                                     )}
                                 </div>

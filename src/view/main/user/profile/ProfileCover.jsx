@@ -120,7 +120,6 @@ const ProfileCover = ({ user, saveImage }) => {
         cancelName={'Cancel'}
         saveName={'Save'}
         onSave={(files, close) => {
-          console.log(files)
           saveImage({ 'pimage': files.target.files }, close);
         }}
       />

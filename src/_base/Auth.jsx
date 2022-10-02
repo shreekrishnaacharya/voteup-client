@@ -16,7 +16,10 @@ const Auth = ({ children }) => {
             }
         } else {
             if (!staticPages.includes(location.pathname) && !guestPage.includes(location.pathname)) {
-                // window.location.href = pages.LOGIN
+                const refurl = localStorage.getItem("REFEERER_URL");
+                if (!Boolean(refurl)) {
+                    localStorage.setItem("REFEERER_URL", window.location.href);
+                }
                 history.push(pages.LOGIN);
                 return false;
             }
@@ -27,12 +30,6 @@ const Auth = ({ children }) => {
             </div>
         );
     }
-    console.log("I am auth");
-    // return (
-    //     <div key="AuthController">
-    //         {children}
-    //     </div>
-    // );
     return checkLogin();
 }
 

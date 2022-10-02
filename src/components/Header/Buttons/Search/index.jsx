@@ -164,9 +164,9 @@ export default function HeaderSearch() {
                         displayEmpty
                         onChange={handleCatChange}
                     >
-                        <MenuItem keys={'all'} value="">All</MenuItem>
+                        <MenuItem key={'all'} value="">All</MenuItem>
                         {Object.keys(StatusCode).map(e => {
-                            return <MenuItem keys={e} value={StatusCode[e]}>{CapitalText(e)}</MenuItem>
+                            return <MenuItem key={e} value={StatusCode[e]}>{CapitalText(e)}</MenuItem>
                         })}
                     </Select>
                 </FormControl>
@@ -246,9 +246,9 @@ export default function HeaderSearch() {
                                             py: 0.81
                                         }}
                                     >
-                                        <MenuItem keys={'all'} value="">All</MenuItem>
+                                        <MenuItem key={'all'} value="">All</MenuItem>
                                         {Object.keys(StatusCode).map(e => {
-                                            return <MenuItem keys={e} value={StatusCode[e]}>{CapitalText(e)}</MenuItem>
+                                            return <MenuItem key={e} value={StatusCode[e]}>{CapitalText(e)}</MenuItem>
                                         })}
                                     </Select>
                                 </FormControl>

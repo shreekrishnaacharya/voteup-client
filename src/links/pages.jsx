@@ -17,13 +17,14 @@ const otherPages = {
     PAGES: "/page",
     STATUS_404: "/page/404",
     PRIVACY: "/page/privacy-policy",
+    TERMS: "/page/terms-and-conditions",
     FAQ: "/page/faq",
     BLOG: "/page/blog",
 }
 
 const pages = {
-    // BASE_URL: "http://ventvoila.com",
-    BASE_URL: "http://localhost:8080",
+    BASE_URL: "http://ventvoila.com",
+    // BASE_URL: "http://localhost:8080",
     // LOCAL_URL: "http://localhost:3000",
     GUEST: "/guest",
     HOME: "/",
@@ -47,6 +48,7 @@ const staticPages = [
     otherPages.FAQ,
     otherPages.PAGES,
     otherPages.PRIVACY,
+    otherPages.TERMS,
     otherPages.STATUS_404
 ]
 

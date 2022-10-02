@@ -3,6 +3,7 @@ import { pages } from "links/pages";
 import Footer from 'components/Footer';
 import { Box, Grid } from '@mui/material';
 import Logo from 'components/Logo';
+import PageTerms from './view/Terms';
 import PageBlog from './view/PageBlog';
 import PagePrivacy from './view/PagePrivacy';
 import PageFAQ from './view/PageFAQ';
@@ -26,6 +27,7 @@ function PagesController() {
                         <Route exact path={pages.PRIVACY} component={PagePrivacy} />
                         <Route exact path={pages.FAQ} component={PageFAQ} />
                         <Route exact path={pages.BLOG} component={PageBlog} />
+                        <Route exact path={pages.TERMS} component={PageTerms} />
                         <Footer />
                     </Switch>
                 </Grid>

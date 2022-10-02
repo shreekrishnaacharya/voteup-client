@@ -18,24 +18,29 @@ import {
     Chip,
     Grid
 } from '@mui/material';
-
+import 'photoswipe/dist/photoswipe.css'
 import MoreHorizTwoToneIcon from '@mui/icons-material/MoreHorizTwoTone';
 import ShareTwoToneIcon from '@mui/icons-material/ShareTwoTone';
 import Text from 'components/Text';
 import ReactTimeAgo from 'react-time-ago'
 import React, { useEffect, useState } from 'react';
-import { actionUpdate } from "../service";
 import CommentTwoToneIcon from '@mui/icons-material/CommentTwoTone';
 import VoteButton from 'components/buttons/VoteButtons';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
+// import ImageList from '@mui/material/ImageList';
+// import ImageListItem from '@mui/material/ImageListItem';
 import Ranking from 'components/Ranking';
 
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import PollIcon from '@mui/icons-material/Poll';
+// import DownloadIcon from '@mui/icons-material/Download';
+import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import { StatusCode, StatusList } from 'links/constant';
 import { CopyToClipboard } from '_services';
+import { getDownload } from '_services';
+
+import { Gallery, Item } from 'react-photoswipe-gallery'
+
 const CardActionsWrapper = styled(CardActions)(
     ({ theme }) => `
        background: ${theme.colors.alpha.black[5]};
@@ -45,7 +50,6 @@ const CardActionsWrapper = styled(CardActions)(
 
 
 function Post({ post, onMenu, onVote, userModel, viewPost, isOpen, toaster }) {
-    // console.log(post)
     // const [paction, setPaction] = useState({
     //     votes: post.votes,
     //     hasVote: post.hasVote,
@@ -54,7 +58,7 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen, toaster }) {
 
 
     const [anchorEl, setAnchorEl] = useState(null);
-
+    const [gsize, setGsize] = useState({});
     const open = Boolean(anchorEl);
     const handleOptionClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -67,9 +71,20 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen, toaster }) {
         setAnchorEl(null);
     }
 
-    // useEffect(() => {
-    //     setPaction(post);
-    // }, [post]);
+    useEffect(() => {
+        setTimeout(() => {
+            let cgsize = {};
+            post.meta.map((j, i) => {
+                const e = document.getElementById('gs' + i);
+                if (e.complete) {
+                    cgsize = { ...cgsize, ['gs' + i]: { w: e.naturalWidth, h: e.naturalHeight } }
+                } else {
+                    cgsize = { ...cgsize, ['gs' + i]: { w: 1000, h: 801 } }
+                }
+            })
+            setGsize({ ...cgsize });
+        }, 2000)
+    }, []);
 
 
     let tagsList = [];
@@ -81,43 +96,49 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen, toaster }) {
         })
     }
 
-    function srcset(image, size, rows = 1, cols = 1) {
-        return {
-            src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
-            srcSet: `${image}?w=${size * cols}&h=${size * rows
-                }&fit=crop&auto=format&dpr=2 2x`,
-        };
-    }
     const ImageView = () => {
         if (post.meta.length == 0) {
             return "";
         }
+        const smallItemStyles = {
+            cursor: 'pointer',
+            objectFit: 'cover',
+            width: '150px',
+            height: '150px',
+        }
         return (<CardContent>
-            <ImageList
-                sx={{ width: "100%", height: "auto" }}
-                variant="quilted"
-                cols={2}
-                rowHeight={151}
-            >
-                {post.meta.map((item, index) => (
-                    <ImageListItem key={item.img} cols={item.cols || 1} rows={item.rows || 1}>
-                        <img
-                            {...srcset(item.img, 151, item.rows, item.cols)}
-                            alt={item.title}
-                            loading="lazy"
-                        // onClick={(e) => {
-                        //     openLightbox(e, {
-                        //         index,
-                        //         photo: photos[index],
-                        //         previous: photos[index - 1] || null,
-                        //         next: photos[index + 1] || null,
-                        //     })
-                        // }}
-                        />
-                    </ImageListItem>
-                ))}
-            </ImageList>
-        </CardContent>)
+            <Gallery>
+                <Box
+                    sx={{
+                        display: 'grid',
+                        gridTemplateColumns: {
+                            xs: 'repeat(2, 0fr)', sm: 'repeat(4, 0fr)', md: 'repeat(5, 0fr)', lg: 'repeat(5, 0fr)'
+                        },
+                        gridGap: 10,
+                    }}
+                >
+                    {post.meta.map((item, index) => {
+                        return (<Item
+                            key={item.img}
+                            cropped
+                            original={item.img}
+                            thumbnail={item.img}
+                            height={('gs' + index in gsize) ? gsize['gs' + index].h : 801}
+                            width={('gs' + index in gsize) ? gsize['gs' + index].w : 1000}
+                        >
+                            {({ ref, open }) => (
+                                <img
+                                    id={'gs' + index}
+                                    style={smallItemStyles}
+                                    ref={ref} onClick={open}
+                                    src={item.img}
+                                />
+                            )}
+                        </Item>)
+                    })}
+                </Box>
+            </Gallery>
+        </CardContent >)
     }
     return (
         <Box mb={2}>
@@ -144,7 +165,7 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen, toaster }) {
                                                 <MenuItem key={'delete'} onClick={() => { handleOptionAction(2) }}>Delete</MenuItem>
                                             ]
                                         ) : (
-                                            <MenuItem onClick={() => { handleOptionAction(0) }}>Report</MenuItem>
+                                            <MenuItem key={'report'} onClick={() => { handleOptionAction(0) }}>Report</MenuItem>
                                         )}
                                     </Menu>
                                 </>
@@ -257,9 +278,20 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen, toaster }) {
                                         <Text
                                             sx={{ display: 'flex', mx: 1 }}
                                         >
-                                            <ThumbUpIcon sx={{ mr: 1 }} />{post.votes}
+                                            <ThumbUpIcon sx={{ mx: 1 }} />{post.votes}
                                         </Text>{'|'}
-                                        <Ranking voters={post.tot_votes} votes={post.votes} />
+                                        <Ranking sx={{ mx: 1 }} voters={post.tot_votes} votes={post.votes} />
+                                        {'|'}
+                                        <a
+                                            style={{ textDecoration: 'none', color: '#6E759F' }}
+                                            href={post.dlink}
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                getDownload(post.dlink)
+                                            }}
+                                        >
+                                            <DownloadForOfflineIcon sx={{ ml: 1, mt: '4px' }} />
+                                        </a>
                                     </>
                                 )}
                             </div>

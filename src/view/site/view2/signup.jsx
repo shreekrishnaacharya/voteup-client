@@ -27,7 +27,6 @@ function SignUp() {
     const { handleSubmit, control, formState: { errors }, setValue } = useForm({
         resolver: yupResolver(schema),
     });
-    console.log(errors);
 
     const handleSetAgremment = () => {
         setValue("agree", !agreement);
@@ -176,7 +175,7 @@ function SignUp() {
                             />
                         </div>
                         <div>
-                            <button onClick={console.log(errors)} style={{ margin: '10px 0' }} type="submit" className="ui fluid large teal button primary">
+                            <button style={{ margin: '10px 0' }} type="submit" className="ui fluid large teal button primary">
                                 Sign Up
                             </button>
                         </div>
