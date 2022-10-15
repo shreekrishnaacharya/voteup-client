@@ -10,6 +10,7 @@ import { CapitalText } from '_services';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearch } from "redux/action/searchAction";
 import { setFeedList } from 'redux/action/feedsAction';
+import PropTypes from 'prop-types';
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="down" ref={ref} {...props} />;
@@ -92,15 +93,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         },
     },
 }));
-
-export default function HeaderSearch() {
+let StatusCodeVal = {};
+Object.keys(StatusCode).forEach((k) => {
+    if (StatusCode[k] <= StatusCode.MANDATE) {
+        StatusCodeVal[k] = StatusCode[k];
+    }
+});
+function HeaderSearch({ openDialog, setDialog }) {
     const search = useSelector(state => state.search);
     const [stext, setStext] = useState(search.text)
     const dispatch = useDispatch();
-
-
-    const [open, setOpen] = useState(false);
-
     const handleChange = (event) => {
         if (event.key === 'Enter') {
             dispatch(setSearch({ ...search, text: stext }));
@@ -109,15 +111,11 @@ export default function HeaderSearch() {
 
     const handleSaveChange = (event) => {
         dispatch(setSearch({ ...search, text: stext }));
-        setOpen(false);
-    };
-
-    const handleClickOpen = () => {
-        setOpen(true);
+        setDialog(false);
     };
 
     const handleClose = () => {
-        setOpen(false);
+        setDialog(false);
     };
     const handleTextChange = (event) => {
         setStext(event.target.value)
@@ -133,7 +131,7 @@ export default function HeaderSearch() {
     };
     return (
         <>
-            <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                 <Tooltip arrow title="Search">
                     <Search>
                         <SearchIconWrapper>
@@ -165,25 +163,18 @@ export default function HeaderSearch() {
                         onChange={handleCatChange}
                     >
                         <MenuItem key={'all'} value="">All</MenuItem>
-                        {Object.keys(StatusCode).map(e => {
-                            return <MenuItem key={e} value={StatusCode[e]}>{CapitalText(e)}</MenuItem>
+                        {Object.keys(StatusCodeVal).map(e => {
+                            return <MenuItem key={e} value={StatusCodeVal[e]}>{CapitalText(e)}</MenuItem>
                         })}
                     </Select>
                 </FormControl>
             </Box>
-            <Box sx={{ display: { xs: 'block', md: 'none' } }}>
-                <Tooltip arrow title="Search">
-                    <IconButton color="primary" onClick={handleClickOpen}>
-                        <SearchIcon />
-                    </IconButton>
-                </Tooltip>
+            <Box>
                 <DialogWrapper
-                    open={open}
+                    open={openDialog}
                     TransitionComponent={Transition}
                     keepMounted
                     maxWidth="lg"
-                    // fullWidth
-                    // fullScreen
                     scroll="paper"
                     onClose={handleClose}
                 >
@@ -247,8 +238,8 @@ export default function HeaderSearch() {
                                         }}
                                     >
                                         <MenuItem key={'all'} value="">All</MenuItem>
-                                        {Object.keys(StatusCode).map(e => {
-                                            return <MenuItem key={e} value={StatusCode[e]}>{CapitalText(e)}</MenuItem>
+                                        {Object.keys(StatusCodeVal).map(e => {
+                                            return <MenuItem key={e} value={StatusCodeVal[e]}>{CapitalText(e)}</MenuItem>
                                         })}
                                     </Select>
                                 </FormControl>
@@ -269,3 +260,14 @@ export default function HeaderSearch() {
         </>
     );
 }
+
+HeaderSearch.propTypes = {
+    openDialog: PropTypes.bool,
+    setDialog: PropTypes.func
+}
+HeaderSearch.defaultValue = {
+    openDialog: false,
+    setDialog: () => { }
+}
+
+export default HeaderSearch

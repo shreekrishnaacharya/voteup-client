@@ -32,7 +32,12 @@ const AddComment = ({ userModel, onAddComment }) => {
             <Box mb={2}>
                 <Card>
                     <CardContent>
-                        <form onSubmit={handleSubmit((fb) => { onAddComment(fb); reset({ 'comment': '' }) })}>
+                        <form onSubmit={handleSubmit((fb) => {
+                            onAddComment(fb).then(e => {
+                                if (e)
+                                    reset({ 'comment': '' })
+                            })
+                        })}>
                             <Box gap={3} sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
                                 <UserBox>
                                     <Avatar

@@ -14,10 +14,7 @@ import { Helmet } from 'react-helmet';
 const Register = () => (
     <AuthWrapper>
         <Helmet>
-            <title>Register | Ventvoila</title>
-            <meta property="description" content="Express your idea, agenda with your communitity. And land to a common ground with democratic voting" />
-            <meta property="og:title" content={"Login | Ventvoila"} />
-            <meta property="og:description" content={"Express your idea, agenda with your communitity. And land to a common ground with democratic voting"} />
+            <title>Signup | Referendum 2.0</title>
         </Helmet>
         <Grid container spacing={3}>
             <Grid item xs={12}>

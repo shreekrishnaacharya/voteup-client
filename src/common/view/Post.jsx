@@ -12,10 +12,8 @@ import {
     CardActions,
     Link,
     styled,
-    Stack,
     Menu,
     MenuItem,
-    Chip,
     Grid
 } from '@mui/material';
 import 'photoswipe/dist/photoswipe.css'
@@ -40,6 +38,8 @@ import { CopyToClipboard } from '_services';
 import { getDownload } from '_services';
 
 import { Gallery, Item } from 'react-photoswipe-gallery'
+import { ICONS_FONT } from 'links';
+import { TEXT_FONT } from 'links';
 
 const CardActionsWrapper = styled(CardActions)(
     ({ theme }) => `
@@ -160,13 +160,7 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen, toaster }) {
                                         open={open}
                                         onClose={handleOptionClose}
                                     >
-                                        {post.userid === userModel._id ? (
-                                            [
-                                                <MenuItem key={'delete'} onClick={() => { handleOptionAction(2) }}>Delete</MenuItem>
-                                            ]
-                                        ) : (
-                                            <MenuItem key={'report'} onClick={() => { handleOptionAction(0) }}>Report</MenuItem>
-                                        )}
+                                        <MenuItem key={'report'} onClick={() => { handleOptionAction(0) }}>Report</MenuItem>
                                     </Menu>
                                 </>
                             )}
@@ -176,11 +170,6 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen, toaster }) {
                     titleTypographyProps={{ variant: 'h4' }}
                     subheaderTypographyProps={{ variant: 'subtitle2' }}
                     title={post.statusCode == StatusCode.REVIEW ? post.username : ""}
-                    subheader={
-                        <>
-                            {tagsList}
-                        </>
-                    }
                 />
                 <Box px={3} pb={2}>
                     <Typography variant="h4" fontWeight="normal">
@@ -252,49 +241,59 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen, toaster }) {
                             </Grid>
                         </Grid>
                         <Grid item xl={6} >
-                            <div style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                flexWrap: 'wrap',
-                            }}>
+                            <Box
+                                component={'div'}
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    flexWrap: 'wrap',
+                                    fontSize: TEXT_FONT
+                                }}>
                                 <Text
                                     sx={{ display: 'flex', mr: 1 }}
                                     color={StatusList[post.statusCode].color}
                                 >
-                                    {StatusList[post.statusCode].icon}{post.status}
+                                    {StatusList[post.statusCode].icon}&nbsp;{post.status}
                                 </Text>{'|'}
                                 <Text
                                     sx={{ display: 'flex', mx: 1 }}
                                 >
-                                    <QuestionAnswerIcon sx={{ mr: 1 }} />{post.review}
+                                    <QuestionAnswerIcon sx={{ fontSize: ICONS_FONT }} />&nbsp;{post.review}
                                 </Text>
                                 {post.statusCode > StatusCode.VOTING && (
                                     <>{'|'}
                                         <Text
                                             sx={{ display: 'flex', mx: 1 }}
                                         >
-                                            <PollIcon sx={{ mr: 1 }} />{post.tot_votes}
+                                            <PollIcon sx={{ fontSize: ICONS_FONT }} />&nbsp;{post.tot_votes}
                                         </Text>{'|'}
                                         <Text
                                             sx={{ display: 'flex', mx: 1 }}
                                         >
-                                            <ThumbUpIcon sx={{ mx: 1 }} />{post.votes}
+                                            <ThumbUpIcon sx={{ fontSize: ICONS_FONT }} />&nbsp;{post.votes}
                                         </Text>{'|'}
                                         <Ranking sx={{ mx: 1 }} voters={post.tot_votes} votes={post.votes} />
-                                        {'|'}
-                                        <a
-                                            style={{ textDecoration: 'none', color: '#6E759F' }}
-                                            href={post.dlink}
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                getDownload(post.dlink)
-                                            }}
-                                        >
-                                            <DownloadForOfflineIcon sx={{ ml: 1, mt: '4px' }} />
-                                        </a>
+                                        {
+                                            post.statusCode == StatusCode.ACCEPTANCE && (
+                                                <>
+                                                    {'|'}
+                                                    <Box
+                                                        component={'a'}
+                                                        sx={{ textDecoration: 'none', color: '#6E759F', ml: 0.5, mt: '4px' }}
+                                                        href={post.dlink}
+                                                        onClick={(e) => {
+                                                            e.preventDefault();
+                                                            getDownload(post.dlink)
+                                                        }}
+                                                    >
+                                                        <DownloadForOfflineIcon sx={{ fontSize: ICONS_FONT }} />
+                                                    </Box>
+                                                </>
+                                            )
+                                        }
                                     </>
                                 )}
-                            </div>
+                            </Box>
                         </Grid>
                     </Grid>
                 </CardActionsWrapper>

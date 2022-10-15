@@ -9,6 +9,7 @@ import tokenService from "_services/token.service";
 import { useDispatch, useSelector } from "react-redux";
 import { setProfile } from "redux/action/profileAction";
 import { useSnackbar } from 'notistack';
+import { Helmet } from 'react-helmet';
 
 const TabsWrapper = styled(Tabs)(
   () => `
@@ -55,11 +56,9 @@ function ManagementUserProfile() {
 
   return (
     <>
-      {/* <Helmet>
-        <title>{userProfile.name + ' | Ventvoila'}</title>
-        <meta property="og:title" content={userProfile.name} />
-        <meta property="og:description" content={userProfile.mystory} />
-      </Helmet> */}
+      <Helmet>
+        <title>{'User Profile | Referendum 2.0'}</title>
+      </Helmet>
       <Grid
         container
         direction="row"

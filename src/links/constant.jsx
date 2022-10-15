@@ -9,9 +9,9 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 const StatusCode = Object.freeze({
     REVIEW: 0,
     VOTING: 1,
-    RESULT: 2,
+    MANDATE: 2,
     ACCEPTANCE: 3,
-    REJECTANCE: 4
+    REJECTION: 4
 })
 
 
@@ -30,21 +30,32 @@ const KycStatus = Object.freeze({
     NOT_VERIFIED: 3,
 })
 
+const ICONS_FONT = Object.freeze({
+    xs: '13px',
+    sm: '20px'
+})
+
+const TEXT_FONT = Object.freeze({
+    xs: '9px',
+    sm: '13px'
+})
+
 const KycStatusList = {
-    [KycStatus.PENDING]: { color: 'info', icon: <ErrorOutlineIcon sx={{ mr: 1 }} /> },
-    [KycStatus.PROCESSING]: { color: 'primary', icon: <PendingIcon sx={{ mr: 1 }} /> },
-    [KycStatus.VERIFIED]: { color: 'success', icon: <CheckCircleIcon sx={{ mr: 1 }} /> },
-    [KycStatus.NOT_VERIFIED]: { color: 'error', icon: <ErrorIcon sx={{ mr: 1 }} /> },
+    [KycStatus.PENDING]: { color: 'info', icon: <ErrorOutlineIcon sx={{ fontSize: ICONS_FONT }} /> },
+    [KycStatus.PROCESSING]: { color: 'primary', icon: <PendingIcon sx={{ fontSize: ICONS_FONT }} /> },
+    [KycStatus.VERIFIED]: { color: 'success', icon: <CheckCircleIcon sx={{ fontSize: ICONS_FONT }} /> },
+    [KycStatus.NOT_VERIFIED]: { color: 'error', icon: <ErrorIcon sx={{ fontSize: ICONS_FONT }} /> },
 }
 
 const StatusList = {
-    [StatusCode.REVIEW]: { color: 'info', icon: <InsertCommentIcon sx={{ mr: 1 }} /> },
-    [StatusCode.VOTING]: { color: 'primary', icon: <HowToVoteIcon sx={{ mr: 1 }} /> },
-    [StatusCode.ACCEPTANCE]: { color: 'success', icon: <CheckCircleIcon sx={{ mr: 1 }} /> },
-    [StatusCode.REJECTANCE]: { color: 'error', icon: <ErrorIcon sx={{ mr: 1 }} /> },
-    [StatusCode.RESULT]: { color: 'warning', icon: <PendingActionsIcon sx={{ mr: 1 }} /> },
+    [StatusCode.REVIEW]: { color: 'info', icon: <InsertCommentIcon sx={{ fontSize: ICONS_FONT }} /> },
+    [StatusCode.VOTING]: { color: 'primary', icon: <HowToVoteIcon sx={{ fontSize: ICONS_FONT }} /> },
+    [StatusCode.ACCEPTANCE]: { color: 'success', icon: <CheckCircleIcon sx={{ fontSize: ICONS_FONT }} /> },
+    [StatusCode.REJECTION]: { color: 'error', icon: <ErrorIcon sx={{ mr: 1, fontSize: ICONS_FONT }} /> },
+    [StatusCode.MANDATE]: { color: 'warning', icon: <PendingActionsIcon sx={{ fontSize: ICONS_FONT }} /> },
 }
 
 
 
-export { StatusCode, StatusList, KycTypes, KycStatusList, KycStatus }
+
+export { StatusCode, StatusList, KycTypes, KycStatusList, KycStatus, ICONS_FONT, TEXT_FONT }

@@ -17,11 +17,11 @@ TokenService.store = store;
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <HashRouter>
+      <Router>
         <SnackbarProvider maxSnack={5}>
           <App />
         </SnackbarProvider>
-      </HashRouter>
+      </Router>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

@@ -53,18 +53,7 @@ async function getResult() {
     });
 }
 
-async function addPost(idata) {
-    // console.log(getJsonForms(idata));
-    // return;
-    return await getApiRequest({
-        url: "/feeds/",
-        method: "post",
-        data: getJsonForms(idata),
-        headers: { 'Content-Type': 'multipart/form-data' }
-    }).then((result) => {
-        return result;
-    });
-}
+
 
 async function actionUpdate(id, type) {
     return await getApiRequest({
@@ -90,7 +79,6 @@ async function getViewPost(id) {
 export {
     getFeeds,
     getRecent,
-    addPost,
     actionUpdate,
     getViewPost,
     getPost,

@@ -25,6 +25,8 @@ import { StatusCode, StatusList } from "links";
 import { CopyToClipboard } from '_services';
 import { Link } from 'react-router-dom';
 import { getDownload } from '_services';
+import { ICONS_FONT } from 'links';
+import { TEXT_FONT } from 'links';
 
 const CardActionsWrapper = styled(CardActions)(
     ({ theme }) => `
@@ -133,11 +135,14 @@ function Comment({ comment, post, onVote, setReport, setConfirm, userModel, toas
                         </Grid>
                         <Grid item xl={6} >
                             <Box sx={{ mt: { xs: 1, md: 0 } }}>
-                                <div style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    flexWrap: 'wrap',
-                                }}>
+                                <Box
+                                    component={'div'}
+                                    sx={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        flexWrap: 'wrap',
+                                        fontSize: TEXT_FONT
+                                    }}>
                                     {/* {post.statusCode == 1 && (
                                         <Text
                                             sx={{ display: 'flex', mr: 1 }}
@@ -152,28 +157,35 @@ function Comment({ comment, post, onVote, setReport, setConfirm, userModel, toas
                                                 sx={{ display: 'flex', mr: 1 }}
                                                 color={StatusList[comment.statusCode].color}
                                             >
-                                                {StatusList[comment.statusCode].icon}{comment.status}
+                                                {StatusList[comment.statusCode].icon}&nbsp;{comment.status}
                                             </Text>{'|'}
                                             <Text
                                                 sx={{ display: 'flex', mx: 1 }}
                                             >
-                                                <ThumbUpIcon sx={{ mr: 1 }} />{comment.votes}
+                                                <ThumbUpIcon sx={{ fontSize: ICONS_FONT }} />&nbsp;{comment.votes}
                                             </Text>{'|'}
                                             <Ranking sx={{ mx: 1 }} voters={post.tot_votes} votes={comment.votes} />
-                                            {'|'}
-                                            <a
-                                                style={{ textDecoration: 'none', color: '#6E759F' }}
-                                                href={post.dlink}
-                                                onClick={(e) => {
-                                                    e.preventDefault();
-                                                    getDownload(comment.dlink)
-                                                }}
-                                            >
-                                                <DownloadForOfflineIcon sx={{ ml: 1, mt: '4px' }} />
-                                            </a>
+                                            {
+                                                comment.statusCode == StatusCode.ACCEPTANCE && (
+                                                    <>
+                                                        {'|'}
+                                                        <Box
+                                                            component={'a'}
+                                                            sx={{ textDecoration: 'none', color: '#6E759F', ml: 0.5, mt: '4px' }}
+                                                            href={post.dlink}
+                                                            onClick={(e) => {
+                                                                e.preventDefault();
+                                                                getDownload(post.dlink)
+                                                            }}
+                                                        >
+                                                            <DownloadForOfflineIcon sx={{ fontSize: ICONS_FONT }} />
+                                                        </Box>
+                                                    </>
+                                                )
+                                            }
                                         </>
                                     )}
-                                </div>
+                                </Box>
                             </Box>
                         </Grid>
                     </Grid>

@@ -16,6 +16,7 @@ import { useSnackbar } from 'notistack';
 import { addReport } from "common/service";
 import { useSelector } from "react-redux";
 import Status404 from "view/pages/view/Status404";
+import { Helmet } from "react-helmet";
 const ViewPost = () => {
     const search = useSelector(state => state.search);
     const userModel = tokenService.getUser();
@@ -66,12 +67,18 @@ const ViewPost = () => {
             });
             return false;
         }
-        await addComment(postid, fdata).then(e => {
+        return addComment(postid, fdata).then(e => {
             if (e.flag) {
                 enqueueSnackbar("Review uploaded", {
                     variant: 'success',
                 });
                 initLoad()
+                return true
+            } else if (e.status == 406) {
+                enqueueSnackbar(e.data, {
+                    variant: 'warning',
+                });
+                return false
             }
         })
     }
@@ -153,10 +160,10 @@ const ViewPost = () => {
             setPost({ ...postStatic.current })
         }
     }, [search]);
-    let tagsList = "";
-    if ("tags" in postFeeds && postFeeds.tags !== null) {
-        tagsList = postFeeds.tags.replace(/,/gi, " | ")
-    }
+    // let tagsList = "";
+    // if ("tags" in postFeeds && postFeeds.tags !== null) {
+    //     tagsList = postFeeds.tags.replace(/,/gi, " | ")
+    // }
     if (loading === 404) {
         return <Status404 />;
     }
@@ -169,7 +176,7 @@ const ViewPost = () => {
                     </>
                 ) : (
                     <>
-
+                        <Helmet><title>{postFeeds.post_detail} | Referendum 2.0</title></Helmet>
                         {postFeeds.ptype == 0 ? (
                             <Post toaster={enqueueSnackbar}
                                 // flash={postid === postFeeds.post_id} 
@@ -182,9 +189,11 @@ const ViewPost = () => {
 
                         {postFeeds.ptype == 0 && (
                             <Box sx={{ marginLeft: '40px' }}>
-                                <Text varient={'h1'}>Post amendment/disseminate to above idea, issues and agenda if you have any.</Text>
                                 {postFeeds.statusCode == StatusCode.REVIEW && (
-                                    <AddComment userModel={userModel} onAddComment={addCommentForm} />
+                                    <>
+                                        <Text varient={'h1'}>Amendment/Dissentment</Text>
+                                        <AddComment userModel={userModel} onAddComment={addCommentForm} />
+                                    </>
                                 )}
                                 {postFeeds.comments.map(comment => {
                                     return <Comment toaster={enqueueSnackbar}

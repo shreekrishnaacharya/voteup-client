@@ -1,11 +1,10 @@
 import { Box } from '@mui/material';
 import HeaderSearch from './Search/index';
-import HeaderNotifications from './Notifications';
 
-function HeaderButtons() {
+function HeaderButtons({ ...rest }) {
   return (
     <Box sx={{ mr: 1, display: 'flex' }}>
-      <HeaderSearch />
+      <HeaderSearch {...rest} />
       {/* <Box sx={{ mx: 0.5 }} component="span">
         <HeaderNotifications />
       </Box> */}

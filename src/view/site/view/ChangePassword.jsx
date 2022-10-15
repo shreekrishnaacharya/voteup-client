@@ -14,9 +14,7 @@ import AuthChangePassword from './auth-forms/AuthChangePassword';
 const ChangePassword = () => (
     <AuthWrapper>
         <Helmet>
-            <title>Change Password | Ventvoila</title>
-            <meta name="title" property="og:title" content={"Login | Ventvoila"} />
-            <meta name="description" property="og:description" content={"Enter your email to recover"} />
+            <title>Change Password | Referendum 2.0</title>
         </Helmet>
         <Grid container spacing={3}>
             <Grid item xs={12}>

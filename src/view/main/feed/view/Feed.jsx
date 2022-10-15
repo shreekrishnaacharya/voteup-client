@@ -16,6 +16,7 @@ import { setFeedList } from "redux/action/feedsAction";
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import Text from "components/Text";
 import { setFeedReset } from "redux/action/feedsAction";
+import { Helmet } from "react-helmet";
 const Feed = ({ userModel, feedType }) => {
   const search = useSelector(state => state.search);
   const history = useHistory();
@@ -122,7 +123,7 @@ const Feed = ({ userModel, feedType }) => {
     }
   }, [search]);
 
-  const appendFeeds = () => {
+  const appendFeeds = (search) => {
     if (feedType == 'profile') {
       getPost({ status: search.cat, post_detail: search.text, page: pageNo.current, size: 10 }).then(res => {
         if (res.flag) {
@@ -143,14 +144,13 @@ const Feed = ({ userModel, feedType }) => {
       })
     }
   }
-
-  const handleObserver = useCallback((entries) => {
+  const handleObserver = ((entries) => {
     const target = entries[0];
     if (target.isIntersecting) {
       pageNo.current += 1;
-      appendFeeds();
+      appendFeeds(search);
     }
-  }, []);
+  });
 
   useEffect(() => {
     if (!loading) {
@@ -166,10 +166,11 @@ const Feed = ({ userModel, feedType }) => {
     return () => {
       observer.unobserve(loaderRef.current);
     }
-  }, [loading]);
+  }, [loading, search]);
 
   return (
     <Box sx={{ width: '100%' }}>
+
       <>
         {!loading && postFeeds.length == 0 ? (
           <>
@@ -181,6 +182,7 @@ const Feed = ({ userModel, feedType }) => {
                 alignContent={'center'}
                 alignItems={'center'}
                 py={10}>
+                <Helmet><title>No result found for '{search.text}'</title></Helmet>
                 <p><Text>No result found for '{search.text}'</Text></p>
                 <p><WarningAmberIcon sx={{ fontSize: "50px" }} /></p>
               </Box>
@@ -192,6 +194,7 @@ const Feed = ({ userModel, feedType }) => {
                 alignContent={'center'}
                 alignItems={'center'}
                 py={10}>
+                <Helmet><title>No post to display</title></Helmet>
                 <p><Text>No post to display</Text></p>
                 <p><WarningAmberIcon sx={{ fontSize: "50px" }} /></p>
               </Box>
@@ -199,6 +202,7 @@ const Feed = ({ userModel, feedType }) => {
           </>
         ) : (
           <>
+            <Helmet><title>Feeds - Home | Referendum 2.0</title></Helmet>
             {postFeeds.map(post => {
               return <Post toaster={enqueueSnackbar} key={post._id} post={post} onMenu={handleMenu} userModel={userModel} viewPost={viewPost} />
             })}

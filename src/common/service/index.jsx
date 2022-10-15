@@ -1,4 +1,4 @@
-import { getApiRequest as getApi, getJsonForm } from '_services';
+import { getApiRequest as getApi, getJsonForm, getJsonForms } from '_services';
 
 
 const getApiRequest = async (requestData) => {
@@ -23,7 +23,18 @@ async function getPost() {
     });
 }
 
-
+async function addPost(idata) {
+    // console.log(getJsonForms(idata));
+    // return;
+    return await getApiRequest({
+        url: "/feeds/",
+        method: "post",
+        data: getJsonForms(idata),
+        headers: { 'Content-Type': 'multipart/form-data' }
+    }).then((result) => {
+        return result;
+    });
+}
 async function actionUpdate(id) {
     return await getApiRequest({
         url: "/feeds/action",
@@ -62,4 +73,5 @@ export {
     addReport,
     deletePost,
     getPost,
+    addPost
 };

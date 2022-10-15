@@ -42,7 +42,7 @@ const Report = ({ open, onReport, onClose, title }) => {
       >
         <form onSubmit={handleSubmit((fd) => { onReport(fd, reset) })}>
           <DialogTitle sx={{ fontWeight: 700, fontSize: 20, padding: '16px 20px' }}>
-            {title ? title : "Repost this content"}
+            {title ? title : "Report this content"}
           </DialogTitle>
           <DialogContent sx={{ padding: '20px' }}>
             <Stack direction="column" gap={5}>

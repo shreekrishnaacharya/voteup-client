@@ -1,7 +1,10 @@
+import { Helmet } from "react-helmet"
+
 export default () => {
 
     return (
         <div>
+            <Helmet><title>Frequently Asked Questions | Referendum 2.0</title></Helmet>
             <h2 style={{ textAlign: 'center' }}>Frequently Asked Questions</h2>
             <p style={{ textAlign: 'justify' }}>&nbsp;</p>
             <blockquote>

@@ -82,15 +82,12 @@ function HeaderUserbox() {
   }
 
   return (
-    <>
+    <Box sx={{ display: { xs: 'none', md: 'block' } }}>
       <UserBoxButton color="secondary" ref={ref} onClick={handleOpen}>
         <Avatar variant="rounded" alt={user.name} src={user.img} />
         <Hidden mdDown>
           <UserBoxText>
             <UserBoxLabel variant="body1">{user.name}</UserBoxLabel>
-            {/* <UserBoxDescription variant="body2">
-              {user.jobtitle}
-            </UserBoxDescription> */}
           </UserBoxText>
         </Hidden>
         <Hidden smDown>
@@ -146,7 +143,7 @@ function HeaderUserbox() {
           </Button>
         </Box>
       </Popover>
-    </>
+    </Box>
   );
 }
 

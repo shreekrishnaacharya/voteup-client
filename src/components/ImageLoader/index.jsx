@@ -156,14 +156,14 @@ function ImageLoader({ title, InputProps, size, cancelName, saveName, onSave, mu
     const ImageBox = () => {
         if (Boolean(profileImg)) {
             return <Box my={2}>
-                <Typography variant="subtitle2">
+                <Box>
                     <Grid
                         container
                         spacing={2}
                     >
                         <ImageList />
                     </Grid>
-                </Typography>
+                </Box>
                 <Box mt={2}>
                     <Divider />
                     <Grid container mt={1} justifyContent="flex-start">
@@ -202,10 +202,9 @@ function ImageLoader({ title, InputProps, size, cancelName, saveName, onSave, mu
     return (
         <>
             <Input
-                {...InputProps}
                 type="file"
                 sx={{ display: 'none' }}
-                inputProps={{ multiple }}
+                inputProps={{ ...InputProps, multiple }}
                 onChange={(e) => {
                     if (e.target.files != undefined) {
                         setProfile(e)
@@ -214,7 +213,9 @@ function ImageLoader({ title, InputProps, size, cancelName, saveName, onSave, mu
                 }}
             />
             {isModal ? (
-                <Dialog open={Boolean(profileImg)} fullWidth maxWidth={'md'}>
+                <Dialog
+                    scroll='paper'
+                    open={Boolean(profileImg)} fullWidth maxWidth={'md'}>
                     <DialogTitle variant="h3">{title}</DialogTitle>
                     <DialogContent sx={{ padding: '10px 16px' }}>
                         <Divider />

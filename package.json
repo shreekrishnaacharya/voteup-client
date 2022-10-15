@@ -1,6 +1,6 @@
 {
-  "name": "Dami",
-  "version": "2.0.0",
+  "name": "Admin | Referendum 2.0",
+  "version": "2.2.1",
   "private": true,
   "author": "Krishna Acharya",
   "license": "MIT Licenses",
@@ -45,7 +45,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "GENERATE_SOURCEMAP=false react-scripts build && cp -r build/* ../public/",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start"

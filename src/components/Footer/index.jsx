@@ -9,7 +9,7 @@ function Footer({ mini }) {
       bottom: 0,
       width: '100%',
       position: Boolean(mini) ? 'relative' : 'absolute',
-      background: Boolean(mini) ? 'transparent' : '#f9f9f991',
+      // background: Boolean(mini) ? 'transparent' : '#f9f9f991',
       height: '2.5rem',
 
     }}>
@@ -27,7 +27,7 @@ function Footer({ mini }) {
               display: Boolean(mini) ? 'none' : 'block'
             }}
           >
-            &copy; 2022 - Ventvoila
+            &copy; 2022 - Referendum 2.0
           </Typography>
           <Typography
             sx={{
@@ -50,7 +50,7 @@ function Footer({ mini }) {
               to={pages.TERMS}
               rel="Terms and conditions"
             >
-              T&C
+              ToS
             </Link>
           </Typography>
           <Typography
@@ -62,7 +62,7 @@ function Footer({ mini }) {
               to={pages.FAQ}
               rel="Frequently asked question"
             >
-              Faq
+              FAQ
             </Link>
           </Typography>
           <Typography
@@ -94,7 +94,8 @@ function Footer({ mini }) {
         <Typography
           sx={{
             pt: { xs: 2, md: 0 },
-            fontSize: Boolean(mini) ? '10px' : '13px'
+            fontSize: Boolean(mini) ? '10px' : '13px',
+            display: Boolean(mini) ? 'none' : 'block'
           }}
         >
           Crafted by{' '}
@@ -102,8 +103,9 @@ function Footer({ mini }) {
             href="https://www.linkedin.com/in/shree-krishna-acharya-0a10a514b/"
             rel="sksharma72000@gmail.com"
             target="_blank"
+            sx={{ color: '#fff', textShadow: '0 3px 5px rgba(0, 0, 0, 0.5)' }}
           >
-            Shree Krishna Acahrya
+            Shree Krishna Acharya
           </RLink>
         </Typography>
       </Box>

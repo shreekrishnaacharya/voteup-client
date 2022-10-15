@@ -1,4 +1,5 @@
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import { ICONS_FONT } from 'links';
 import Text from './Text';
 
 export default function Ranking({ voters, votes, sx }) {
@@ -11,7 +12,7 @@ export default function Ranking({ voters, votes, sx }) {
             }}
             color={(ranking < 20 ? "error" : ranking < 50 ? "warning" : "success")}
         >
-            <StarBorderIcon />{ranking + "%"}
+            <StarBorderIcon sx={{ fontSize: ICONS_FONT }} />{ranking + "%"}
         </Text>
     )
 }
