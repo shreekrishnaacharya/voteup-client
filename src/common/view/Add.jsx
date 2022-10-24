@@ -122,7 +122,7 @@ const Add = ({ setDialog }) => {
           <AddIcon />
         </Fab>
       </Tooltip>
-      <AppBar position="fixed" color="secondary" sx={{ py: 0.2, top: 'auto', bottom: 0, display: { xs: 'block', md: 'none' } }}>
+      {/* <AppBar position="fixed" color="secondary" sx={{ py: 0.2, top: 'auto', bottom: 0, display: { xs: 'block', md: 'none' } }}>
         <Toolbar>
           <IconButton onClick={goHome} color="inherit" sx={{ width: '20%' }}>
             <HomeIcon sx={{ fontSize: 32 }} />
@@ -138,7 +138,7 @@ const Add = ({ setDialog }) => {
             <LogoutIcon sx={{ fontSize: 32 }} />
           </IconButton>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
       <SytledModal
         open={open}
         onClose={(e) => setOpen(false)}

@@ -47,6 +47,18 @@ function Footer({ mini }) {
             }}
           >
             <Link
+              to={pages.RULES}
+              rel="Terms of Use"
+            >
+              ToU
+            </Link>
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: Boolean(mini) ? '10px' : '13px'
+            }}
+          >
+            <Link
               to={pages.TERMS}
               rel="Terms and conditions"
             >

@@ -117,6 +117,10 @@ function HeaderSearch({ openDialog, setDialog }) {
     const handleClose = () => {
         setDialog(false);
     };
+
+    const handleClickOpen = () => {
+        setDialog(true);
+    };
     const handleTextChange = (event) => {
         setStext(event.target.value)
     };
@@ -169,7 +173,12 @@ function HeaderSearch({ openDialog, setDialog }) {
                     </Select>
                 </FormControl>
             </Box>
-            <Box>
+            <Box sx={{ display: { xs: 'block', md: 'none' } }}>
+                <Tooltip arrow title="Search">
+                    <IconButton color="primary" onClick={handleClickOpen}>
+                        <SearchIcon />
+                    </IconButton>
+                </Tooltip>
                 <DialogWrapper
                     open={openDialog}
                     TransitionComponent={Transition}

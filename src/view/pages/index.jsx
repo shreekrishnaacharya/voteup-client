@@ -7,6 +7,7 @@ import PageTerms from './view/Terms';
 import PageBlog from './view/PageBlog';
 import PagePrivacy from './view/PagePrivacy';
 import PageFAQ from './view/PageFAQ';
+import PageRules from './view/PageRules';
 
 function PagesController() {
     return (
@@ -28,6 +29,7 @@ function PagesController() {
                         <Route exact path={pages.FAQ} component={PageFAQ} />
                         <Route exact path={pages.BLOG} component={PageBlog} />
                         <Route exact path={pages.TERMS} component={PageTerms} />
+                        <Route exact path={pages.RULES} component={PageRules} />
                         <Footer />
                     </Switch>
                 </Grid>

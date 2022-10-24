@@ -82,7 +82,9 @@ function HeaderUserbox() {
   }
 
   return (
-    <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+    <Box 
+    // sx={{ display: { xs: 'none', md: 'block' } }}
+    >
       <UserBoxButton color="secondary" ref={ref} onClick={handleOpen}>
         <Avatar variant="rounded" alt={user.name} src={user.img} />
         <Hidden mdDown>

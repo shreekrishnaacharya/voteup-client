@@ -14,7 +14,9 @@ import {
     InputLabel,
     OutlinedInput,
     Stack,
-    Typography
+    Typography,
+    Select,
+    MenuItem
 } from '@mui/material';
 
 // third party
@@ -31,13 +33,14 @@ import { strengthColor, strengthIndicator } from 'utils/password-strength';
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import { getSignup } from 'view/site/service';
 import { pages } from 'links';
-
+import countryList from 'assets/json/country'
 
 const schema = yup.object({
     fname: yup.string().required("First name cannot be blank"),
     lname: yup.string().required("Last name cannot be blank"),
     email: yup.string().required("Email cannot be blank").email(),
     contact: yup.string().required("Phone cannot be blank"),
+    country: yup.string().required("Country cannot be blank"),
     temp_password: yup.string().required("Password cannot be blank"),
 });
 
@@ -74,7 +77,7 @@ const AuthRegister = () => {
                     variant: 'success',
                 });
                 history.push({
-                    pathname: sitePage.LOGIN
+                    pathname: pages.LOGIN
                 });
             } else {
                 enqueueSnackbar("Signup failed", {
@@ -83,7 +86,7 @@ const AuthRegister = () => {
             }
         });
     }
-
+    console.log(countryList)
     return (
         <>
             <form noValidate onSubmit={handleSubmit(onSubmitHandler)}>
@@ -146,7 +149,7 @@ const AuthRegister = () => {
                             />
                         </Stack>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} md={6}>
                         <Stack spacing={1}>
                             <Controller
                                 name="contact"
@@ -165,6 +168,37 @@ const AuthRegister = () => {
                                             />
                                             {fieldState.error && (
                                                 <FormHelperText error >
+                                                    {fieldState.error.message}
+                                                </FormHelperText>
+                                            )}
+
+                                        </>
+                                    )
+                                }}
+                            />
+                        </Stack>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <Stack spacing={1}>
+                            <Controller
+                                name="country"
+                                defaultValue="Nepal"
+                                control={control}
+                                render={({ field, fieldState }) => {
+                                    return (
+                                        <>
+                                            <InputLabel htmlFor="country-login">Country*</InputLabel>
+                                            <Select
+                                                {...field}
+                                                labelId="select-label"
+                                                id="country-login"
+                                            >
+                                                {Object.values(countryList).map(e => {
+                                                    return <MenuItem key={e} value={e}>{e}</MenuItem>
+                                                })}
+                                            </Select>
+                                            {fieldState.error && (
+                                                <FormHelperText error>
                                                     {fieldState.error.message}
                                                 </FormHelperText>
                                             )}
@@ -205,6 +239,7 @@ const AuthRegister = () => {
                             />
                         </Stack>
                     </Grid>
+
                     <Grid item xs={12}>
                         <Stack spacing={1}>
                             <Controller
@@ -261,6 +296,7 @@ const AuthRegister = () => {
                             </Grid>
                         </FormControl>
                     </Grid>
+
                     <Grid item xs={12}>
                         <Typography variant="body2">
                             By Signing up, you agree to our &nbsp;

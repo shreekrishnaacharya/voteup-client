@@ -11,7 +11,10 @@ import {
     FormHelperText,
     RadioGroup,
     FormControlLabel,
-    Radio
+    Radio,
+    Select,
+    MenuItem,
+    FormControl
 } from '@mui/material';
 
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
@@ -25,6 +28,7 @@ import * as yup from "yup";
 import { updateProfile } from "../../service";
 import { useDispatch, useSelector } from "react-redux";
 import { setProfile } from "redux/action/profileAction";
+import countryList from 'assets/json/country'
 
 const schema = yup.object({
     fname: yup.string().required("First name is required"),
@@ -33,7 +37,8 @@ const schema = yup.object({
     contact: yup.string().required("Contact is required"),
     dob: yup.string().required("Date of Birth is required"),
     address1: yup.string().required("Address1 is required"),
-    address2: yup.string()
+    address2: yup.string(),
+    country: yup.string().required("Country is required")
 });
 export default function PersonalDetail() {
     const dispatch = useDispatch();
@@ -321,6 +326,46 @@ export default function PersonalDetail() {
                             ) : (
                                 <Text color="black">
                                     <b>{userProfile.address2}</b>
+                                </Text>
+                            )
+                            }
+                        </Grid>
+                        <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
+                            <Box pr={3} pb={2}>
+                                Country:
+                            </Box>
+                        </Grid>
+                        <Grid item xs={12} sm={8} md={9}>
+                            {editForm ? (
+                                <Controller
+                                    name="country"
+                                    defaultValue={userProfile.country}
+                                    control={control}
+                                    render={({ field, fieldState }) => (
+                                        <>
+                                            <FormControl sx={{ width: '100%' }} size="small">
+                                                <Select
+                                                    
+                                                    {...field}
+                                                    labelId="select-label"
+                                                    id="country-login"
+                                                >
+                                                    {Object.values(countryList).map(e => {
+                                                        return <MenuItem key={e} value={e}>{e}</MenuItem>
+                                                    })}
+                                                </Select>
+                                            </FormControl>
+                                            {fieldState.error && (
+                                                <FormHelperText error>
+                                                    {fieldState.error?.message}
+                                                </FormHelperText>
+                                            )}
+                                        </>
+                                    )}
+                                />
+                            ) : (
+                                <Text color="black">
+                                    <b>{userProfile.country}</b>
                                 </Text>
                             )
                             }
