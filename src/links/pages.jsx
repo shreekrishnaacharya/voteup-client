@@ -46,6 +46,7 @@ const guestPage = [
 ];
 
 const staticPages = [
+    otherPages.RULES,
     otherPages.BLOG,
     otherPages.FAQ,
     otherPages.PAGES,
