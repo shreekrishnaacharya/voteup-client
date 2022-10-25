@@ -20,7 +20,7 @@ function PagesController() {
                     minHeight: '60vh'
                 }}
             >
-                <Grid item xs={12} sx={{ px: 2, py: 3.5, backgroundColor: "#fff" }} >
+                <Grid item xs={12} sx={{ px: 2, backgroundColor: "#fff" }} >
                     <Logo to={pages.HOME} />
                 </Grid>
                 <Grid item xs={12} sx={{ my: 2, mx: 6 }}>
