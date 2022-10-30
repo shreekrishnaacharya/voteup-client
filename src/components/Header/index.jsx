@@ -33,7 +33,7 @@ const HeaderWrapper = styled(Box)(
 function Header({ openDialog, setDialog }) {
   const theme = useTheme();
   const location = useLocation();
-  console.log(location.pathname === pages.POST)
+  // console.log(location.pathname === pages.POST)
   return (
     <HeaderWrapper
       display="flex"

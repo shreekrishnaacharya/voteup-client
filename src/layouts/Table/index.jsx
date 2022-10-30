@@ -6,38 +6,41 @@ import PropTypes from "prop-types";
 
 function Table({ columns, rows }) {
 
-    const renderColumns = columns.map(({ name, label, align }, key) => {
-        let pl;
-        let pr;
+    const renderColumns = useMemo(() => {
+        return columns.map(({ name, label, align }, key) => {
+            let pl;
+            let pr;
 
-        if (key === 0) {
-            pl = 3;
-            pr = 3;
-        } else if (key === columns.length - 1) {
-            pl = 3;
-            pr = 3;
-        } else {
-            pl = 1;
-            pr = 1;
-        }
-        return (
-            <th
-                key={name}
-                className="ui primary"
-                style={{
-                    textAlign: align,
-                    fontSize: '14px',
-                    fontWeight: 'bold',
-                    opacity: "0.9",
-                    borderBottom: '1px solid #eee'
-                }}
-            >
-                {label ? label : name.toUpperCase()}
-            </th >
-        );
-    });
+            if (key === 0) {
+                pl = 3;
+                pr = 3;
+            } else if (key === columns.length - 1) {
+                pl = 3;
+                pr = 3;
+            } else {
+                pl = 1;
+                pr = 1;
+            }
+            return (
+                <th
+                    key={name}
+                    className="ui primary"
+                    style={{
+                        textAlign: align,
+                        fontSize: '14px',
+                        fontWeight: 'bold',
+                        opacity: "0.9",
+                        borderBottom: '1px solid #eee'
+                    }}
+                >
+                    {label ? label : name.toUpperCase()}
+                </th >
+            );
+        });
+    }, [columns])
 
-    const renderRows = rows.map((row, key) => {
+
+    const renderRows = useMemo(() => rows.map((row, key) => {
         const rowKey = `row-${key}`;
         const tableRow = columns.map(({ name, align }) => {
             if (!row.hasOwnProperty(name)) {
@@ -57,7 +60,7 @@ function Table({ columns, rows }) {
                 {tdata}</td>);
         });
         return <tr key={rowKey}>{tableRow}</tr>;
-    });
+    }), [rows])
 
     return useMemo(
         () => (
@@ -74,32 +77,36 @@ function Table({ columns, rows }) {
 
 const Pagination = (props) => {
     const { totalPages, currentPage, onClick, padding } = props;
-    let leftPage = [];
-    let currentCount = currentPage < 1 ? 1 : currentPage;
-    if (currentPage > padding + 1) {
-        currentCount -= padding;
-        leftPage[0] = <a key={1} className='ui label' onClick={(e) => onClick(e, 1)}><i>&lt;&lt;</i></a>
-        leftPage[1] = <a key={currentPage - 1} className='ui label' onClick={(e) => onClick(e, currentPage - 1)}><i>&lt;</i></a>
-    } else {
-        currentCount = 1;
-    }
-    let currentPageLink = [];
-    let counter = 0;
-    while (currentCount <= (currentPage + padding)) {
-        const pid = currentCount;//wow, hahaha this is interesting problem i came accross;
-        currentPageLink[counter] = <a key={pid} className={`ui label ${currentPage == pid ? 'teal' : ''}`} onClick={(e) => { onClick(e, pid) }}>{pid}</a>
-        if (pid >= totalPages) {
-            break;
+    const [leftPage, currentPageLink, rightPage] = useMemo(() => {
+        let leftPage = [];
+        let currentCount = currentPage < 1 ? 1 : currentPage;
+        if (currentPage > padding + 1) {
+            currentCount -= padding;
+            leftPage[0] = <a key={1} className='ui label' onClick={(e) => onClick(e, 1)}><i>&lt;&lt;</i></a>
+            leftPage[1] = <a key={currentPage - 1} className='ui label' onClick={(e) => onClick(e, currentPage - 1)}><i>&lt;</i></a>
+        } else {
+            currentCount = 1;
         }
-        counter++;
-        currentCount++;
-    }
-    currentCount--;
-    let rightPage = [];
-    if ((currentPage + padding) < totalPages) {
-        rightPage[0] = <a key={currentPage + 1} className='ui label' onClick={(e) => onClick(e, currentPage + 1)}><i>&gt;</i></a>
-        rightPage[1] = <a key={totalPages} className='ui label' onClick={(e) => onClick(e, totalPages)}><i>&gt;&gt;</i></a>
-    }
+        let currentPageLink = [];
+        let counter = 0;
+        while (currentCount <= (currentPage + padding)) {
+            const pid = currentCount;//wow, hahaha this is interesting problem i came accross;
+            currentPageLink[counter] = <a key={pid} className={`ui label ${currentPage == pid ? 'teal' : ''}`} onClick={(e) => { onClick(e, pid) }}>{pid}</a>
+            if (pid >= totalPages) {
+                break;
+            }
+            counter++;
+            currentCount++;
+        }
+        currentCount--;
+        let rightPage = [];
+        if ((currentPage + padding) < totalPages) {
+            rightPage[0] = <a key={currentPage + 1} className='ui label' onClick={(e) => onClick(e, currentPage + 1)}><i>&gt;</i></a>
+            rightPage[1] = <a key={totalPages} className='ui label' onClick={(e) => onClick(e, totalPages)}><i>&gt;&gt;</i></a>
+        }
+        return [leftPage, currentPageLink, rightPage];
+    }, [currentPage])
+
     return (
         <div className="ui mini horizontal divided list">
             <div className="item">
