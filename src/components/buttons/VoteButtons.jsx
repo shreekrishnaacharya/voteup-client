@@ -1,7 +1,7 @@
 import { LoadingButton } from '@mui/lab';
 import { ThumbUpAltTwoTone } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useEffect } from 'react';
 
 const LoaderIndicator = styled('div')(({ theme }) => ({
@@ -70,4 +70,4 @@ const VoteButton = ({ hasVote, onClick, ...rest }) => {
     </LoadingButton>
 }
 
-export default VoteButton;
+export default React.memo(VoteButton);

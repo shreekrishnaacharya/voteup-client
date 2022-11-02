@@ -35,12 +35,12 @@ const Loading = () => {
 
 const Rightbar = () => {
   const history = useHistory();
-  const { recent, result } = useSelector(state => state.rightbar)
-  const dispatch = useDispatch();
+  // const { recent, result } = useSelector(state => state.rightbar)
+  // const dispatch = useDispatch();
   const [loadrec, setLoadRec] = useState(true);
   const [loadres, setLoadRes] = useState(true);
-  // const [postFeeds, setFeeds] = useState([]);
-  // const [resultFeeds, setResult] = useState([]);
+  const [postFeeds, setFeeds] = useState([]);
+  const [resultFeeds, setResult] = useState([]);
 
   const viewPost = (postid) => {
     history.push({
@@ -69,7 +69,7 @@ const Rightbar = () => {
       }
     })
   }, []);
-
+  console.log("i am rightbar")
   return (
     <Box sx={{ display: { xs: "none", sm: "none", md: "block" } }}>
       <Box position="sticky" width={350}>

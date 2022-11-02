@@ -48,6 +48,51 @@ const CardActionsWrapper = styled(CardActions)(
   `
 );
 
+const ImageView = ({ meta, gsize }) => {
+    if (meta.length == 0) {
+        return "";
+    }
+    const smallItemStyles = {
+        cursor: 'pointer',
+        objectFit: 'cover',
+        width: '150px',
+        height: '150px',
+    }
+    return (<CardContent>
+        <Gallery>
+            <Box
+                sx={{
+                    display: 'grid',
+                    gridTemplateColumns: {
+                        xs: 'repeat(2, 0fr)', sm: 'repeat(4, 0fr)', md: 'repeat(5, 0fr)', lg: 'repeat(5, 0fr)'
+                    },
+                    gridGap: 10,
+                }}
+            >
+                {meta.map((item, index) => {
+                    return (<Item
+                        key={item.img}
+                        cropped
+                        original={item.img}
+                        thumbnail={item.img}
+                        height={('gs' + index in gsize) ? gsize['gs' + index].h : 801}
+                        width={('gs' + index in gsize) ? gsize['gs' + index].w : 1000}
+                    >
+                        {({ ref, open }) => (
+                            <img
+                                id={'gs' + index}
+                                style={smallItemStyles}
+                                ref={ref} onClick={open}
+                                src={item.img}
+                            />
+                        )}
+                    </Item>)
+                })}
+            </Box>
+        </Gallery>
+    </CardContent >)
+}
+
 
 function Post({ post, onMenu, onVote, userModel, viewPost, isOpen, toaster }) {
     // const [paction, setPaction] = useState({
@@ -96,50 +141,7 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen, toaster }) {
         })
     }
 
-    const ImageView = () => {
-        if (post.meta.length == 0) {
-            return "";
-        }
-        const smallItemStyles = {
-            cursor: 'pointer',
-            objectFit: 'cover',
-            width: '150px',
-            height: '150px',
-        }
-        return (<CardContent>
-            <Gallery>
-                <Box
-                    sx={{
-                        display: 'grid',
-                        gridTemplateColumns: {
-                            xs: 'repeat(2, 0fr)', sm: 'repeat(4, 0fr)', md: 'repeat(5, 0fr)', lg: 'repeat(5, 0fr)'
-                        },
-                        gridGap: 10,
-                    }}
-                >
-                    {post.meta.map((item, index) => {
-                        return (<Item
-                            key={item.img}
-                            cropped
-                            original={item.img}
-                            thumbnail={item.img}
-                            height={('gs' + index in gsize) ? gsize['gs' + index].h : 801}
-                            width={('gs' + index in gsize) ? gsize['gs' + index].w : 1000}
-                        >
-                            {({ ref, open }) => (
-                                <img
-                                    id={'gs' + index}
-                                    style={smallItemStyles}
-                                    ref={ref} onClick={open}
-                                    src={item.img}
-                                />
-                            )}
-                        </Item>)
-                    })}
-                </Box>
-            </Gallery>
-        </CardContent >)
-    }
+
     return (
         <Box mb={2}>
             <Card>
@@ -176,7 +178,7 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen, toaster }) {
                         {post.post_detail}
                     </Typography>
                 </Box>
-                <ImageView />
+                <ImageView meta={post.meta} gsize={gsize} />
                 <Box p={1}>
                     <Typography variant="subtitle2">
                         <ReactTimeAgo date={new Date(post.create_at)} locale="en-US" />
@@ -315,4 +317,4 @@ Post.propTypes = {
 Post.defaultProps = {
     isOpen: false,
 }
-export default Post;  
+export default React.memo(Post);  

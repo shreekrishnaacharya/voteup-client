@@ -86,7 +86,6 @@ const AuthRegister = () => {
             }
         });
     }
-    console.log(countryList)
     return (
         <>
             <form noValidate onSubmit={handleSubmit(onSubmitHandler)}>
