@@ -29,6 +29,7 @@ import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 
 import { getNewPassword } from 'view/site/service';
 import { pages } from 'links';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
 const schema = yup.object({
     code: yup.string().required("Verify code is required").test('len', 'Must be exactly 6 characters', val => val.length === 6),
@@ -41,9 +42,14 @@ const schema = yup.object({
 const AuthChangePassword = () => {
     const [showPassword, setShowPassword] = useState({ new: false, confirm: false });
     const history = useHistory();
+    const location = useLocation()
+    const query = new URLSearchParams(location.search);
+    const hascode = query.has("code")
+    console.log(query.has("code"))
     const { handleSubmit, control, formState: { errors, isSubmitting } } = useForm({
         resolver: yupResolver(schema),
     });
+
     const handleClickShowPassword = (type) => {
         setShowPassword({ ...showPassword, [type]: !showPassword[type] });
     };
@@ -77,7 +83,7 @@ const AuthChangePassword = () => {
                         <Stack spacing={1}>
                             <Controller
                                 name="code"
-                                defaultValue=""
+                                defaultValue={query.has("code") ? query.get("code") : ""}
                                 control={control}
                                 render={({ field, fieldState }) => {
                                     return (
@@ -87,6 +93,7 @@ const AuthChangePassword = () => {
                                                 id="email-login"
                                                 type="text"
                                                 placeholder="Enter code"
+                                                readOnly={query.has("code")}
                                                 fullWidth
                                                 {...field}
                                             // error={Boolean(fieldState.error)}
