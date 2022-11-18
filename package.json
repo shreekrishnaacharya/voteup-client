@@ -9,6 +9,9 @@
   "dependencies": {
     "@ant-design/colors": "^4.0.0-alpha.0",
     "@ant-design/icons": "^4.0.0-rc.0",
+    "@capacitor/android": "4.4.0",
+    "@capacitor/core": "^4.4.0",
+    "@capacitor/splash-screen": "^4.1.1",
     "@emotion/react": "11.9.0",
     "@emotion/styled": "11.8.1",
     "@hookform/resolvers": "^2.8.3",
@@ -77,6 +80,7 @@
     }
   },
   "devDependencies": {
+    "@capacitor/cli": "^4.4.0",
     "eslint": "^7.30.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",

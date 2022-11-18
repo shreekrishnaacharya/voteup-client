@@ -1,0 +1,14 @@
+{
+  "appId": "com.krishna.referendum",
+  "appName": "Referendum",
+  "webDir": "build",
+  "bundledWebRuntime": false,
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1000,
+      "launchAutoHide": true,
+      "splashImmersive": true,
+      "backgroundColor": "#ffffff"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+    "name": "Referendum",
+    "integrations": {
+      "capacitor": {}
+    },
+    "type": "react"
+  }
