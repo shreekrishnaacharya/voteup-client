@@ -2,16 +2,16 @@ import { Box, Link as RLink, Typography, styled } from '@mui/material';
 import { pages } from 'links';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { _GLOBAL } from 'links';
 
-function Footer({ mini }) {
+function Footer() {
+  const { mini } = _GLOBAL
   return (
     <Box sx={{
       bottom: 0,
       width: '100%',
-      position: Boolean(mini) ? 'relative' : 'absolute',
-      // background: Boolean(mini) ? 'transparent' : '#f9f9f991',
-      height: '2.5rem',
-
+      position: 'absolute',
+      height: '2.5rem'
     }}>
       <Box
         px={2}
@@ -31,7 +31,7 @@ function Footer({ mini }) {
           </Typography>
           <Typography
             sx={{
-              fontSize: Boolean(mini) ? '10px' : '13px'
+              fontSize: Boolean(mini) ? '13px' : '13px'
             }}
           >
             <Link
@@ -43,7 +43,7 @@ function Footer({ mini }) {
           </Typography>
           <Typography
             sx={{
-              fontSize: Boolean(mini) ? '10px' : '13px'
+              fontSize: Boolean(mini) ? '13px' : '13px'
             }}
           >
             <Link
@@ -55,7 +55,7 @@ function Footer({ mini }) {
           </Typography>
           <Typography
             sx={{
-              fontSize: Boolean(mini) ? '10px' : '13px'
+              fontSize: Boolean(mini) ? '13px' : '13px'
             }}
           >
             <Link
@@ -67,7 +67,7 @@ function Footer({ mini }) {
           </Typography>
           <Typography
             sx={{
-              fontSize: Boolean(mini) ? '10px' : '13px'
+              fontSize: Boolean(mini) ? '13px' : '13px'
             }}
           >
             <Link
@@ -79,7 +79,7 @@ function Footer({ mini }) {
           </Typography>
           <Typography
             sx={{
-              fontSize: Boolean(mini) ? '10px' : '13px'
+              fontSize: Boolean(mini) ? '13px' : '13px'
             }}
           >
             <Link
@@ -106,7 +106,7 @@ function Footer({ mini }) {
         <Typography
           sx={{
             pt: { xs: 2, md: 0 },
-            fontSize: Boolean(mini) ? '10px' : '13px',
+            fontSize: Boolean(mini) ? '13px' : '13px',
             display: Boolean(mini) ? 'none' : 'block'
           }}
         >

@@ -1,4 +1,4 @@
-import { IconButton } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import { useHistory } from "react-router-dom";
 export default function GoBack({ sx }) {
@@ -8,7 +8,8 @@ export default function GoBack({ sx }) {
     }
     return (
         <IconButton sx={{ ...sx }} aria-label="Back" onClick={goback}>
-            <KeyboardBackspaceIcon  sx={{fontSize:'30px'}}/>
+            <KeyboardBackspaceIcon sx={{ fontSize: '30px' }} />
+            <Typography variant="h3" sx={{ mt: '5px', ml: '10px' }}>Post</Typography>
         </IconButton>
     )
 }

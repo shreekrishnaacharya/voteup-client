@@ -8,8 +8,10 @@ import PageBlog from './view/PageBlog';
 import PagePrivacy from './view/PagePrivacy';
 import PageFAQ from './view/PageFAQ';
 import PageRules from './view/PageRules';
+import { _GLOBAL } from 'links';
 
 function PagesController() {
+    const { mini } = _GLOBAL
     return (
         <Box>
             <Grid
@@ -23,7 +25,7 @@ function PagesController() {
                 <Grid item xs={12} sx={{ px: 2, backgroundColor: "#fff" }} >
                     <Logo to={pages.HOME} />
                 </Grid>
-                <Grid item xs={12} sx={{ my: 2, mx: 6 }}>
+                <Grid item xs={12} sx={{ my: 7, mx: mini ? 2 : 6 }}>
                     <Switch>
                         <Route exact path={pages.PRIVACY} component={PagePrivacy} />
                         <Route exact path={pages.FAQ} component={PageFAQ} />

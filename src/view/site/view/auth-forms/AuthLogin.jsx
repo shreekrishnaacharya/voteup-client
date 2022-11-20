@@ -73,10 +73,9 @@ const AuthLogin = () => {
                         pathname: pages.HOME
                     });
                 }
-
             } else {
                 enqueueSnackbar("Invalid login detail", {
-                    variant: 'error',
+                    variant: 'error'
                 });
             }
         });
@@ -129,7 +128,7 @@ const AuthLogin = () => {
                                             <OutlinedInput
                                                 fullWidth
                                                 // error={Boolean(fieldState.error)}
-                                                id="-password-login"
+                                                id="password-login"
                                                 type={showPassword ? 'text' : 'password'}
                                                 {...field}
                                                 endAdornment={

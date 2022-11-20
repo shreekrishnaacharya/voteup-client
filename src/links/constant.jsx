@@ -31,13 +31,12 @@ const KycStatus = Object.freeze({
 })
 
 const ICONS_FONT = Object.freeze({
-    xs: '13px',
+    xs: '16px',
     sm: '20px'
 })
 
 const TEXT_FONT = Object.freeze({
-    xs: '9px',
-    sm: '13px'
+    xs: '13px'
 })
 
 const KycStatusList = {
@@ -55,7 +54,9 @@ const StatusList = {
     [StatusCode.MANDATE]: { color: 'warning', icon: <PendingActionsIcon sx={{ fontSize: ICONS_FONT }} /> },
 }
 
+const _GLOBAL = Object.freeze({
+    mini: true
+})
 
 
-
-export { StatusCode, StatusList, KycTypes, KycStatusList, KycStatus, ICONS_FONT, TEXT_FONT }
+export { StatusCode, StatusList, KycTypes, KycStatusList, KycStatus, ICONS_FONT, TEXT_FONT, _GLOBAL }

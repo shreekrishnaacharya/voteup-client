@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
@@ -7,9 +8,11 @@ import Logo from './Logo';
 // ==============================|| MAIN LOGO ||============================== //
 
 const LogoSection = ({ sx, to }) => (
-    <Link to={to} sx={{ ...sx, position: 'absolute', top: 0 }}>
-        <Logo />
-    </Link>
+    <Box sx={{ ...sx, position: 'absolute', top: 0 }}>
+        <Link to={to}>
+            <Logo />
+        </Link>
+    </Box>
 );
 
 LogoSection.propTypes = {

@@ -37,6 +37,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { pages } from "links";
+import { _GLOBAL } from "links";
 
 const SytledModal = styled(Modal)({
   display: "flex",
@@ -57,6 +58,7 @@ const schema = yup.object({
   supporters: yup.number().min(1),
 });
 const Add = ({ setDialog }) => {
+  const { mini } = _GLOBAL
   const userModel = tokenService.getUser();
   const history = useHistory();
   const search = useSelector(state => state.search);
@@ -122,23 +124,25 @@ const Add = ({ setDialog }) => {
           <AddIcon />
         </Fab>
       </Tooltip>
-      {/* <AppBar position="fixed" color="secondary" sx={{ py: 0.2, top: 'auto', bottom: 0, display: { xs: 'block', md: 'none' } }}>
-        <Toolbar>
-          <IconButton onClick={goHome} color="inherit" sx={{ width: '20%' }}>
-            <HomeIcon sx={{ fontSize: 32 }} />
-          </IconButton>
-          <IconButton color="inherit" sx={{ width: '20%' }} onClick={() => setDialog(true)}>
-            <SearchIcon sx={{ fontSize: 32 }} />
-          </IconButton>
-          <Box sx={{ flexGrow: 1 }} />
-          <IconButton onClick={goProfile} color="inherit" sx={{ width: '20%' }}>
-            <AccountCircleIcon sx={{ fontSize: 32 }} />
-          </IconButton>
-          <IconButton onClick={getOut} color="inherit" sx={{ width: '20%' }}>
-            <LogoutIcon sx={{ fontSize: 32 }} />
-          </IconButton>
-        </Toolbar>
-      </AppBar> */}
+      {mini && (
+        <AppBar position="fixed" color="secondary" sx={{ py: 0.2, top: 'auto', bottom: 0, display: { xs: 'block', md: 'none' } }}>
+          <Toolbar>
+            <IconButton onClick={goHome} color="inherit" sx={{ width: '20%' }}>
+              <HomeIcon sx={{ fontSize: 32 }} />
+            </IconButton>
+            <IconButton color="inherit" sx={{ width: '20%' }} onClick={() => setDialog(true)}>
+              <SearchIcon sx={{ fontSize: 32 }} />
+            </IconButton>
+            <Box sx={{ flexGrow: 1 }} />
+            <IconButton onClick={goProfile} color="inherit" sx={{ width: '20%' }}>
+              <AccountCircleIcon sx={{ fontSize: 32 }} />
+            </IconButton>
+            <IconButton onClick={getOut} color="inherit" sx={{ width: '20%' }}>
+              <LogoutIcon sx={{ fontSize: 32 }} />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+      )}
       <SytledModal
         open={open}
         onClose={(e) => setOpen(false)}

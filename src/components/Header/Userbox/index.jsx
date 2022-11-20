@@ -22,6 +22,7 @@ import LockOpenTwoToneIcon from '@mui/icons-material/LockOpenTwoTone';
 // import AccountTreeTwoToneIcon from '@mui/icons-material/AccountTreeTwoTone';
 import { pages } from 'links';
 import tokenService from "_services/token.service";
+import { _GLOBAL } from 'links';
 
 const UserBoxButton = styled(Button)(
   ({ theme }) => `
@@ -59,7 +60,7 @@ const UserBoxLabel = styled(Typography)(
 // );
 
 function HeaderUserbox() {
-
+  const { mini } = _GLOBAL
   const history = useHistory();
   const user = tokenService.getUser();
   const ref = useRef(null);
@@ -82,8 +83,8 @@ function HeaderUserbox() {
   }
 
   return (
-    <Box 
-    // sx={{ display: { xs: 'none', md: 'block' } }}
+    <Box
+      sx={{ display: Boolean(mini) ? "none" : "block" }}
     >
       <UserBoxButton color="secondary" ref={ref} onClick={handleOpen}>
         <Avatar variant="rounded" alt={user.name} src={user.img} />

@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSearch } from "redux/action/searchAction";
 import { setFeedList } from 'redux/action/feedsAction';
 import PropTypes from 'prop-types';
+import { _GLOBAL } from 'links';
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="down" ref={ref} {...props} />;
@@ -100,6 +101,7 @@ Object.keys(StatusCode).forEach((k) => {
     }
 });
 function HeaderSearch({ openDialog, setDialog }) {
+    const { mini } = _GLOBAL
     const search = useSelector(state => state.search);
     const [stext, setStext] = useState(search.text)
     const dispatch = useDispatch();
@@ -174,11 +176,13 @@ function HeaderSearch({ openDialog, setDialog }) {
                 </FormControl>
             </Box>
             <Box sx={{ display: { xs: 'block', md: 'none' } }}>
-                <Tooltip arrow title="Search">
-                    <IconButton color="primary" onClick={handleClickOpen}>
-                        <SearchIcon />
-                    </IconButton>
-                </Tooltip>
+                {!mini && (
+                    <Tooltip arrow title="Search">
+                        <IconButton color="primary" onClick={handleClickOpen}>
+                            <SearchIcon />
+                        </IconButton>
+                    </Tooltip>
+                )}
                 <DialogWrapper
                     open={openDialog}
                     TransitionComponent={Transition}
