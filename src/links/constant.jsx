@@ -31,12 +31,13 @@ const KycStatus = Object.freeze({
 })
 
 const ICONS_FONT = Object.freeze({
-    xs: '16px',
+    xs: '15px',
     sm: '20px'
 })
 
 const TEXT_FONT = Object.freeze({
-    xs: '13px'
+    xs: '11px',
+    sm: '13px'
 })
 
 const KycStatusList = {

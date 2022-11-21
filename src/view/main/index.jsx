@@ -3,7 +3,7 @@ import { pages } from 'links';
 import FeedController from './feed';
 import ManagementUserProfile from './user/profile';
 import ViewPost from './post/view/ViewPost';
-import { Container } from '@mui/material';
+import { Box } from '@mui/material';
 import Header from 'components/Header';
 import Status404 from 'view/pages/view/Status404';
 import Add from 'common/view/Add';
@@ -14,14 +14,14 @@ function MainController() {
     return (
         <div key="MainController">
             <Header openDialog={openDialog} setDialog={setDialog} />
-            <Container sx={{ pt: 7, mb: 5 }} maxWidth="lg">
+            <Box sx={{ pt: 7, mb: 5, px: 1 }}>
                 <Switch>
                     <Route path={pages.PROFILE} component={ManagementUserProfile} />
                     <Route path={pages.POST} component={ViewPost} />
                     <Route exact path={pages.HOME} component={FeedController} />
                     <Route path="*" component={Status404} />
                 </Switch>
-            </Container>
+            </Box>
             <Add setDialog={setDialog} />
         </div>
     );

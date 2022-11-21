@@ -9,9 +9,10 @@ import {
     InputLabel,
     OutlinedInput,
     Stack,
+    Typography,
 } from '@mui/material';
 
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { pages } from "links/pages";
 
 import { getUserByEmail } from '../../service';
@@ -80,6 +81,11 @@ const AuthForgot = () => {
                             />
 
                         </Stack>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography component={Link} to={pages.LOGIN} variant="body1" sx={{ textDecoration: 'none' }} color="primary">
+                            Got your password?
+                        </Typography>
                     </Grid>
                     <Grid item xs={12}>
                         <AnimateButton>

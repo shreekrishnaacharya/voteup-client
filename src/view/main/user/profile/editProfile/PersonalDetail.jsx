@@ -99,12 +99,12 @@ export default function PersonalDetail() {
             <CardContent sx={{ p: 4 }}>
                 <Typography variant="subtitle2">
                     <Grid container spacing={0}>
-                        <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
+                        <Grid item xs={4} md={3} textAlign={{ sm: 'right' }}>
                             <Box pr={3} pb={2}>
                                 Name:
                             </Box>
                         </Grid>
-                        <Grid item xs={12} sm={8} md={9}>
+                        <Grid item xs={8} md={9}>
                             {editForm ? (
                                 <Grid direction="row" container spacing={3}>
                                     <Grid item xs={6}>
@@ -158,12 +158,12 @@ export default function PersonalDetail() {
                             }
 
                         </Grid>
-                        <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
+                        <Grid item xs={4} md={3} textAlign={{ sm: 'right' }}>
                             <Box pr={3} pb={2}>
                                 Gender:
                             </Box>
                         </Grid>
-                        <Grid item xs={12} sm={8} md={9}>
+                        <Grid item xs={8} md={9}>
                             {editForm ? (
                                 <Controller
                                     name="gender"
@@ -197,12 +197,12 @@ export default function PersonalDetail() {
                             )
                             }
                         </Grid>
-                        <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
+                        <Grid item xs={4} md={3} textAlign={{ sm: 'right' }}>
                             <Box pr={3} pb={2}>
                                 Date of birth:
                             </Box>
                         </Grid>
-                        <Grid item xs={12} sm={8} md={9}>
+                        <Grid item xs={8} md={9}>
                             {editForm ? (
                                 <Controller
                                     name="dob"
@@ -231,12 +231,12 @@ export default function PersonalDetail() {
                             )
                             }
                         </Grid>
-                        <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
+                        <Grid item xs={4} md={3} textAlign={{ sm: 'right' }}>
                             <Box pr={3} pb={2}>
                                 Contact:
                             </Box>
                         </Grid>
-                        <Grid item xs={12} sm={8} md={9}>
+                        <Grid item xs={8} md={9}>
                             {editForm ? (
                                 <Controller
                                     name="contact"
@@ -264,12 +264,12 @@ export default function PersonalDetail() {
                             )
                             }
                         </Grid>
-                        <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
+                        <Grid item xs={4} md={3} textAlign={{ sm: 'right' }}>
                             <Box pr={3} pb={2}>
                                 Address1:
                             </Box>
                         </Grid>
-                        <Grid item xs={12} sm={8} md={9}>
+                        <Grid item xs={8} md={9}>
                             {editForm ? (
                                 <Controller
                                     name="address1"
@@ -297,12 +297,12 @@ export default function PersonalDetail() {
                             )
                             }
                         </Grid>
-                        <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
+                        <Grid item xs={4} md={3} textAlign={{ sm: 'right' }}>
                             <Box pr={3} pb={2}>
                                 Address2:
                             </Box>
                         </Grid>
-                        <Grid item xs={12} sm={8} md={9}>
+                        <Grid item xs={8} md={9}>
                             {editForm ? (
                                 <Controller
                                     name="address2"
@@ -330,12 +330,12 @@ export default function PersonalDetail() {
                             )
                             }
                         </Grid>
-                        <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
+                        <Grid item xs={4} md={3} textAlign={{ sm: 'right' }}>
                             <Box pr={3} pb={2}>
                                 Country:
                             </Box>
                         </Grid>
-                        <Grid item xs={12} sm={8} md={9}>
+                        <Grid item xs={8} md={9}>
                             {editForm ? (
                                 <Controller
                                     name="country"
@@ -345,7 +345,7 @@ export default function PersonalDetail() {
                                         <>
                                             <FormControl sx={{ width: '100%' }} size="small">
                                                 <Select
-                                                    
+
                                                     {...field}
                                                     labelId="select-label"
                                                     id="country-login"

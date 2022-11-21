@@ -56,6 +56,7 @@ const AuthLogin = () => {
     const { enqueueSnackbar } = useSnackbar();
 
     const onSubmitHandler = async (fdata) => {
+        console.log(fdata)
         await getLogin(fdata).then((res) => {
             if (res.flag == true) {
                 enqueueSnackbar("Login success", {
@@ -89,7 +90,7 @@ const AuthLogin = () => {
                         <Stack spacing={1}>
                             <Controller
                                 name="username"
-                                defaultValue=""
+                                defaultValue="sksharma72000@gmail.com"
                                 control={control}
                                 render={({ field, fieldState }) => {
                                     return (
@@ -119,7 +120,7 @@ const AuthLogin = () => {
                         <Stack spacing={1}>
                             <Controller
                                 name="password"
-                                defaultValue=""
+                                defaultValue="Krishna21211"
                                 control={control}
                                 render={({ field, fieldState }) => {
                                     return (

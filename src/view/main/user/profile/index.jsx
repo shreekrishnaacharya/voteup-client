@@ -1,5 +1,4 @@
 import ProfileCover from './ProfileCover';
-import PopularTags from './PopularTags';
 import { useState, useEffect } from 'react';
 import { getProfile, updateProfile } from '../service';
 import EditProfileTab from './EditProfileTab';
@@ -28,8 +27,7 @@ function ManagementUserProfile() {
   const userModel = tokenService.getUser();
   const tabs = [
     { value: 'activity', label: 'Post' },
-    { value: 'edit_profile', label: 'Edit Profile' },
-    { value: 'populat_tags', label: 'Tags' }
+    { value: 'edit_profile', label: 'Edit Profile' }
   ];
   const handleTabsChange = (event, value) => {
     setCurrentTab(value);
@@ -85,7 +83,6 @@ function ManagementUserProfile() {
         <Grid item xs={12}>
           {currentTab === 'activity' && <Feed userModel={userModel} feedType={'profile'} />}
           {currentTab === 'edit_profile' && <EditProfileTab userProfile={userProfile} />}
-          {currentTab === 'populat_tags' && <PopularTags />}
         </Grid>
       </Grid>
     </>
