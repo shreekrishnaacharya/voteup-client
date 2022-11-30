@@ -172,10 +172,10 @@ function Comment({ comment, post, onVote, setReport, setConfirm, userModel, toas
                                                         <Box
                                                             component={'a'}
                                                             sx={{ textDecoration: 'none', color: '#6E759F', ml: 0.5, mt: '4px' }}
-                                                            href={post.dlink}
+                                                            href={comment.dlink}
                                                             onClick={(e) => {
                                                                 e.preventDefault();
-                                                                getDownload(post.dlink)
+                                                                getDownload(comment.dlink)
                                                             }}
                                                         >
                                                             <DownloadForOfflineIcon sx={{ fontSize: ICONS_FONT }} />

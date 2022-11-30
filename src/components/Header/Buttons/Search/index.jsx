@@ -187,9 +187,10 @@ function HeaderSearch({ openDialog, setDialog }) {
                     open={openDialog}
                     TransitionComponent={Transition}
                     keepMounted
-                    maxWidth="lg"
                     scroll="paper"
                     onClose={handleClose}
+                    fullScreen
+                    fullWidth
                 >
                     <DialogTitleWrapper sx={{ m: 0, p: 2 }}>
                         {"Search"}

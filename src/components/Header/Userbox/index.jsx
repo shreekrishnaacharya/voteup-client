@@ -84,7 +84,7 @@ function HeaderUserbox() {
 
   return (
     <Box
-      sx={{ display: Boolean(mini) ? "none" : "block" }}
+      sx={{ display: { xs: Boolean(mini) ? "none" : "block", md: 'block' } }}
     >
       <UserBoxButton color="secondary" ref={ref} onClick={handleOpen}>
         <Avatar variant="rounded" alt={user.name} src={user.img} />
