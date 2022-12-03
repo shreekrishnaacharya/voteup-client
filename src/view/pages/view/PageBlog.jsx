@@ -4,7 +4,7 @@ export default () => {
 
     return (
         <div>
-            <Helmet><title>Blog | Referendum 2.0</title></Helmet>
+            <Helmet><title>{`Blog | Referendum 2.0`}</title></Helmet>
             <h2 style={{ textAlign: 'center' }}>New Era&nbsp;Politics</h2>
             <h2>Real&nbsp;/&nbsp;Liquid Democracy</h2>
             <p style={{ textAlign: 'justify' }}>The democratic principles and their ideals enshrined within the Rig Veda were known

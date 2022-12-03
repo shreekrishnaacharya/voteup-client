@@ -194,7 +194,7 @@ const Feed = ({ userModel, feedType }) => {
                 alignContent={'center'}
                 alignItems={'center'}
                 py={10}>
-                <Helmet><title>No post to display</title></Helmet>
+                <Helmet><title>{`No post to display`}</title></Helmet>
                 <p><Text>No post to display</Text></p>
                 <p><WarningAmberIcon sx={{ fontSize: "50px" }} /></p>
               </Box>
@@ -202,7 +202,7 @@ const Feed = ({ userModel, feedType }) => {
           </>
         ) : (
           <>
-            <Helmet><title>Feeds - Home | Referendum 2.0</title></Helmet>
+            <Helmet><title>{`Feeds - Home | Referendum 2.0`}</title></Helmet>
             {postFeeds.map(post => {
               return <Post toaster={enqueueSnackbar} key={post._id} post={post} onMenu={handleMenu} userModel={userModel} viewPost={viewPost} />
             })}

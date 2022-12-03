@@ -4,30 +4,52 @@ import Auth from "_base/Auth";
 // import 'axios-progress-bar/dist/nprogress.css';
 import ThemeProvider from './theme/ThemeProvider';
 // loadProgressBar();
-import React, { useEffect } from "react";
-// import { Plugins, Capacitor } from "@capacitor/core";
+import React, { useEffect, useState } from "react";
+import { App as cApp } from "@capacitor/app";
 import { pages } from "links";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import Offline from "Offline";
+
 
 export default function App() {
-  // useEffect(() => {
-  //   if (Capacitor.isNative) {
-  //     Plugins.App.addListener("backButton", (e) => {
-  //       if (window.location.pathname === pages.HOME) {
-  //         // Show A Confirm Box For User to exit app or not
-  //         let ans = window.confirm("Are you sure");
-  //         if (ans) {
-  //           Plugins.App.exitApp();
-  //         }
-  //       } else if (window.location.pathname === pages.HOME || window.location.pathname === pages.LOGIN) {
-  //         // Show A Confirm Box For User to exit app or not
-  //         let ans = window.confirm("Are you sure");
-  //         if (ans) {
-  //           Plugins.App.exitApp();
-  //         }
-  //       }
-  //     });
-  //   }
-  // }, []);
+  const history = useHistory()
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  useEffect(() => {
+    cApp.addListener('backButton', (ev) => {
+      ev.detail.register(10, () => {
+        if (window.location.pathname === pages.HOME || window.location.pathname === pages.LOGIN) {
+          // Show A Confirm Box For User to exit app or not
+          cApp.exitApp();
+        } else {
+          history.goBack();
+        }
+      });
+    });
+  }, []);
+
+
+  useEffect(() => {
+    // Update network status
+    const handleStatusChange = () => {
+      setIsOnline(navigator.onLine);
+    };
+
+    // Listen to the online status
+    window.addEventListener('online', handleStatusChange);
+
+    // Listen to the offline status
+    window.addEventListener('offline', handleStatusChange);
+
+    // Specify how to clean up after this effect for performance improvment
+    return () => {
+      window.removeEventListener('online', handleStatusChange);
+      window.removeEventListener('offline', handleStatusChange);
+    };
+  }, [isOnline]);
+
+  if (!isOnline) {
+    return <Offline />
+  }
   return (
     <ThemeProvider>
       <Auth>
