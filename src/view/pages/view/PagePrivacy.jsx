@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet"
 export default () => {
     return (
         <div>
-            <Helmet><title>Privacy Policy | Referendum 2.0</title></Helmet>
+            <Helmet><title>{`Privacy Policy | Referendum 2.0`}</title></Helmet>
             <h2 style={{ textAlign: 'center' }}><span style={{ color: 'windowtext' }}>Privacy Policy</span></h2>
             <p>&nbsp;</p>
             <p>https://ventvoila.com/privacy</p>

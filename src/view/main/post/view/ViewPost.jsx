@@ -176,7 +176,7 @@ const ViewPost = () => {
                     </>
                 ) : (
                     <>
-                        <Helmet><title>{postFeeds.post_detail} | Referendum 2.0</title></Helmet>
+                        <Helmet><title>{postFeeds.post_detail + ` | Referendum 2.0`}</title></Helmet>
                         {postFeeds.ptype == 0 ? (
                             <Post toaster={enqueueSnackbar}
                                 // flash={postid === postFeeds.post_id} 

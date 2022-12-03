@@ -14,7 +14,7 @@ import { Helmet } from 'react-helmet';
 const Login = () => (
     <AuthWrapper>
         <Helmet>
-            <title>Login | Referendum 2.0</title>
+            <title>{`Login | Referendum 2.0`}</title>
         </Helmet>
         <Grid container spacing={3}>
             <Grid item xs={12}>

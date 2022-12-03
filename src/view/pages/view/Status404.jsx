@@ -22,7 +22,7 @@ const MainContent = styled(Box)(
 function Status404() {
   return (
     <>
-      <Helmet><title>404 Not Found | Referendum 2.0</title></Helmet>
+      <Helmet><title>{`404 Not Found | Referendum 2.0`}</title></Helmet>
       <MainContent mt={3}>
         <Container maxWidth="md">
           <Box textAlign="center">

@@ -90,7 +90,7 @@ const AuthLogin = () => {
                         <Stack spacing={1}>
                             <Controller
                                 name="username"
-                                defaultValue="sksharma72000@gmail.com"
+                                defaultValue=""
                                 control={control}
                                 render={({ field, fieldState }) => {
                                     return (
@@ -120,7 +120,7 @@ const AuthLogin = () => {
                         <Stack spacing={1}>
                             <Controller
                                 name="password"
-                                defaultValue="Krishna21211"
+                                defaultValue=""
                                 control={control}
                                 render={({ field, fieldState }) => {
                                     return (

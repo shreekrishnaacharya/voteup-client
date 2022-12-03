@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet"
 export default () => {
     return (
         <div>
-            <Helmet><title>Terms of Service | Referendum 2.0</title></Helmet>
+            <Helmet><title>{`Terms of Service | Referendum 2.0`}</title></Helmet>
             <h2 style={{ textAlign: 'center' }}>Terms of Service</h2>
             <p>Referendum 2.0 at https://ventvoila.com</p>
             <p style={{ textAlign: 'justify' }}>These Terms of Service govern your access to and use of the service (“Referendum 2.0”), and any information, text, graphics, photos or other materials uploaded, downloaded or appearing on the services is collectively said as "content". Your access to and use of the services are conditioned on your acceptance of and compliance with these terms. By accessing or using the services, you comply with these terms.</p>

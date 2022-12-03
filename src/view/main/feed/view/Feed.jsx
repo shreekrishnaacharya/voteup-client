@@ -182,7 +182,7 @@ const Feed = ({ userModel, feedType }) => {
                 alignContent={'center'}
                 alignItems={'center'}
                 py={10}>
-                <Helmet><title>No result found for '{search.text}'</title></Helmet>
+                <Helmet><title>{`No result found for '${search.text}'`}</title></Helmet>
                 <p><Text>No result found for '{search.text}'</Text></p>
                 <p><WarningAmberIcon sx={{ fontSize: "50px" }} /></p>
               </Box>
