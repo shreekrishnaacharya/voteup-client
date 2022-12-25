@@ -21,13 +21,14 @@ const otherPages = {
     FAQ: "/page/faq",
     RULES: "/page/rules",
     BLOG: "/page/blog",
+    ABOUT: "/page/about",
 }
 
 const pages = {
-    BASE_URL: "http://ventvoila.com/api",
-    // BASE_URL: '/api',
+    // BASE_URL: "http://ventvoila.com/api",
+    BASE_URL: '/api',
+    // BASE_URL: "http://localhost:3000/api",
     // BASE_URL: "http://localhost:8080/api",
-    // BASE_URL: "http://192.168.1.81:8080/api",
     GUEST: "/guest",
     HOME: "/",
     ...otherPages,
@@ -52,6 +53,7 @@ const staticPages = [
     otherPages.PAGES,
     otherPages.PRIVACY,
     otherPages.TERMS,
+    otherPages.ABOUT,
     otherPages.STATUS_404
 ]
 

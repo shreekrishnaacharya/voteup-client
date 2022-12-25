@@ -33,6 +33,7 @@ import tokenService from "_services/token.service";
 import { useHistory } from "react-router-dom";
 import IconButton from '@mui/material/IconButton';
 import HomeIcon from '@mui/icons-material/Home';
+import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -115,12 +116,12 @@ const Add = ({ setDialog }) => {
         title="Create Post"
         sx={{
           position: "fixed",
-          bottom: { xs: 23, md: 20 },
+          bottom: { xs: 3, md: 20 },
           zIndex: 1101,
           right: { xs: "calc(50% - 20px)", md: 30 },
         }}
       >
-        <Fab color="primary" aria-label="add">
+        <Fab color="primary" aria-label="add" size={mini ? "medium" : "large"}>
           <AddIcon />
         </Fab>
       </Tooltip>
@@ -149,107 +150,114 @@ const Add = ({ setDialog }) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box
-          width={600}
-          height={'auto'}
-          bgcolor={"background.default"}
-          color={"text.primary"}
-          p={3}
-          borderRadius={3}
-        >
-          <Box display={'flex'} justifyContent={'center'}>
-            <Typography variant="h6" color="gray" textAlign="center">
-              Post Your Idea, Issue and Agenda
-            </Typography>
-            <Tooltip
-              title="Issue / Agenda involving problem, perception, opinion and solution that will be more precise. For eg. throwing shell of chocolate bar indiscriminately went into the drain(perception / opinion) and got stuck in the drainage (problem). Only paper shell should be allowed for manufacturing (solution)."
-              sx={{
-                ml: 2,
-              }}
-            >
-              <InfoIcon color={'info'} />
-            </Tooltip>
-          </Box>
-          <UserBox>
-            <Avatar
-              src={userModel.img}
-              sx={{ width: 30, height: 30 }}
-            />
-            <Typography fontWeight={500} variant="span">
-              {userModel.name}
-            </Typography>
-          </UserBox>
-          <form onSubmit={handleSubmit(submitForm)}>
-            <Controller
-              name="post_detail"
-              control={control}
-              render={({ field, fieldState }) => (
-                <>
-                  <TextField
-                    sx={{ width: "100%" }}
-                    multiline
-                    rows={3}
-                    placeholder="Your Idea, Issue and Agenda here!"
-                    variant="standard"
-                    {...field}
-                  />
-                </>
-              )}
-            />
-            <Controller
-              name="supporters"
-              control={control}
-              render={({ field, fieldState }) => (
-                <>
-                  <TextField
-                    type={'number'}
-                    sx={{ marginTop: "15px" }}
-                    placeholder="Your Supporters"
-                    variant="standard"
-                    {...field}
-                  />
-                </>
-              )}
-            />
-            <Stack direction="row" gap={1} mt={2} mb={2}>
-              <label htmlFor="uploadimages">
-                <Image color="secondary" />
-              </label>
-            </Stack>
-            <Controller
-              name="image"
-              control={control}
-              render={({ field, fieldState }) => (
-                <>
-                  <ImageLoader
-                    multiple={true}
-                    InputProps={{
-                      accept: "image/*",
-                      id: 'uploadimages'
-                    }}
-                    size='md'
-                    isModal={false}
-                    onChange={(e) => {
-                      field.onChange(e.target.files);
-                    }}
-                  />
-                </>
-              )}
-            />
-            <AnimateButton>
-              <Button
-                variant="contained"
-                type="submit"
-                color="primary"
-                disableElevation
-                disabled={isSubmitting}
-                fullWidth
+        <>
+
+          <Box
+            width={600}
+            height={'auto'}
+            bgcolor={"background.default"}
+            color={"text.primary"}
+            p={3}
+            borderRadius={3}
+          >
+            <IconButton onClick={(e) => setOpen(false)} sx={{ position: 'relative', top: '-10px', float: 'right' }}>
+              <CloseIcon />
+            </IconButton>
+            <Box display={'flex'} justifyContent={'center'}>
+              <Typography variant="h6" color="gray" textAlign="center">
+                Post Your Idea, Issue and Agenda
+              </Typography>
+              <Tooltip
+                title="Issue / Agenda involving problem, perception, opinion and solution that will be more precise. For eg. throwing shell of chocolate bar indiscriminately went into the drain(perception / opinion) and got stuck in the drainage (problem). Only paper shell should be allowed for manufacturing (solution)."
+                sx={{
+                  ml: 2,
+                }}
               >
-                Post
-              </Button>
-            </AnimateButton>
-          </form>
-        </Box>
+                <InfoIcon color={'info'} />
+              </Tooltip>
+
+            </Box>
+            <UserBox>
+              <Avatar
+                src={userModel.img}
+                sx={{ width: 30, height: 30 }}
+              />
+              <Typography fontWeight={500} variant="span">
+                {userModel.name}
+              </Typography>
+            </UserBox>
+            <form onSubmit={handleSubmit(submitForm)}>
+              <Controller
+                name="post_detail"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <>
+                    <TextField
+                      sx={{ width: "100%" }}
+                      multiline
+                      rows={3}
+                      placeholder="Your Idea, Issue and Agenda here!"
+                      variant="standard"
+                      {...field}
+                    />
+                  </>
+                )}
+              />
+              <Controller
+                name="supporters"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <>
+                    <TextField
+                      type={'number'}
+                      sx={{ marginTop: "15px" }}
+                      placeholder="Your Supporters"
+                      variant="standard"
+                      {...field}
+                    />
+                  </>
+                )}
+              />
+              <Stack direction="row" gap={1} mt={2} mb={2}>
+                <label htmlFor="uploadimages">
+                  <Image color="secondary" />
+                </label>
+              </Stack>
+              <Controller
+                name="image"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <>
+                    <ImageLoader
+                      multiple={true}
+                      InputProps={{
+                        accept: "image/*",
+                        id: 'uploadimages'
+                      }}
+                      size='md'
+                      isModal={false}
+                      onChange={(e) => {
+                        field.onChange(e.target.files);
+                      }}
+                    />
+                  </>
+                )}
+              />
+              <AnimateButton>
+                <Button
+                  variant="contained"
+                  type="submit"
+                  color="primary"
+                  disableElevation
+                  disabled={isSubmitting}
+                  fullWidth
+                >
+                  Post
+                </Button>
+              </AnimateButton>
+            </form>
+          </Box>
+        </>
       </SytledModal>
     </>
   );

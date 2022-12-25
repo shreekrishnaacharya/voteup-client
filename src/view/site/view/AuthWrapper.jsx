@@ -43,7 +43,7 @@ const AuthWrapper = ({ children }) => (
                 </Grid>
             </Grid>
         </Grid>
-        <Footer mini={true} />
+        <Footer place={"site"} />
     </Box>
 );
 

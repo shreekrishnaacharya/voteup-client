@@ -8,6 +8,7 @@ import PageBlog from './view/PageBlog';
 import PagePrivacy from './view/PagePrivacy';
 import PageFAQ from './view/PageFAQ';
 import PageRules from './view/PageRules';
+import PageAbout from './view/Aboutus';
 import { _GLOBAL } from 'links';
 
 function PagesController() {
@@ -32,6 +33,7 @@ function PagesController() {
                         <Route exact path={pages.BLOG} component={PageBlog} />
                         <Route exact path={pages.TERMS} component={PageTerms} />
                         <Route exact path={pages.RULES} component={PageRules} />
+                        <Route exact path={pages.ABOUT} component={PageAbout} />
                         <Footer />
                     </Switch>
                 </Grid>

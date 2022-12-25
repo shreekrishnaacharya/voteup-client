@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { _GLOBAL } from 'links';
 
-function Footer() {
+function Footer({ place }) {
   const { mini } = _GLOBAL
   return (
     <Box sx={{
-      bottom: 0,
+      bottom: place == "rightBar" ? "auto" : 0,
       width: '100%',
       position: 'absolute',
       height: '2.5rem'
@@ -24,14 +24,14 @@ function Footer() {
         <Box display={'flex'} gap={2}>
           <Typography
             sx={{
-              display: Boolean(mini) ? 'none' : 'block'
+              display: place == "rightBar" ? 'none' : 'block'
             }}
           >
             &copy; 2022 - Referendum 2.0
           </Typography>
           <Typography
             sx={{
-              fontSize: Boolean(mini) ? '13px' : '13px'
+              fontSize: '13px'
             }}
           >
             <Link
@@ -43,7 +43,7 @@ function Footer() {
           </Typography>
           <Typography
             sx={{
-              fontSize: Boolean(mini) ? '13px' : '13px'
+              fontSize: '13px'
             }}
           >
             <Link
@@ -55,7 +55,7 @@ function Footer() {
           </Typography>
           <Typography
             sx={{
-              fontSize: Boolean(mini) ? '13px' : '13px'
+              fontSize: '13px'
             }}
           >
             <Link
@@ -67,7 +67,7 @@ function Footer() {
           </Typography>
           <Typography
             sx={{
-              fontSize: Boolean(mini) ? '13px' : '13px'
+              fontSize: '13px'
             }}
           >
             <Link
@@ -79,7 +79,7 @@ function Footer() {
           </Typography>
           <Typography
             sx={{
-              fontSize: Boolean(mini) ? '13px' : '13px'
+              fontSize: '13px'
             }}
           >
             <Link
@@ -91,8 +91,20 @@ function Footer() {
           </Typography>
           <Typography
             sx={{
+              fontSize: '13px'
+            }}
+          >
+            <Link
+              to={pages.ABOUT}
+              rel="About Us"
+            >
+              About Us
+            </Link>
+          </Typography>
+          <Typography
+            sx={{
               fontSize: '13px',
-              display: Boolean(mini) ? 'none' : 'block'
+              display: place == "rightBar" ? 'none' : 'block'
             }}
           >
             <Link
@@ -106,8 +118,8 @@ function Footer() {
         <Typography
           sx={{
             pt: { xs: 2, md: 0 },
-            fontSize: Boolean(mini) ? '13px' : '13px',
-            display: Boolean(mini) ? 'none' : 'block'
+            fontSize: '13px',
+            display: place == "rightBar" ? 'none' : 'block'
           }}
         >
           Crafted by{' '}

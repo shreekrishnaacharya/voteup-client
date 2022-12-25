@@ -69,7 +69,6 @@ const Rightbar = () => {
       }
     })
   }, []);
-  console.log("i am rightbar")
   return (
     <Box sx={{ display: { xs: "none", sm: "none", md: "block" } }}>
       <Box position="sticky" width={350}>
@@ -148,7 +147,7 @@ const Rightbar = () => {
           )}
         </Card>
       </Box>
-      <Footer mini={true} />
+      <Footer place={"rightBar"} />
     </Box>
   );
 };
