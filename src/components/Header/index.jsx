@@ -60,7 +60,7 @@ function Header({ openDialog, setDialog }) {
         // alignItems="center"
         spacing={1}
       >
-        <GoBack sx={{ display: { xs: (location.pathname === pages.POST ? 'flex' : 'none'), md: 'none' }, alignItems: 'center' }} />
+        <GoBack goto={'Post'} sx={{ display: { xs: (location.pathname === pages.POST ? 'flex' : 'none'), md: 'none' }, alignItems: 'center' }} />
         <HeaderLogo sx={{ display: { xs: (location.pathname === pages.POST ? 'none' : 'block'), md: 'block' } }} to={pages.HOME} />
       </Stack>
       <Box display='flex' alignItems="center">

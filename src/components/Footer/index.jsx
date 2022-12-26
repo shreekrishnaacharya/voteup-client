@@ -91,18 +91,6 @@ function Footer({ place }) {
           </Typography>
           <Typography
             sx={{
-              fontSize: '13px'
-            }}
-          >
-            <Link
-              to={pages.ABOUT}
-              rel="About Us"
-            >
-              About Us
-            </Link>
-          </Typography>
-          <Typography
-            sx={{
               fontSize: '13px',
               display: place == "rightBar" ? 'none' : 'block'
             }}

@@ -1,18 +1,27 @@
-import { Route, Switch } from 'react-router-dom';
-import { pages } from "links/pages";
+import { Route, Switch, useLocation } from 'react-router-dom';
+import { pages, otherPages } from "links/pages";
 import Footer from 'components/Footer';
 import { Box, Grid } from '@mui/material';
-import Logo from 'components/Logo';
 import PageTerms from './view/Terms';
 import PageBlog from './view/PageBlog';
 import PagePrivacy from './view/PagePrivacy';
 import PageFAQ from './view/PageFAQ';
 import PageRules from './view/PageRules';
-import PageAbout from './view/Aboutus';
+import GoBack from 'components/Header/Buttons/GoBack'
+import HeaderLogo from 'components/Logo'
 import { _GLOBAL } from 'links';
 
 function PagesController() {
     const { mini } = _GLOBAL
+    const location = useLocation();
+    let title = "";
+    Object.keys(otherPages).forEach(e => {
+        if (otherPages[e] == location.pathname) {
+            title = e;
+        }
+    })
+
+    console.log(location.pathname == pages.RULES);
     return (
         <Box>
             <Grid
@@ -24,7 +33,8 @@ function PagesController() {
                 }}
             >
                 <Grid item xs={12} sx={{ px: 2, backgroundColor: "#fff" }} >
-                    <Logo to={pages.HOME} />
+                    <GoBack goto={title} sx={{ display: { xs: 'flex', md: 'none' }, alignItems: 'center' }} />
+                    <HeaderLogo sx={{ display: { xs: 'none', md: 'block' } }} to={pages.HOME} />
                 </Grid>
                 <Grid item xs={12} sx={{ my: 7, mx: mini ? 2 : 6 }}>
                     <Switch>
@@ -33,7 +43,6 @@ function PagesController() {
                         <Route exact path={pages.BLOG} component={PageBlog} />
                         <Route exact path={pages.TERMS} component={PageTerms} />
                         <Route exact path={pages.RULES} component={PageRules} />
-                        <Route exact path={pages.ABOUT} component={PageAbout} />
                         <Footer />
                     </Switch>
                 </Grid>
