@@ -9,10 +9,12 @@ import { App as cApp } from "@capacitor/app";
 import { pages } from "links";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import Offline from "Offline";
+import { _GLOBAL } from "links";
 
 
 export default function App() {
   const history = useHistory()
+  const { mini } = _GLOBAL
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   useEffect(() => {
     cApp.addListener('backButton', (ev) => {
@@ -47,7 +49,7 @@ export default function App() {
     };
   }, [isOnline]);
 
-  if (!isOnline) {
+  if (mini && !isOnline) {
     return <Offline />
   }
   return (

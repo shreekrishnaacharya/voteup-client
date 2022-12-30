@@ -166,7 +166,7 @@ function Comment({ comment, post, onVote, setReport, setConfirm, userModel, toas
                                             </Text>{'|'}
                                             <Ranking sx={{ mx: 1 }} voters={post.tot_votes} votes={comment.votes} />
                                             {
-                                                comment.statusCode == StatusCode.ACCEPTANCE && (
+                                                comment.statusCode == StatusCode.ACCEPTANCE && !mini && (
                                                     <>
                                                         {'|'}
                                                         <Box

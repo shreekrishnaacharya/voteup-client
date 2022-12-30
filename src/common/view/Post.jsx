@@ -40,6 +40,7 @@ import { getDownload } from '_services';
 import { Gallery, Item } from 'react-photoswipe-gallery'
 import { ICONS_FONT } from 'links';
 import { TEXT_FONT } from 'links';
+import { _GLOBAL } from 'links';
 
 const CardActionsWrapper = styled(CardActions)(
     ({ theme }) => `
@@ -101,7 +102,7 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen, toaster }) {
     //     review: post.review
     // });
 
-
+    const { mini } = _GLOBAL
     const [anchorEl, setAnchorEl] = useState(null);
     const [gsize, setGsize] = useState({});
     const open = Boolean(anchorEl);
@@ -276,7 +277,7 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen, toaster }) {
                                         </Text>{'|'}
                                         <Ranking sx={{ mx: 1 }} voters={post.tot_votes} votes={post.votes} />
                                         {
-                                            post.statusCode == StatusCode.ACCEPTANCE && (
+                                            post.statusCode == StatusCode.ACCEPTANCE && !mini && (
                                                 <>
                                                     {'|'}
                                                     <Box

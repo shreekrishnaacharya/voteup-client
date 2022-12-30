@@ -56,7 +56,7 @@ const StatusList = {
 }
 
 const _GLOBAL = Object.freeze({
-    mini: false
+    mini: true
 })
 
 

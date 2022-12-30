@@ -21,14 +21,16 @@ function Footer({ place }) {
         textAlign={{ xs: 'center', md: 'left' }}
         justifyContent="space-between"
       >
-        <Box display={'flex'} gap={2}>
-          <Typography
-            sx={{
-              display: place == "rightBar" ? 'none' : 'block'
-            }}
-          >
-            &copy; 2022 - Referendum 2.0
-          </Typography>
+        <Box display={'flex'} gap={2} justifyContent="center">
+          {!mini && (
+            <Typography
+              sx={{
+                display: place == "rightBar" ? 'none' : 'block'
+              }}
+            >
+              &copy; 2022 - Referendum 2.0
+            </Typography>
+          )}
           <Typography
             sx={{
               fontSize: '13px'
@@ -89,19 +91,21 @@ function Footer({ place }) {
               Blog
             </Link>
           </Typography>
-          <Typography
-            sx={{
-              fontSize: '13px',
-              display: place == "rightBar" ? 'none' : 'block'
-            }}
-          >
-            <Link
-              to={pages.HOME}
-              rel="Home"
+          {!mini && (
+            <Typography
+              sx={{
+                fontSize: '13px',
+                display: place == "rightBar" ? 'none' : 'block'
+              }}
             >
-              Home
-            </Link>
-          </Typography>
+              <Link
+                to={pages.HOME}
+                rel="Home"
+              >
+                Home
+              </Link>
+            </Typography>
+          )}
         </Box>
         <Typography
           sx={{
