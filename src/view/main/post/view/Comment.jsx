@@ -27,6 +27,7 @@ import { Link } from 'react-router-dom';
 import { getDownload } from '_services';
 import { ICONS_FONT } from 'links';
 import { TEXT_FONT } from 'links';
+import { _GLOBAL } from 'links';
 
 const CardActionsWrapper = styled(CardActions)(
     ({ theme }) => `
@@ -37,6 +38,7 @@ const CardActionsWrapper = styled(CardActions)(
 
 
 function Comment({ comment, post, onVote, setReport, setConfirm, userModel, toaster }) {
+    const { mini } = _GLOBAL
     const handleOptionAction = (type) => {
         if (type == 0) {
             setReport({ postid: comment._id, open: true })
