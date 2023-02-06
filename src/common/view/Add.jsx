@@ -9,17 +9,14 @@ import {
   Tooltip,
   Typography,
   Toolbar,
-  AppBar
+  AppBar,
 } from "@mui/material";
 import React, { useState } from "react";
-import {
-  Add as AddIcon,
-  Image,
-} from "@mui/icons-material";
-import AnimateButton from 'components/@extended/AnimateButton';
+import { Add as AddIcon, Image } from "@mui/icons-material";
+import AnimateButton from "components/@extended/AnimateButton";
 import { Box } from "@mui/system";
 import { Controller, useForm } from "react-hook-form";
-import { useSnackbar } from 'notistack';
+import { useSnackbar } from "notistack";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { addPost } from "../service";
@@ -28,17 +25,18 @@ import ImageLoader from "components/ImageLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearch } from "redux/action/searchAction";
 import { Rid } from "_services";
-import InfoIcon from '@mui/icons-material/Info';
+import InfoIcon from "@mui/icons-material/Info";
 import tokenService from "_services/token.service";
 import { useHistory } from "react-router-dom";
-import IconButton from '@mui/material/IconButton';
-import HomeIcon from '@mui/icons-material/Home';
-import CloseIcon from '@mui/icons-material/Close';
-import SearchIcon from '@mui/icons-material/Search';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import LogoutIcon from '@mui/icons-material/Logout';
+import IconButton from "@mui/material/IconButton";
+import HomeIcon from "@mui/icons-material/Home";
+import CloseIcon from "@mui/icons-material/Close";
+import SearchIcon from "@mui/icons-material/Search";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { pages } from "links";
 import { _GLOBAL } from "links";
+import { confirmAlert } from "_services";
 
 const SytledModal = styled(Modal)({
   display: "flex",
@@ -59,56 +57,72 @@ const schema = yup.object({
   supporters: yup.number().min(1),
 });
 const Add = ({ setDialog }) => {
-  const { mini } = _GLOBAL
+  const { mini } = _GLOBAL;
+  const [condifmed, setConfirm] = useState(false);
   const userModel = tokenService.getUser();
   const history = useHistory();
-  const search = useSelector(state => state.search);
+  const search = useSelector((state) => state.search);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const { handleSubmit, control, reset, formState: { errors, isSubmitting } } = useForm({
-    resolver: yupResolver(schema)
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: yupResolver(schema),
   });
   const goHome = () => {
     history.push({
-      pathname: pages.HOME
-    })
-  }
+      pathname: pages.HOME,
+    });
+  };
   const goProfile = () => {
     history.push({
-      pathname: pages.PROFILE
-    })
-  }
-  const getOut = () => {
-    tokenService.removeUser()
-    history.push({
-      pathname: pages.GUEST
+      pathname: pages.PROFILE,
     });
-  }
+  };
+  const getOut = () => {
+    tokenService.removeUser();
+    history.push({
+      pathname: pages.GUEST,
+    });
+  };
   const { enqueueSnackbar } = useSnackbar();
   const submitForm = async (fdata) => {
     if (isEmpty(fdata.post_detail)) {
       enqueueSnackbar("Post cannot be blank", {
-        variant: 'error',
+        variant: "error",
       });
       return false;
     }
     if (isEmpty(fdata.supporters) || fdata.supporters < 1) {
       enqueueSnackbar("Please indicate your supporters", {
-        variant: 'error',
+        variant: "error",
       });
       return false;
     }
-    await addPost(fdata).then(e => {
-      if (e.flag) {
-        enqueueSnackbar("Post uploaded", {
-          variant: 'success',
+    confirmAlert({
+      text: "Are you sure you want to post this?",
+      title: "",
+    }).then(({ isConfirmed }) => {
+      if (isConfirmed) {
+        addPost(fdata).then((e) => {
+          if (e.flag) {
+            enqueueSnackbar("Post uploaded", {
+              variant: "success",
+            });
+            reset();
+            setOpen(false);
+            dispatch(setSearch({ ...search, update: Rid() }));
+          }
         });
+      } else {
         reset();
         setOpen(false);
-        dispatch(setSearch({ ...search, update: Rid() }));
       }
-    })
-  }
+    });
+  };
   return (
     <>
       <Tooltip
@@ -126,19 +140,36 @@ const Add = ({ setDialog }) => {
         </Fab>
       </Tooltip>
       {mini && (
-        <AppBar position="fixed" color="secondary" sx={{ py: 0.2, top: 'auto', bottom: 0, display: { xs: 'block', md: 'none' } }}>
+        <AppBar
+          position="fixed"
+          color="secondary"
+          sx={{
+            py: 0.2,
+            top: "auto",
+            bottom: 0,
+            display: { xs: "block", md: "none" },
+          }}
+        >
           <Toolbar>
-            <IconButton onClick={goHome} color="inherit" sx={{ width: '20%' }}>
+            <IconButton onClick={goHome} color="inherit" sx={{ width: "20%" }}>
               <HomeIcon sx={{ fontSize: 32 }} />
             </IconButton>
-            <IconButton color="inherit" sx={{ width: '20%' }} onClick={() => setDialog(true)}>
+            <IconButton
+              color="inherit"
+              sx={{ width: "20%" }}
+              onClick={() => setDialog(true)}
+            >
               <SearchIcon sx={{ fontSize: 32 }} />
             </IconButton>
             <Box sx={{ flexGrow: 1 }} />
-            <IconButton onClick={goProfile} color="inherit" sx={{ width: '20%' }}>
+            <IconButton
+              onClick={goProfile}
+              color="inherit"
+              sx={{ width: "20%" }}
+            >
               <AccountCircleIcon sx={{ fontSize: 32 }} />
             </IconButton>
-            <IconButton onClick={getOut} color="inherit" sx={{ width: '20%' }}>
+            <IconButton onClick={getOut} color="inherit" sx={{ width: "20%" }}>
               <LogoutIcon sx={{ fontSize: 32 }} />
             </IconButton>
           </Toolbar>
@@ -146,24 +177,27 @@ const Add = ({ setDialog }) => {
       )}
       <SytledModal
         open={open}
+        sx={{ zIndex: 1050 }}
         onClose={(e) => setOpen(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <>
-
           <Box
             width={600}
-            height={'auto'}
+            height={"auto"}
             bgcolor={"background.default"}
             color={"text.primary"}
             p={3}
             borderRadius={3}
           >
-            <IconButton onClick={(e) => setOpen(false)} sx={{ position: 'relative', top: '-10px', float: 'right' }}>
+            <IconButton
+              onClick={(e) => setOpen(false)}
+              sx={{ position: "relative", top: "-10px", float: "right" }}
+            >
               <CloseIcon />
             </IconButton>
-            <Box display={'flex'} justifyContent={'center'}>
+            <Box display={"flex"} justifyContent={"center"}>
               <Typography variant="h6" color="gray" textAlign="center">
                 Post Your Idea, Issue and Agenda
               </Typography>
@@ -173,15 +207,11 @@ const Add = ({ setDialog }) => {
                   ml: 2,
                 }}
               >
-                <InfoIcon color={'info'} />
+                <InfoIcon color={"info"} />
               </Tooltip>
-
             </Box>
             <UserBox>
-              <Avatar
-                src={userModel.img}
-                sx={{ width: 30, height: 30 }}
-              />
+              <Avatar src={userModel.img} sx={{ width: 30, height: 30 }} />
               <Typography fontWeight={500} variant="span">
                 {userModel.name}
               </Typography>
@@ -209,7 +239,7 @@ const Add = ({ setDialog }) => {
                 render={({ field, fieldState }) => (
                   <>
                     <TextField
-                      type={'number'}
+                      type={"number"}
                       sx={{ marginTop: "15px" }}
                       placeholder="Your Supporters"
                       variant="standard"
@@ -232,9 +262,9 @@ const Add = ({ setDialog }) => {
                       multiple={true}
                       InputProps={{
                         accept: "image/*",
-                        id: 'uploadimages'
+                        id: "uploadimages",
                       }}
-                      size='md'
+                      size="md"
                       isModal={false}
                       onChange={(e) => {
                         field.onChange(e.target.files);
