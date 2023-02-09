@@ -5,6 +5,7 @@ import {
   deleteComment,
   getViewPost,
   actionUpdateAction,
+  actionUpdateMandate,
 } from "../service";
 import ConfirmDelete from "common/view/ConfirmDelete";
 import Post from "common/view/Post";
@@ -61,6 +62,13 @@ const ViewPost = () => {
   };
   const onVote = async (id) => {
     await actionUpdateAction(id).then((e) => {
+      if (e.flag) {
+        initLoad();
+      }
+    });
+  };
+  const onMandate = async (id, type) => {
+    await actionUpdateMandate(id, type).then((e) => {
       if (e.flag) {
         initLoad();
       }
@@ -204,6 +212,9 @@ const ViewPost = () => {
                 userModel={userModel}
                 viewPost={() => {}}
                 onPostHide={onPostHide}
+                onMandate={(type) => {
+                  onMandate(postid, type);
+                }}
               />
             ) : (
               <Comment
@@ -218,6 +229,9 @@ const ViewPost = () => {
                 setReport={setReport}
                 setConfirm={setConfirm}
                 userModel={userModel}
+                onMandate={(type) => {
+                  onMandate(postFeeds._id, type);
+                }}
               />
             )}
 
@@ -247,6 +261,9 @@ const ViewPost = () => {
                       setReport={setReport}
                       setConfirm={setConfirm}
                       userModel={userModel}
+                      onMandate={(type) => {
+                        onMandate(comment._id, type);
+                      }}
                     />
                   );
                 })}
@@ -259,7 +276,6 @@ const ViewPost = () => {
                 setReport({ open: false, postid: null });
               }}
             />
-
           </>
         )}
       </Box>

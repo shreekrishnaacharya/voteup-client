@@ -45,7 +45,7 @@ const AuthChangePassword = () => {
     const location = useLocation()
     const query = new URLSearchParams(location.search);
     const hascode = query.has("code")
-    console.log(query.has("code"))
+    // console.log(query.has("code"))
     const { handleSubmit, control, formState: { errors, isSubmitting } } = useForm({
         resolver: yupResolver(schema),
     });

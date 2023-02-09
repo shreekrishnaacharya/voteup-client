@@ -21,7 +21,7 @@ function PagesController() {
         }
     })
 
-    console.log(location.pathname == pages.RULES);
+    // console.log(location.pathname == pages.RULES);
     return (
         <Box>
             <Grid

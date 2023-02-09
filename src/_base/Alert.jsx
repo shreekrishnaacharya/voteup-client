@@ -15,7 +15,7 @@ const defaultProps = {
     fade: true
 };
 function Alert({ id, fade }) {
-    console.log("I am alert");
+    // console.log("I am alert");
     const history = useHistory();
     const [alerts, setAlerts] = useState([]);
 

@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { getFeeds, getPost,getHidePost } from "../service";
+import { getFeeds, getPost, getHidePost } from "../service";
 import ConfirmDelete from "common/view/ConfirmDelete";
 import Post from "common/view/Post";
 import PostLoad from "common/view/PostLoad";

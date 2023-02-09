@@ -44,7 +44,11 @@ import { _GLOBAL } from "links";
 import { getHidePost, getUnHidePost } from "view/main/feed/service";
 import { HidePost } from "./HidePost";
 import { useSnackbar } from "notistack";
-
+import MandateButtons from "components/buttons/MandateButtons";
+import {
+  SentimentVeryDissatisfied,
+  SentimentSatisfiedAlt,
+} from "@mui/icons-material";
 const CardActionsWrapper = styled(CardActions)(
   ({ theme }) => `
        background: ${theme.colors.alpha.black[5]};
@@ -109,6 +113,7 @@ function Post({
   post,
   onMenu,
   onVote,
+  onMandate,
   userModel,
   viewPost,
   isOpen,
@@ -278,6 +283,15 @@ function Post({
                           hasVote={post.hasVote}
                         />
                       )}
+                      {post.statusCode == StatusCode.ACCEPTANCE && (
+                        <MandateButtons
+                          post={post}
+                          sxy={{ mr: { xs: 0.5, md: 2 } }}
+                          sxn={{ mr: { xs: 0.5, md: 2 } }}
+                          onClick={onMandate}
+                          hasMandate={post.hasMandate}
+                        />
+                      )}
                     </>
                   ) : (
                     <Button
@@ -322,6 +336,26 @@ function Post({
                 >
                   {StatusList[post.statusCode].icon}&nbsp;{post.status}
                 </Text>
+                {post.statusCode == StatusCode.ACCEPTANCE && (
+                  <>
+                    {"|"}
+                    <Text sx={{ display: "flex", mx: 1 }}>
+                      <SentimentSatisfiedAlt
+                        color="info"
+                        sx={{ fontSize: ICONS_FONT }}
+                      />
+                      &nbsp;{post.tamd}
+                    </Text>
+                    {"|"}
+                    <Text sx={{ display: "flex", mx: 1 }}>
+                      <SentimentSatisfiedAlt
+                        color="warning"
+                        sx={{ fontSize: ICONS_FONT }}
+                      />
+                      &nbsp;{post.trmd}
+                    </Text>
+                  </>
+                )}
                 {"|"}
                 <Text sx={{ display: "flex", mx: 1 }}>
                   <QuestionAnswerIcon sx={{ fontSize: ICONS_FONT }} />
@@ -345,29 +379,23 @@ function Post({
                       voters={post.tot_votes}
                       votes={post.votes}
                     />
-                    {post.statusCode == StatusCode.ACCEPTANCE && !mini && (
-                      <>
-                        {"|"}
-                        <Box
-                          component={"a"}
-                          sx={{
-                            textDecoration: "none",
-                            color: "#6E759F",
-                            ml: 0.5,
-                            mt: "4px",
-                          }}
-                          href={post.dlink}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            getDownload(post.dlink);
-                          }}
-                        >
-                          <DownloadForOfflineIcon
-                            sx={{ fontSize: ICONS_FONT }}
-                          />
-                        </Box>
-                      </>
-                    )}
+                    {"|"}
+                    <Box
+                      component={"a"}
+                      sx={{
+                        textDecoration: "none",
+                        color: "#6E759F",
+                        ml: 0.5,
+                        mt: "4px",
+                      }}
+                      href={post.dlink}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        getDownload(post.dlink);
+                      }}
+                    >
+                      <DownloadForOfflineIcon sx={{ fontSize: ICONS_FONT }} />
+                    </Box>
                   </>
                 )}
               </Box>
