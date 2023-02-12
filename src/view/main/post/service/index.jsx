@@ -18,7 +18,7 @@ const getApiRequest = async (requestData) => {
       return finalJson;
     })
     .catch((error) => {
-    //   console.log(error.response);
+      //   console.log(error.response);
       return {
         flag: false,
         status: error.response.status,
@@ -80,10 +80,37 @@ async function deleteComment(id) {
     return result;
   });
 }
+
+async function getHidePost(id) {
+  return await getApiRequest({
+    url: "/feeds/hide/" + id,
+    method: "post",
+    data: {
+      type: "post",
+      status: "hide",
+    },
+  }).then((result) => {
+    return result;
+  });
+}
+async function getUnHidePost(id) {
+  return await getApiRequest({
+    url: "/feeds/hide/" + id,
+    method: "post",
+    data: {
+      type: "post",
+      status: "unhide",
+    },
+  }).then((result) => {
+    return result;
+  });
+}
 export {
   addComment,
   actionUpdateAction,
   getViewPost,
   deleteComment,
   actionUpdateMandate,
+  getHidePost,
+  getUnHidePost,
 };

@@ -182,7 +182,7 @@ const Feed = ({ userModel, feedType }) => {
       observer.unobserve(loaderRef.current);
     };
   }, [loading, search]);
-  console.log("i am render feeds");
+  // console.log("i am render feeds");
   return (
     <Box sx={{ width: "100%" }}>
       <>

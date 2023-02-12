@@ -10,7 +10,6 @@ import {
   IconButton,
   Button,
   CardActions,
-  Link,
   styled,
   Menu,
   MenuItem,
@@ -114,13 +113,11 @@ function Post({
   onMenu,
   onVote,
   onMandate,
-  userModel,
   viewPost,
   isOpen,
   toaster,
   onPostHide,
 }) {
-  const { mini } = _GLOBAL;
   const [isHidePost, setHide] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [gsize, setGsize] = useState({});
@@ -200,44 +197,26 @@ function Post({
     <Box mb={2}>
       <Card>
         <CardHeader
-          avatar={
-            post.statusCode == StatusCode.REVIEW ? (
-              <Avatar src={post.user_dp} />
-            ) : (
-              <></>
-            )
-          }
           action={
             <>
-              {post.statusCode == StatusCode.REVIEW && (
-                <>
-                  <IconButton color="primary" onClick={handleOptionClick}>
-                    <MoreHorizTwoToneIcon fontSize="medium" />
-                  </IconButton>
-                  <Menu
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleOptionClose}
-                  >
-                    <MenuItem key={"hide"} onClick={setHidePost}>
-                      Hide
-                    </MenuItem>
-                    <MenuItem
-                      key={"report"}
-                      onClick={() => {
-                        handleOptionAction(0);
-                      }}
-                    >
-                      Report
-                    </MenuItem>
-                  </Menu>
-                </>
-              )}
+              <IconButton color="primary" onClick={handleOptionClick}>
+                <MoreHorizTwoToneIcon fontSize="medium" />
+              </IconButton>
+              <Menu anchorEl={anchorEl} open={open} onClose={handleOptionClose}>
+                <MenuItem key={"hide"} onClick={setHidePost}>
+                  Hide
+                </MenuItem>
+                <MenuItem
+                  key={"report"}
+                  onClick={() => {
+                    handleOptionAction(0);
+                  }}
+                >
+                  Report
+                </MenuItem>
+              </Menu>
             </>
           }
-          titleTypographyProps={{ variant: "h4" }}
-          subheaderTypographyProps={{ variant: "subtitle2" }}
-          title={post.statusCode == StatusCode.REVIEW ? post.username : ""}
         />
         <Box px={3} pb={2}>
           <Typography variant="h4" fontWeight="normal">
@@ -283,7 +262,7 @@ function Post({
                           hasVote={post.hasVote}
                         />
                       )}
-                      {post.statusCode == StatusCode.ACCEPTANCE && (
+                      {post.statusCode == StatusCode.MANDATE && (
                         <MandateButtons
                           post={post}
                           sxy={{ mr: { xs: 0.5, md: 2 } }}
@@ -336,7 +315,7 @@ function Post({
                 >
                   {StatusList[post.statusCode].icon}&nbsp;{post.status}
                 </Text>
-                {post.statusCode == StatusCode.ACCEPTANCE && (
+                {post.statusCode == StatusCode.MANDATE && (
                   <>
                     {"|"}
                     <Text sx={{ display: "flex", mx: 1 }}>
@@ -348,7 +327,7 @@ function Post({
                     </Text>
                     {"|"}
                     <Text sx={{ display: "flex", mx: 1 }}>
-                      <SentimentSatisfiedAlt
+                      <SentimentVeryDissatisfied
                         color="warning"
                         sx={{ fontSize: ICONS_FONT }}
                       />
@@ -379,23 +358,30 @@ function Post({
                       voters={post.tot_votes}
                       votes={post.votes}
                     />
-                    {"|"}
-                    <Box
-                      component={"a"}
-                      sx={{
-                        textDecoration: "none",
-                        color: "#6E759F",
-                        ml: 0.5,
-                        mt: "4px",
-                      }}
-                      href={post.dlink}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        getDownload(post.dlink);
-                      }}
-                    >
-                      <DownloadForOfflineIcon sx={{ fontSize: ICONS_FONT }} />
-                    </Box>
+                    {(post.statusCode == StatusCode.ACCEPTANCE ||
+                      post.statusCode == StatusCode.MANDATE) && (
+                      <>
+                        {"|"}
+                        <Box
+                          component={"a"}
+                          sx={{
+                            textDecoration: "none",
+                            color: "#6E759F",
+                            ml: 0.5,
+                            mt: "4px",
+                          }}
+                          href={post.dlink}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            getDownload(post.dlink);
+                          }}
+                        >
+                          <DownloadForOfflineIcon
+                            sx={{ fontSize: ICONS_FONT }}
+                          />
+                        </Box>
+                      </>
+                    )}
                   </>
                 )}
               </Box>

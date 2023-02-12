@@ -15,9 +15,14 @@ import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline";
 import ShareTwoToneIcon from "@mui/icons-material/ShareTwoTone";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import LaunchIcon from "@mui/icons-material/Launch";
-import { Delete, Info, SentimentSatisfiedAlt } from "@mui/icons-material";
+import {
+  Delete,
+  Info,
+  SentimentSatisfiedAlt,
+  SentimentVeryDissatisfied,
+} from "@mui/icons-material";
 import ReactTimeAgo from "react-time-ago";
-import React from "react";
+import React, { useState } from "react";
 import VoteButton from "components/buttons/VoteButtons";
 import Ranking from "components/Ranking";
 import Text from "components/Text";
@@ -29,6 +34,7 @@ import { ICONS_FONT } from "links";
 import { TEXT_FONT } from "links";
 import { _GLOBAL } from "links";
 import MandateButtons from "components/buttons/MandateButtons";
+import { getHidePost, getUnHidePost } from "../service";
 
 const CardActionsWrapper = styled(CardActions)(
   ({ theme }) => `
@@ -47,7 +53,8 @@ function Comment({
   userModel,
   toaster,
 }) {
-  const { mini } = _GLOBAL;
+  const [open, onMenu] = useState(false);
+  const [isHidePost, setHide] = useState(false);
   const handleOptionAction = (type) => {
     if (type == 0) {
       setReport({ postid: comment._id, open: true });
@@ -55,48 +62,66 @@ function Comment({
       setConfirm({ postid: comment._id, open: true });
     }
   };
+  const setHidePost = async () => {
+    await getHidePost(post._id).then((e) => {
+      if (e.flag) {
+        setHide(true);
+        handleOptionClose();
+        onPostHide(true);
+      } else {
+        enqueueSnackbar("Error in query", {
+          variant: "error",
+        });
+      }
+    });
+  };
+  const setUnHidePost = async () => {
+    await getUnHidePost(post._id).then((e) => {
+      if (e.flag) {
+        setHide(false);
+        onPostHide(false);
+      } else {
+        enqueueSnackbar("Error in query", {
+          variant: "error",
+        });
+      }
+    });
+  };
+
   return (
     <Box mb={1}>
       <Card>
         <CardHeader
-          avatar={
-            comment.statusCode == StatusCode.REVIEW ? (
-              <Avatar src={comment.user_dp} />
-            ) : (
-              <></>
-            )
-          }
           action={
             <>
-              {comment.statusCode == StatusCode.REVIEW && (
-                <>
-                  {comment.userid === userModel._id ? (
-                    <IconButton
-                      color="error"
-                      onClick={() => {
-                        handleOptionAction(2);
-                      }}
-                    >
-                      <Delete fontSize="medium" />
-                    </IconButton>
-                  ) : (
-                    <IconButton
-                      color="info"
-                      onClick={() => {
-                        handleOptionAction(0);
-                      }}
-                    >
-                      <Info fontSize="medium" />
-                    </IconButton>
-                  )}
-                </>
-              )}
+              <IconButton color="primary" onClick={handleOptionClick}>
+                <MoreHorizTwoToneIcon fontSize="medium" />
+              </IconButton>
+              <Menu anchorEl={anchorEl} open={open} onClose={handleOptionClose}>
+                <MenuItem key={"hide"} onClick={setHidePost}>
+                  Hide
+                </MenuItem>
+                {comment.userid === userModel._id ? (
+                  <MenuItem
+                    key={"delete"}
+                    onClick={() => {
+                      handleOptionAction(2);
+                    }}
+                  >
+                    Delete
+                  </MenuItem>
+                ) : (
+                  <MenuItem
+                    key={"report"}
+                    onClick={() => {
+                      handleOptionAction(0);
+                    }}
+                  >
+                    Report
+                  </MenuItem>
+                )}
+              </Menu>
             </>
-          }
-          titleTypographyProps={{ variant: "h5" }}
-          subheaderTypographyProps={{ variant: "subtitle2" }}
-          title={
-            comment.statusCode == StatusCode.REVIEW ? comment.username : ""
           }
         />
         <Box px={2} pb={1}>
@@ -132,7 +157,7 @@ function Comment({
                     hasVote={comment.hasVote}
                   />
                 )}
-                {comment.statusCode == StatusCode.ACCEPTANCE && (
+                {comment.statusCode == StatusCode.MANDATE && (
                   <MandateButtons
                     post={post}
                     sxn={{ mr: { xs: 0.5, md: 2 } }}
@@ -194,7 +219,7 @@ function Comment({
                         {StatusList[comment.statusCode].icon}&nbsp;
                         {comment.status}
                       </Text>
-                      {comment.statusCode == StatusCode.ACCEPTANCE && (
+                      {comment.statusCode == StatusCode.MANDATE && (
                         <>
                           {"|"}
                           <Text sx={{ display: "flex", mx: 1 }}>
@@ -206,7 +231,7 @@ function Comment({
                           </Text>
                           {"|"}
                           <Text sx={{ display: "flex", mx: 1 }}>
-                            <SentimentSatisfiedAlt
+                            <SentimentVeryDissatisfied
                               color="warning"
                               sx={{ fontSize: ICONS_FONT }}
                             />
@@ -225,23 +250,29 @@ function Comment({
                         voters={post.tot_votes}
                         votes={comment.votes}
                       />
-                      {"|"}
-                      <Box
-                        component={"a"}
-                        sx={{
-                          textDecoration: "none",
-                          color: "#6E759F",
-                          ml: 0.5,
-                          mt: "4px",
-                        }}
-                        href={comment.dlink}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          getDownload(comment.dlink);
-                        }}
-                      >
-                        <DownloadForOfflineIcon sx={{ fontSize: ICONS_FONT }} />
-                      </Box>
+                      {comment.statusCode == StatusCode.ACCEPTANCE && (
+                        <>
+                          {"|"}
+                          <Box
+                            component={"a"}
+                            sx={{
+                              textDecoration: "none",
+                              color: "#6E759F",
+                              ml: 0.5,
+                              mt: "4px",
+                            }}
+                            href={comment.dlink}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              getDownload(comment.dlink);
+                            }}
+                          >
+                            <DownloadForOfflineIcon
+                              sx={{ fontSize: ICONS_FONT }}
+                            />
+                          </Box>
+                        </>
+                      )}
                     </>
                   )}
                 </Box>
