@@ -1,14 +1,14 @@
-import ProfileCover from './ProfileCover';
-import { useState, useEffect } from 'react';
-import { getProfile, updateProfile } from '../service';
-import EditProfileTab from './EditProfileTab';
-import { Tabs, Tab, Grid, styled } from '@mui/material';
-import Feed from 'view/main/feed/view/Feed';
+import ProfileCover from "./ProfileCover";
+import { useState, useEffect } from "react";
+import { getProfile, updateProfile } from "../service";
+import EditProfileTab from "./EditProfileTab";
+import { Tabs, Tab, Grid, styled } from "@mui/material";
+import Feed from "view/main/feed/view/Feed";
 import tokenService from "_services/token.service";
 import { useDispatch, useSelector } from "react-redux";
 import { setProfile } from "redux/action/profileAction";
-import { useSnackbar } from 'notistack';
-import { Helmet } from 'react-helmet';
+import { useSnackbar } from "notistack";
+import { Helmet } from "react-helmet";
 
 const TabsWrapper = styled(Tabs)(
   () => `
@@ -19,15 +19,16 @@ const TabsWrapper = styled(Tabs)(
 );
 
 function ManagementUserProfile() {
-  const [currentTab, setCurrentTab] = useState('activity');
-  const userProfile = useSelector(state => state.profile);
+  const [currentTab, setCurrentTab] = useState("activity");
+  const userProfile = useSelector((state) => state.profile);
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
 
   const userModel = tokenService.getUser();
   const tabs = [
-    { value: 'activity', label: 'Post' },
-    { value: 'edit_profile', label: 'Edit Profile' }
+    { value: "activity", label: "Post" },
+    { value: "edit_profile", label: "Edit Profile" },
+    { value: "hidden_post", label: "Blocked Post" },
   ];
   const handleTabsChange = (event, value) => {
     setCurrentTab(value);
@@ -35,27 +36,27 @@ function ManagementUserProfile() {
   useEffect(() => {
     getProfile().then((e) => {
       if (e.flag) {
-        dispatch(setProfile(e.data))
+        dispatch(setProfile(e.data));
       }
-    })
-  }, [])
+    });
+  }, []);
 
   const saveImage = (fdata, closeModel) => {
-    updateProfile(fdata).then(e => {
+    updateProfile(fdata).then((e) => {
       if (e.flag) {
         enqueueSnackbar("Updated success", {
-          variant: 'success',
+          variant: "success",
         });
-        dispatch(setProfile({ ...userProfile, ...e.data }))
-        closeModel()
+        dispatch(setProfile({ ...userProfile, ...e.data }));
+        closeModel();
       }
-    })
-  }
+    });
+  };
 
   return (
     <>
       <Helmet>
-        <title>{'User Profile | Referendum 2.0'}</title>
+        <title>{"User Profile | Referendum 2.0"}</title>
       </Helmet>
       <Grid
         container
@@ -81,8 +82,12 @@ function ManagementUserProfile() {
           </TabsWrapper>
         </Grid>
         <Grid item xs={12}>
-          {currentTab === 'activity' && <Feed userModel={userModel} feedType={'profile'} />}
-          {currentTab === 'edit_profile' && <EditProfileTab userProfile={userProfile} />}
+          {currentTab === "activity" && (
+            <Feed userModel={userModel} feedType={"profile"} />
+          )}
+          {currentTab === "edit_profile" && (
+            <EditProfileTab userProfile={userProfile} />
+          )}
         </Grid>
       </Grid>
     </>

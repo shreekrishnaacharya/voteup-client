@@ -108,29 +108,12 @@ const ImageView = ({ meta, gsize }) => {
   );
 };
 
-function Post({
-  post,
-  onMenu,
-  onVote,
-  onMandate,
-  viewPost,
-  isOpen,
-  toaster,
-  onPostHide,
-}) {
+function HiddenPost({ post, onPostHide }) {
   const [isHidePost, setHide] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
   const [gsize, setGsize] = useState({});
-  const open = Boolean(anchorEl);
   const { enqueueSnackbar } = useSnackbar();
-  const handleOptionClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+
   const handleOptionClose = () => {
-    setAnchorEl(null);
-  };
-  const handleOptionAction = (type) => {
-    onMenu(post._id, type);
     setAnchorEl(null);
   };
 
@@ -191,7 +174,7 @@ function Post({
     });
   };
   if (isHidePost) {
-    return <HidePost onUndo={setUnHidePost} />;
+    return <HidePost onUndo={setHidePost} />;
   }
   return (
     <Box mb={2}>
@@ -199,22 +182,7 @@ function Post({
         <CardHeader
           action={
             <>
-              <IconButton color="primary" onClick={handleOptionClick}>
-                <MoreHorizTwoToneIcon fontSize="medium" />
-              </IconButton>
-              <Menu anchorEl={anchorEl} open={open} onClose={handleOptionClose}>
-                <MenuItem key={"hide"} onClick={setHidePost}>
-                  Hide
-                </MenuItem>
-                <MenuItem
-                  key={"report"}
-                  onClick={() => {
-                    handleOptionAction(0);
-                  }}
-                >
-                  Report
-                </MenuItem>
-              </Menu>
+              <Button onClick={setUnHidePost}>{"Unhide"}</Button>
             </>
           }
         />
@@ -249,56 +217,7 @@ function Post({
             justifyContent="space-between"
             alignItems="center"
           >
-            <Grid item xl={6}>
-              <Grid container direction={"row"}>
-                <Grid item xl={6}>
-                  {isOpen ? (
-                    <>
-                      {post.statusCode == StatusCode.VOTING && (
-                        <VoteButton
-                          post={post}
-                          sx={{ mr: { xs: 0.5, md: 2 } }}
-                          onClick={onVote}
-                          hasVote={post.hasVote}
-                        />
-                      )}
-                      {post.statusCode == StatusCode.MANDATE && (
-                        <MandateButtons
-                          post={post}
-                          sxy={{ mr: { xs: 0.5, md: 2 } }}
-                          sxn={{ mr: { xs: 0.5, md: 2 } }}
-                          onClick={onMandate}
-                          hasMandate={post.hasMandate}
-                        />
-                      )}
-                    </>
-                  ) : (
-                    <Button
-                      startIcon={<CommentTwoToneIcon />}
-                      variant="outlined"
-                      sx={{ mr: { xs: 0.5, md: 2 } }}
-                      onClick={() => {
-                        viewPost(post._id);
-                      }}
-                    >
-                      View
-                    </Button>
-                  )}
-                </Grid>
-                <Grid item xl={6}>
-                  <Button
-                    startIcon={<ShareTwoToneIcon />}
-                    variant="outlined"
-                    onClick={() => {
-                      CopyToClipboard(post.link);
-                      toaster("Link copied!!!");
-                    }}
-                  >
-                    Share
-                  </Button>
-                </Grid>
-              </Grid>
-            </Grid>
+            <Grid item xl={6}></Grid>
             <Grid item xl={6}>
               <Box
                 component={"div"}
@@ -358,30 +277,6 @@ function Post({
                       voters={post.tot_votes}
                       votes={post.votes}
                     />
-                    {(post.statusCode == StatusCode.ACCEPTANCE ||
-                      post.statusCode == StatusCode.MANDATE) && (
-                      <>
-                        {"|"}
-                        <Box
-                          component={"a"}
-                          sx={{
-                            textDecoration: "none",
-                            color: "#6E759F",
-                            ml: 0.5,
-                            mt: "4px",
-                          }}
-                          href={post.dlink}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            getDownload(post.dlink);
-                          }}
-                        >
-                          <DownloadForOfflineIcon
-                            sx={{ fontSize: ICONS_FONT }}
-                          />
-                        </Box>
-                      </>
-                    )}
                   </>
                 )}
               </Box>
@@ -393,16 +288,8 @@ function Post({
   );
 }
 
-Post.propTypes = {
+HiddenPost.propTypes = {
   post: PropTypes.object.isRequired,
-  onMenu: PropTypes.func.isRequired,
-  userModel: PropTypes.object.isRequired,
-  viewPost: PropTypes.func.isRequired,
-  onVote: PropTypes.func,
-  isOpen: PropTypes.bool,
 };
 
-Post.defaultProps = {
-  isOpen: false,
-};
-export default React.memo(Post);
+export default React.memo(HiddenPost);

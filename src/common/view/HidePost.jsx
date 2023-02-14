@@ -1,14 +1,14 @@
 import { Button, Card, CardHeader } from "@mui/material";
 import { Box } from "@mui/system";
 
-export const HidePost = ({ onUnhide }) => {
+export const HidePost = ({ onUndo }) => {
   return (
     <Box mb={2}>
       <Card>
         <CardHeader
           action={
             <>
-              <Button onClick={onUnhide}>Unhide</Button>
+              <Button onClick={onUndo}>{"Undo"}</Button>
             </>
           }
           titleTypographyProps={{ variant: "h4" }}
