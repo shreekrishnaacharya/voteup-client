@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setProfile } from "redux/action/profileAction";
 import { useSnackbar } from "notistack";
 import { Helmet } from "react-helmet";
+import HiddenList from "./HiddenList";
 
 const TabsWrapper = styled(Tabs)(
   () => `
@@ -88,6 +89,7 @@ function ManagementUserProfile() {
           {currentTab === "edit_profile" && (
             <EditProfileTab userProfile={userProfile} />
           )}
+          {currentTab === "hidden_post" && <HiddenList />}
         </Grid>
       </Grid>
     </>

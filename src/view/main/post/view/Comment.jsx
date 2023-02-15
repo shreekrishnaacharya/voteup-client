@@ -10,6 +10,8 @@ import {
   Stack,
   Grid,
   Button,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline";
 import ShareTwoToneIcon from "@mui/icons-material/ShareTwoTone";
@@ -22,6 +24,7 @@ import {
   SentimentVeryDissatisfied,
 } from "@mui/icons-material";
 import ReactTimeAgo from "react-time-ago";
+import MoreHorizTwoToneIcon from "@mui/icons-material/MoreHorizTwoTone";
 import React, { useState } from "react";
 import VoteButton from "components/buttons/VoteButtons";
 import Ranking from "components/Ranking";
@@ -35,6 +38,7 @@ import { TEXT_FONT } from "links";
 import { _GLOBAL } from "links";
 import MandateButtons from "components/buttons/MandateButtons";
 import { getHidePost, getUnHidePost } from "../service";
+import { HidePost } from "common/view/HidePost";
 
 const CardActionsWrapper = styled(CardActions)(
   ({ theme }) => `
@@ -53,8 +57,10 @@ function Comment({
   userModel,
   toaster,
 }) {
-  const [open, onMenu] = useState(false);
+  // const [open, onMenu] = useState(false);
   const [isHidePost, setHide] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
   const handleOptionAction = (type) => {
     if (type == 0) {
       setReport({ postid: comment._id, open: true });
@@ -62,32 +68,43 @@ function Comment({
       setConfirm({ postid: comment._id, open: true });
     }
   };
+  const handleOptionClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleOptionClose = () => {
+    setAnchorEl(null);
+  };
+  const onPostHide = (flag) => {
+    setHide(flag);
+  };
   const setHidePost = async () => {
-    await getHidePost(post._id).then((e) => {
+    await getHidePost(comment._id).then((e) => {
       if (e.flag) {
         setHide(true);
         handleOptionClose();
         onPostHide(true);
       } else {
-        enqueueSnackbar("Error in query", {
+        toaster("Error in query", {
           variant: "error",
         });
       }
     });
   };
   const setUnHidePost = async () => {
-    await getUnHidePost(post._id).then((e) => {
+    await getUnHidePost(comment._id).then((e) => {
       if (e.flag) {
         setHide(false);
         onPostHide(false);
       } else {
-        enqueueSnackbar("Error in query", {
+        toaster("Error in query", {
           variant: "error",
         });
       }
     });
   };
-
+  if (isHidePost) {
+    return <HidePost onUndo={setUnHidePost} />;
+  }
   return (
     <Box mb={1}>
       <Card>

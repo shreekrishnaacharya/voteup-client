@@ -39,7 +39,7 @@ async function getFeeds() {
 
 async function getHiddenPost() {
   return await getApiRequest({
-    url: "/feeds/hide-list",
+    url: "/feeds/hidden/list",
   }).then((result) => {
     return result;
   });

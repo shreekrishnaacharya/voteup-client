@@ -2,8 +2,6 @@ import { Box } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import {  getHiddenPost } from "../service";
 import PostLoad from "common/view/PostLoad";
-import { useHistory } from "react-router-dom";
-import { useSnackbar } from "notistack";
 import { useDispatch, useSelector } from "react-redux";
 import { setFeedList } from "redux/action/feedsAction";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
@@ -12,14 +10,13 @@ import { setFeedReset } from "redux/action/feedsAction";
 import { Helmet } from "react-helmet";
 import HiddenPost from "common/view/HiddenPost";
 
-const HiddenList = ({ userModel, feedType }) => {
+const HiddenList = () => {
+  const postFeeds = useSelector((state) => state.feedList);
   const search = useSelector((state) => state.search);
-  const history = useHistory();
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const loaderRef = useRef(null);
   const pageNo = useRef(1);
-  const { enqueueSnackbar } = useSnackbar();
 
   // const filterPost = (pid) => {
   //   dispatch(setFeedReset(postFeeds.filter((e) => e._id !== pid)));
@@ -72,11 +69,11 @@ const HiddenList = ({ userModel, feedType }) => {
       rootMargin: "20px",
       threshold: 0,
     };
-    const observer = new IntersectionObserver(handleObserver, option);
-    if (loaderRef.current) observer.observe(loaderRef.current);
-    return () => {
-      observer.unobserve(loaderRef.current);
-    };
+    // const observer = new IntersectionObserver(handleObserver, option);
+    // if (loaderRef.current) observer.observe(loaderRef.current);
+    // return () => {
+    //   observer.unobserve(loaderRef.current);
+    // };
   }, [loading, search]);
   // console.log("i am render feeds");
   return (
@@ -146,4 +143,4 @@ const HiddenList = ({ userModel, feedType }) => {
   );
 };
 
-export default Feed;
+export default HiddenList;

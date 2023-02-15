@@ -108,14 +108,10 @@ const ImageView = ({ meta, gsize }) => {
   );
 };
 
-function HiddenPost({ post, onPostHide }) {
+function HiddenPost({ post }) {
   const [isHidePost, setHide] = useState(false);
   const [gsize, setGsize] = useState({});
   const { enqueueSnackbar } = useSnackbar();
-
-  const handleOptionClose = () => {
-    setAnchorEl(null);
-  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -151,9 +147,7 @@ function HiddenPost({ post, onPostHide }) {
   const setHidePost = async () => {
     await getHidePost(post._id).then((e) => {
       if (e.flag) {
-        setHide(true);
-        handleOptionClose();
-        onPostHide(true);
+        setHide(false);
       } else {
         enqueueSnackbar("Error in query", {
           variant: "error",
@@ -164,8 +158,7 @@ function HiddenPost({ post, onPostHide }) {
   const setUnHidePost = async () => {
     await getUnHidePost(post._id).then((e) => {
       if (e.flag) {
-        setHide(false);
-        onPostHide(false);
+        setHide(true);
       } else {
         enqueueSnackbar("Error in query", {
           variant: "error",
