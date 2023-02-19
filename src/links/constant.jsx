@@ -2,7 +2,6 @@ import HowToVoteIcon from "@mui/icons-material/HowToVote";
 import InsertCommentIcon from "@mui/icons-material/InsertComment";
 import ErrorIcon from "@mui/icons-material/Error";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import PendingIcon from "@mui/icons-material/Pending";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import GppGoodIcon from "@mui/icons-material/GppGood";
@@ -60,28 +59,33 @@ const KycStatusList = {
 
 const StatusList = {
   [StatusCode.REVIEW]: {
+    name: "Review",
     color: "info",
     icon: <InsertCommentIcon sx={{ fontSize: ICONS_FONT }} />,
   },
   [StatusCode.VOTING]: {
+    name: "Voting",
     color: "primary",
     icon: <HowToVoteIcon sx={{ fontSize: ICONS_FONT }} />,
   },
   [StatusCode.ACCEPTANCE]: {
+    name: "Mandate",
     color: "success",
     icon: <CheckCircleIcon sx={{ fontSize: ICONS_FONT }} />,
   },
   [StatusCode.REJECTION]: {
+    name: "Rejected",
     color: "error",
     icon: <ErrorIcon sx={{ mr: 1, fontSize: ICONS_FONT }} />,
   },
   [StatusCode.MANDATE]: {
+    name: "Referendum",
     icon: <GppGoodIcon sx={{ fontSize: ICONS_FONT, color: "#00897b" }} />,
   },
 };
 
 const _GLOBAL = Object.freeze({
-  mini: false,
+  mini: true,
 });
 
 export {

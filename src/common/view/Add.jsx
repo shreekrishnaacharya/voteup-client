@@ -58,7 +58,7 @@ const schema = yup.object({
 });
 const Add = ({ setDialog }) => {
   const { mini } = _GLOBAL;
-  const [condifmed, setConfirm] = useState(false);
+  // const [condifmed, setConfirm] = useState(false);
   const userModel = tokenService.getUser();
   const history = useHistory();
   const search = useSelector((state) => state.search);
@@ -235,6 +235,7 @@ const Add = ({ setDialog }) => {
               />
               <Controller
                 name="supporters"
+                defaultValue={1}
                 control={control}
                 render={({ field, fieldState }) => (
                   <>
