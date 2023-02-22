@@ -43,11 +43,13 @@ import { _GLOBAL } from "links";
 import { getHidePost, getUnHidePost } from "view/main/feed/service";
 import { HidePost } from "./HidePost";
 import { useSnackbar } from "notistack";
-import MandateButtons from "components/buttons/MandateButtons";
+
 import {
   SentimentVeryDissatisfied,
   SentimentSatisfiedAlt,
 } from "@mui/icons-material";
+import useMandateButtons from "hooks/mandate.button";
+
 const CardActionsWrapper = styled(CardActions)(
   ({ theme }) => `
        background: ${theme.colors.alpha.black[5]};
@@ -118,6 +120,12 @@ function Post({
   toaster,
   onPostHide,
 }) {
+  const { AcceptButton, RejectButton } = useMandateButtons({
+    post,
+    onClick: onMandate,
+    hasMandate: post.hasMandate,
+    size: "small",
+  });
   const [isHidePost, setHide] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [gsize, setGsize] = useState({});
@@ -151,7 +159,6 @@ function Post({
       setGsize({ ...cgsize });
     }, 2000);
   }, []);
-
 
   const setHidePost = async () => {
     await getHidePost(post._id).then((e) => {
@@ -238,29 +245,38 @@ function Post({
             alignItems="center"
           >
             <Grid item xl={6}>
-              <Grid container direction={"row"}>
-                <Grid item xl={6}>
-                  {isOpen ? (
-                    <>
-                      {post.statusCode == StatusCode.VOTING && (
+              <Grid
+                container
+                spacing={1}
+                direction={"row"}
+                justifyContent="space-between"
+                alignItems={"center"}
+              >
+                {isOpen ? (
+                  <>
+                    {post.statusCode == StatusCode.VOTING && (
+                      <Grid item>
                         <VoteButton
                           post={post}
                           sx={{ mr: { xs: 0.5, md: 2 } }}
                           onClick={onVote}
                           hasVote={post.hasVote}
                         />
-                      )}
-                      {post.statusCode == StatusCode.MANDATE && (
-                        <MandateButtons
-                          post={post}
-                          sxy={{ mr: { xs: 0.5, md: 2 } }}
-                          sxn={{ mr: { xs: 0.5, md: 2 } }}
-                          onClick={onMandate}
-                          hasMandate={post.hasMandate}
-                        />
-                      )}
-                    </>
-                  ) : (
+                      </Grid>
+                    )}
+                    {post.statusCode == StatusCode.MANDATE && (
+                      <>
+                        <Grid item>
+                          <AcceptButton />
+                        </Grid>
+                        <Grid item>
+                          <RejectButton />
+                        </Grid>
+                      </>
+                    )}
+                  </>
+                ) : (
+                  <Grid item>
                     <Button
                       startIcon={<CommentTwoToneIcon />}
                       variant="outlined"
@@ -271,9 +287,9 @@ function Post({
                     >
                       View
                     </Button>
-                  )}
-                </Grid>
-                <Grid item xl={6}>
+                  </Grid>
+                )}
+                <Grid item>
                   <Button
                     startIcon={<ShareTwoToneIcon />}
                     variant="outlined"

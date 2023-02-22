@@ -36,7 +36,6 @@ import { getDownload } from "_services";
 import { ICONS_FONT } from "links";
 import { TEXT_FONT } from "links";
 import { _GLOBAL } from "links";
-import MandateButtons from "components/buttons/MandateButtons";
 import { getHidePost, getUnHidePost } from "../service";
 import { HidePost } from "common/view/HidePost";
 import useMandateButtons from "hooks/mandate.button";
@@ -178,9 +177,8 @@ function Comment({
                 justifyContent="space-between"
                 alignItems={"center"}
               >
-                {/* <Stack direction="row" spacing={1} justifyContent="space-between"> */}
                 {post.statusCode == StatusCode.VOTING && (
-                  <Grid item xs={6} sm={"auto"}>
+                  <Grid item>
                     <VoteButton
                       post={comment}
                       size="small"
@@ -191,15 +189,15 @@ function Comment({
                 )}
                 {comment.statusCode == StatusCode.MANDATE && (
                   <>
-                    <Grid item xs={6} sm={"auto"}>
+                    <Grid item>
                       <AcceptButton size="small" />
                     </Grid>
-                    <Grid item xs={6} sm={"auto"}>
+                    <Grid item>
                       <RejectButton size="small" />
                     </Grid>
                   </>
                 )}
-                <Grid item xs={6} sm={"auto"}>
+                <Grid item>
                   <Button
                     startIcon={<ShareTwoToneIcon />}
                     variant="outlined"
@@ -213,7 +211,7 @@ function Comment({
                   </Button>
                 </Grid>
                 {post.ptype == 1 && (
-                  <Grid item xl={6} sm={"auto"}>
+                  <Grid item>
                     <Button
                       component={Link}
                       to={"post?id=" + comment.parent_id}

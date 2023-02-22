@@ -30,11 +30,8 @@ import Ranking from "components/Ranking";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import PollIcon from "@mui/icons-material/Poll";
 // import DownloadIcon from '@mui/icons-material/Download';
-import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { StatusCode, StatusList } from "links/constant";
-import { CopyToClipboard } from "_services";
-import { getDownload } from "_services";
 
 import { Gallery, Item } from "react-photoswipe-gallery";
 import { ICONS_FONT } from "links";
@@ -43,7 +40,6 @@ import { _GLOBAL } from "links";
 import { getHidePost, getUnHidePost } from "view/main/feed/service";
 import { HidePost } from "./HidePost";
 import { useSnackbar } from "notistack";
-import MandateButtons from "components/buttons/MandateButtons";
 import {
   SentimentVeryDissatisfied,
   SentimentSatisfiedAlt,
