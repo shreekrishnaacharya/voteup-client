@@ -27,6 +27,7 @@ import { setSearch } from "redux/action/searchAction";
 import { setFeedList } from "redux/action/feedsAction";
 import PropTypes from "prop-types";
 import { _GLOBAL } from "links";
+import { useCallback } from "react";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />;
@@ -110,11 +111,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+const StatusCode2 = Object.values(StatusCode).filter(
+  (e) => e != StatusCode.REJECTION
+);
 function HeaderSearch({ openDialog, setDialog }) {
   const { mini } = _GLOBAL;
   const search = useSelector((state) => state.search);
   const [stext, setStext] = useState(search.text);
   const dispatch = useDispatch();
+
   const handleChange = (event) => {
     if (event.key === "Enter") {
       dispatch(setSearch({ ...search, text: stext }));
@@ -185,7 +190,7 @@ function HeaderSearch({ openDialog, setDialog }) {
             <MenuItem key={"all"} value="">
               All
             </MenuItem>
-            {Object.values(StatusCode).map((e) => {
+            {StatusCode2.map((e) => {
               return (
                 <MenuItem key={e} value={e}>
                   {CapitalText(StatusList[e].name)}
@@ -278,7 +283,7 @@ function HeaderSearch({ openDialog, setDialog }) {
                     <MenuItem key={"all"} value="">
                       All
                     </MenuItem>
-                    {Object.values(StatusCode).map((e) => {
+                    {StatusCode2.map((e) => {
                       return (
                         <MenuItem key={e} value={e}>
                           {CapitalText(StatusList[e].name)}

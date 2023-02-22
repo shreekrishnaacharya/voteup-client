@@ -165,48 +165,78 @@ function Comment({
             justifyContent="space-between"
           >
             <Grid item xl={6}>
-              <Stack direction="row" spacing={1} justifyContent="space-between">
+              <Grid
+                container
+                direction={"row"}
+                justifyContent="space-between"
+                alignItems={"center"}
+              >
+                {/* <Stack direction="row" spacing={1} justifyContent="space-between"> */}
                 {post.statusCode == StatusCode.VOTING && (
-                  <VoteButton
-                    post={comment}
-                    size="small"
-                    onClick={onVote}
-                    hasVote={comment.hasVote}
-                  />
+                  <Grid item xl={3}>
+                    <VoteButton
+                      post={comment}
+                      size="small"
+                      sx={{
+                        mr: { xs: 0.5, sm: 1, md: 2, lg: 1 },
+                        // my: { xs: 0.5, sm: 0 },
+                      }}
+                      onClick={onVote}
+                      hasVote={comment.hasVote}
+                    />
+                  </Grid>
                 )}
                 {comment.statusCode == StatusCode.MANDATE && (
-                  <MandateButtons
-                    post={post}
-                    sxn={{ mr: { xs: 0.5, md: 2 } }}
-                    onClick={onMandate}
-                    hasMandate={comment.hasMandate}
-                    size="small"
-                  />
+                  <Grid item xl={3}>
+                    <MandateButtons
+                      post={post}
+                      sx={{
+                        mr: { xs: 0.5, sm: 1, md: 2, lg: 1 },
+                        // my: { xs: 0.5, sm: 0 },
+                      }}
+                      onClick={onMandate}
+                      hasMandate={comment.hasMandate}
+                      size="small"
+                    />
+                  </Grid>
                 )}
-                <Button
-                  startIcon={<ShareTwoToneIcon />}
-                  variant="outlined"
-                  size="small"
-                  onClick={() => {
-                    CopyToClipboard(comment.link);
-                    toaster("Link copied!!!");
-                  }}
-                >
-                  Share
-                </Button>
-                {post.ptype == 1 && (
+                <Grid item xl={6}>
                   <Button
-                    component={Link}
-                    to={"post?id=" + comment.parent_id}
-                    startIcon={<LaunchIcon />}
+                    startIcon={<ShareTwoToneIcon />}
                     variant="outlined"
                     size="small"
-                    color="info"
+                    sx={{
+                      mr: { xs: 0.5, sm: 1, md: 2, lg: 1 },
+                      // my: { xs: 0.5, sm: 0 },
+                    }}
+                    onClick={() => {
+                      CopyToClipboard(comment.link);
+                      toaster("Link copied!!!");
+                    }}
                   >
-                    Open Main Post
+                    Share
                   </Button>
+                </Grid>
+                {post.ptype == 1 && (
+                  <Grid item xl={6}>
+                    <Button
+                      component={Link}
+                      sx={{
+                        mr: { xs: 0.5, sm: 1, md: 2, lg: 1 },
+                        // my: { xs: 0.5, sm: 0 },
+                      }}
+                      to={"post?id=" + comment.parent_id}
+                      startIcon={<LaunchIcon />}
+                      variant="outlined"
+                      size="small"
+                      color="info"
+                    >
+                      Open Main Post
+                    </Button>
+                  </Grid>
                 )}
-              </Stack>
+                {/* </Stack> */}
+              </Grid>
             </Grid>
             <Grid item xl={6}>
               <Box sx={{ mt: { xs: 1, md: 0 } }}>

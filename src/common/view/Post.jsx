@@ -152,18 +152,6 @@ function Post({
     }, 2000);
   }, []);
 
-  //   let tagsList = [];
-  //   if (post.tags !== null) {
-  //     tagsList = post.tags.split(",").map((hash) => {
-  //       return (
-  //         <>
-  //           <Link href="#" underline="hover">
-  //             {hash}
-  //           </Link>{" "}
-  //         </>
-  //       );
-  //     });
-  //   }
 
   const setHidePost = async () => {
     await getHidePost(post._id).then((e) => {
