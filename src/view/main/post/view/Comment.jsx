@@ -39,6 +39,7 @@ import { _GLOBAL } from "links";
 import MandateButtons from "components/buttons/MandateButtons";
 import { getHidePost, getUnHidePost } from "../service";
 import { HidePost } from "common/view/HidePost";
+import useMandateButtons from "hooks/mandate.button";
 
 const CardActionsWrapper = styled(CardActions)(
   ({ theme }) => `
@@ -57,7 +58,12 @@ function Comment({
   userModel,
   toaster,
 }) {
-  // const [open, onMenu] = useState(false);
+  const { AcceptButton, RejectButton } = useMandateButtons({
+    post,
+    onClick: onMandate,
+    hasMandate: comment.hasMandate,
+    size: "small",
+  });
   const [isHidePost, setHide] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -167,48 +173,37 @@ function Comment({
             <Grid item xl={6}>
               <Grid
                 container
+                spacing={1}
                 direction={"row"}
                 justifyContent="space-between"
                 alignItems={"center"}
               >
                 {/* <Stack direction="row" spacing={1} justifyContent="space-between"> */}
                 {post.statusCode == StatusCode.VOTING && (
-                  <Grid item xl={3}>
+                  <Grid item xs={6} sm={"auto"}>
                     <VoteButton
                       post={comment}
                       size="small"
-                      sx={{
-                        mr: { xs: 0.5, sm: 1, md: 2, lg: 1 },
-                        // my: { xs: 0.5, sm: 0 },
-                      }}
                       onClick={onVote}
                       hasVote={comment.hasVote}
                     />
                   </Grid>
                 )}
                 {comment.statusCode == StatusCode.MANDATE && (
-                  <Grid item xl={3}>
-                    <MandateButtons
-                      post={post}
-                      sx={{
-                        mr: { xs: 0.5, sm: 1, md: 2, lg: 1 },
-                        // my: { xs: 0.5, sm: 0 },
-                      }}
-                      onClick={onMandate}
-                      hasMandate={comment.hasMandate}
-                      size="small"
-                    />
-                  </Grid>
+                  <>
+                    <Grid item xs={6} sm={"auto"}>
+                      <AcceptButton size="small" />
+                    </Grid>
+                    <Grid item xs={6} sm={"auto"}>
+                      <RejectButton size="small" />
+                    </Grid>
+                  </>
                 )}
-                <Grid item xl={6}>
+                <Grid item xs={6} sm={"auto"}>
                   <Button
                     startIcon={<ShareTwoToneIcon />}
                     variant="outlined"
                     size="small"
-                    sx={{
-                      mr: { xs: 0.5, sm: 1, md: 2, lg: 1 },
-                      // my: { xs: 0.5, sm: 0 },
-                    }}
                     onClick={() => {
                       CopyToClipboard(comment.link);
                       toaster("Link copied!!!");
@@ -218,13 +213,9 @@ function Comment({
                   </Button>
                 </Grid>
                 {post.ptype == 1 && (
-                  <Grid item xl={6}>
+                  <Grid item xl={6} sm={"auto"}>
                     <Button
                       component={Link}
-                      sx={{
-                        mr: { xs: 0.5, sm: 1, md: 2, lg: 1 },
-                        // my: { xs: 0.5, sm: 0 },
-                      }}
                       to={"post?id=" + comment.parent_id}
                       startIcon={<LaunchIcon />}
                       variant="outlined"
@@ -249,14 +240,6 @@ function Comment({
                     fontSize: TEXT_FONT,
                   }}
                 >
-                  {/* {post.statusCode == 1 && (
-                                        <Text
-                                            sx={{ display: 'flex', mr: 1 }}
-                                            color={StatusList[comment.statusCode].color}
-                                        >
-                                            {StatusList[comment.statusCode].icon}{comment.status}
-                                        </Text>
-                                    )} */}
                   {post.statusCode > StatusCode.VOTING && (
                     <>
                       <Text

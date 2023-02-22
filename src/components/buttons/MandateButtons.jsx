@@ -7,6 +7,7 @@ import {
 import { styled } from "@mui/material/styles";
 import React, { useState } from "react";
 import { useEffect } from "react";
+import { Box } from "@mui/material";
 
 const LoaderIndicator = styled("div")(({ theme }) => ({
   position: "relative",
@@ -58,6 +59,7 @@ const MandateButton = ({ hasMandate, onClick, sxy, sxn, ...rest }) => {
   }, [hasMandate]);
   return (
     <>
+      {/* // <Box sx={{ justifyContent: "space-between", m: 0, p: 0 }}> */}
       <LoadingButton
         onClick={() => {
           onClick("yes");
@@ -90,6 +92,7 @@ const MandateButton = ({ hasMandate, onClick, sxy, sxn, ...rest }) => {
       >
         {hasMandate == "no" ? "Rejected/Disagreed" : "Reject/Disagree"}
       </LoadingButton>
+      {/* </Box> */}
     </>
   );
 };
