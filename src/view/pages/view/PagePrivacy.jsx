@@ -9,7 +9,7 @@ export default () => {
             <p>https://ventvoila.com/privacy</p>
             <p style={{ textAlign: 'justify' }}>Referendum 2.0 at https://ventvoila.com instantly connects people to debate
                 meaningful ideas, issues and agendas raised by their peers. Any registered user can post idea issue and agenda
-                that's public by default and may include other content like photos, videos and documents to support their post.
+                that's public by default and may include other content like photos and documents to support their post.
             </p>
             <p style={{ textAlign: 'justify' }}>This Privacy Policy describes how and when Referendum 2.0 collects, uses and shares
                 your information after you use our services. Using any of our services, you consent to the gathering, transfer,
