@@ -142,6 +142,18 @@ function Post({
     setAnchorEl(null);
   };
 
+  const handleDownload = (url) => {
+    if (getDownload(url)) {
+      enqueueSnackbar("File downloaded", {
+        variant: "success",
+      });
+    } else {
+      enqueueSnackbar("Error in query", {
+        variant: "error",
+      });
+    }
+  };
+
   useEffect(() => {
     setTimeout(() => {
       let cgsize = {};
@@ -374,10 +386,10 @@ function Post({
                             ml: 0.5,
                             mt: "4px",
                           }}
-                          href={post.dlink}
+                          // href={post.dlink}
                           onClick={(e) => {
                             e.preventDefault();
-                            getDownload(post.dlink);
+                            handleDownload(post.dlink);
                           }}
                         >
                           <DownloadForOfflineIcon

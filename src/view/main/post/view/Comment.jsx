@@ -39,6 +39,7 @@ import { _GLOBAL } from "links";
 import { getHidePost, getUnHidePost } from "../service";
 import { HidePost } from "common/view/HidePost";
 import useMandateButtons from "hooks/mandate.button";
+import { useSnackbar } from "notistack";
 
 const CardActionsWrapper = styled(CardActions)(
   ({ theme }) => `
@@ -66,6 +67,7 @@ function Comment({
   const [isHidePost, setHide] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const { enqueueSnackbar } = useSnackbar();
   const handleOptionAction = (type) => {
     if (type == 0) {
       setReport({ postid: comment._id, open: true });
@@ -78,6 +80,17 @@ function Comment({
   };
   const handleOptionClose = () => {
     setAnchorEl(null);
+  };
+  const handleDownload = (url) => {
+    if (getDownload(url)) {
+      enqueueSnackbar("File downloaded", {
+        variant: "success",
+      });
+    } else {
+      enqueueSnackbar("Error in query", {
+        variant: "error",
+      });
+    }
   };
   const onPostHide = (flag) => {
     setHide(flag);
@@ -278,7 +291,8 @@ function Comment({
                         voters={post.tot_votes}
                         votes={comment.votes}
                       />
-                      {comment.statusCode == StatusCode.ACCEPTANCE && (
+                      {(comment.statusCode == StatusCode.ACCEPTANCE ||
+                        comment.statusCode == StatusCode.MANDATE) && (
                         <>
                           {"|"}
                           <Box
@@ -292,7 +306,7 @@ function Comment({
                             href={comment.dlink}
                             onClick={(e) => {
                               e.preventDefault();
-                              getDownload(comment.dlink);
+                              handleDownload(comment.dlink);
                             }}
                           >
                             <DownloadForOfflineIcon
