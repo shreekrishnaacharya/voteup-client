@@ -53,7 +53,7 @@ const UserBox = styled(Box)({
 
 const schema = yup.object({
   image: yup.mixed(),
-  post_detail: yup.string().max(1000),
+  post_detail: yup.string().max(700),
   supporters: yup.number().min(1),
 });
 const Add = ({ setDialog }) => {
