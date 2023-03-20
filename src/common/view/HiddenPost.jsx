@@ -223,7 +223,7 @@ function HiddenPost({ post }) {
                 >
                   {StatusList[post.statusCode].icon}&nbsp;{post.status}
                 </Text>
-                {post.statusCode == StatusCode.MANDATE && (
+                {post.statusCode >= StatusCode.REFERENDUM && (
                   <>
                     {"|"}
                     <Text sx={{ display: "flex", mx: 1 }}>

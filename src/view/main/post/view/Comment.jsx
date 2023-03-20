@@ -260,7 +260,7 @@ function Comment({
                         {StatusList[comment.statusCode].icon}&nbsp;
                         {comment.status}
                       </Text>
-                      {comment.statusCode == StatusCode.MANDATE && (
+                      {comment.statusCode >= StatusCode.MANDATE && (
                         <>
                           {"|"}
                           <Text sx={{ display: "flex", mx: 1 }}>
@@ -292,7 +292,7 @@ function Comment({
                         votes={comment.votes}
                       />
                       {(comment.statusCode == StatusCode.ACCEPTANCE ||
-                        comment.statusCode == StatusCode.MANDATE) && (
+                        comment.statusCode == StatusCode.REFERENDUM) && (
                         <>
                           {"|"}
                           <Box

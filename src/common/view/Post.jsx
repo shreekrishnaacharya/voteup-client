@@ -331,7 +331,7 @@ function Post({
                 >
                   {StatusList[post.statusCode].icon}&nbsp;{post.status}
                 </Text>
-                {post.statusCode == StatusCode.MANDATE && (
+                {post.statusCode >= StatusCode.MANDATE && (
                   <>
                     {"|"}
                     <Text sx={{ display: "flex", mx: 1 }}>
@@ -375,7 +375,7 @@ function Post({
                       votes={post.votes}
                     />
                     {(post.statusCode == StatusCode.ACCEPTANCE ||
-                      post.statusCode == StatusCode.MANDATE) && (
+                      post.statusCode == StatusCode.REFERENDUM) && (
                       <>
                         {"|"}
                         <Box

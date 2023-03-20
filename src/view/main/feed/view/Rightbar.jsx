@@ -93,7 +93,7 @@ const Rightbar = () => {
                   }}>
                     <ListItem alignItems="flex-start">
                       <ListItemText
-                        primary={post.username}
+                        // primary={post.username}
                         secondary={
                           <Typography noWrap style={{ color: "#6E759F" }}>
                             {post.post_detail}
@@ -131,7 +131,7 @@ const Rightbar = () => {
                   }}>
                     <ListItem alignItems="flex-start">
                       <ListItemText
-                        primary={post.username}
+                        // primary={post.username}
                         secondary={
                           <Typography noWrap style={{ color: "#6E759F" }}>
                             {post.post_detail}
