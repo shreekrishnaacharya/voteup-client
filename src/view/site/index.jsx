@@ -15,7 +15,6 @@ function SiteController() {
             {/* {/* <Route exact path={pages.VERIFY_TOKEN} component={VerifyToken} /> */}
             <Route exact path={pages.NEW_PASSWORD} component={ChangePassword} />
             <Route exact path={pages.SIGNUP} component={Signup} />
-            
         </>
     );
 }

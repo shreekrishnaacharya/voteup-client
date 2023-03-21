@@ -21,13 +21,11 @@ import {
 } from "@mui/material";
 import { StatusCode, StatusList } from "links";
 import { useState, forwardRef } from "react";
-import { CapitalText } from "_services";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearch } from "redux/action/searchAction";
 import { setFeedList } from "redux/action/feedsAction";
 import PropTypes from "prop-types";
 import { _GLOBAL } from "links";
-import { useCallback } from "react";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />;
@@ -193,7 +191,7 @@ function HeaderSearch({ openDialog, setDialog }) {
             {StatusCode2.map((e) => {
               return (
                 <MenuItem key={e} value={e}>
-                  {CapitalText(StatusList[e].name)}
+                  {StatusList[e].name}
                 </MenuItem>
               );
             })}
@@ -286,7 +284,7 @@ function HeaderSearch({ openDialog, setDialog }) {
                     {StatusCode2.map((e) => {
                       return (
                         <MenuItem key={e} value={e}>
-                          {CapitalText(StatusList[e].name)}
+                          {StatusList[e].name}
                         </MenuItem>
                       );
                     })}
